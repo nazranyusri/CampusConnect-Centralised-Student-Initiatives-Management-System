@@ -2,6 +2,9 @@ const express = require('express');
 const connection = require('../connection');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+var auth = require('../services/authentication');
 
 //test routing
 // router.get('/', (req, res) => {
@@ -37,7 +40,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 //create program
-router.post('/add', (req, res, next) => {
+router.post('/add', auth.authenticateToken, (req, res, next) => {
     let program = req.body;
     var sql = `INSERT INTO program (createdBy, description, endDate, endTime, location, programTitle, registrationLink, startDate, startTime, tag, telNo, telName, image) 
                VALUES ('${program.createdBy}', '${program.description}', '${program.endDate}', '${program.endTime}', '${program.location}','${program.programTitle}',
@@ -52,22 +55,23 @@ router.post('/add', (req, res, next) => {
 });
 
 //update program
-router.patch('/update/:id', (req, res, next) => {
+router.patch('/update/:id', auth.authenticateToken, (req, res, next) => {
+    const id = req.params.id; //sementara, nanti diganti bila frontend siap
     let program = req.body;
-    var sql = 'UPDATE program SET description = ?, endDate = ?, endTime = ?, location = ?, programTitle = ?, registrationLink = ?, startDate = ?, startTime = ?'
+    var sql = 'UPDATE program SET description = ?, endDate = ?, endTime = ?, location = ?, programTitle = ?, registrationLink = ?, startDate = ?, startTime = ?,'
             + 'tag = ?, telNo = ?, telName = ?, image = ? WHERE id = ?';
     connection.query(sql, [program.description, program.endDate, program.endTime, program.location, program.programTitle, program.registrationLink, program.startDate,
-                     program.startTime, program.tag, program.telNo, program.telName, program.image, program.id], (err, result) => {
+                     program.startTime, program.tag, program.telNo, program.telName, program.image, id], (err, result) => { // (program.id) id tu sementara, nanti diganti bila frontend siap
         if (!err) {
             return res.status(200).json({ message: "Program updated successfully" });
         } else {
-            return res.status(500).json(err);
+            return res.status(500).json(err); 
         }
     });
 });
 
 //delete program
-router.delete('/delete/:id', (req, res, next) => {
+router.delete('/delete/:id', auth.authenticateToken, (req, res, next) => {
     const id = req.params.id;
     var sql = "DELETE FROM program WHERE id = ?";
     connection.query(sql, id, (err, result) => {
