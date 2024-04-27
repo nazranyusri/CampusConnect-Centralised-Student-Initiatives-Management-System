@@ -3,6 +3,7 @@ const connection = require('../connection');
 const router = express.Router();
 
 const jwt = require('jsonwebtoken');
+const progHistory = require('./program').getProgramHistory;
 require('dotenv').config();
 var auth = require('../services/authentication');
 
@@ -39,15 +40,44 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-//get a user
-router.get('/profile', auth.authenticateToken, (req, res, next) => {
+//get user profile and posts history
+router.get('/profile', auth.authenticateToken, async (req, res, next) => { // Added async keyword
     const tokenPayload = res.userLocal;
-    var sql = 'SELECT id, username, email, role FROM user WHERE id = ?';
-    connection.query(sql, [tokenPayload.id], (err, result) => {
+
+    try {
+        const userData = await getUserData(tokenPayload.id);
+        const programHistory = await progHistory(userData.username); // Call getUserProgramHistory function
+
+        return res.status(200).json({ userData, programHistory }); // Return both user data and program history
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+//fetch user data for profile viewing
+function getUserData(userId) {
+    return new Promise((resolve, reject) => {
+        var sql = 'SELECT id, username, email, role FROM user WHERE id = ?';
+        connection.query(sql, [userId], (err, result) => {
+            if (!err && result.length > 0) {
+                resolve(result[0]);
+            } else {
+                reject(err || { message: "User not found" });
+            }
+        });
+    });
+}
+
+//update profile
+router.patch('/update', auth.authenticateToken, (req, res, next) => {
+    const tokenPayload = res.userLocal;
+    let user = req.body;
+    var sql = 'UPDATE user SET username = ?, email = ?, password = ? WHERE id = ?';
+    connection.query(sql, [user.username, user.email, user.password, tokenPayload.id], (err, result) => {
         if (!err) {
-            return res.status(200).json({ result });
+            return res.status(200).json({ message: "User details updated successfully" });
         } else {
-            return res.status(500).json(err);
+            return res.status(500).json(err); 
         }
     });
 });

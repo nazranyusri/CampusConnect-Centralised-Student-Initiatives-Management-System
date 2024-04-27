@@ -6,16 +6,41 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 var auth = require('../services/authentication');
 
-//test routing
-// router.get('/', (req, res) => {
-//     res.send('Hello World!');
-// });
+//get specific user programs
+function getProgramHistory(username) {
+    return new Promise((resolve, reject) => {
+        var sql = 'SELECT * FROM program WHERE createdBy = ?';
+        connection.query(sql, [username], (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
+    });
+}
 
 //get all programs
 router.get('/', (req, res, next) => {
     var sql = 'SELECT * FROM program';
     connection.query(sql, (err, result) => {
         if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+});
+
+//get specific user programs
+router.get('/history', auth.authenticateToken, (req, res, next) => {
+    const tokenPayload = res.userLocal;
+    var sql = 'SELECT * FROM program WHERE createdBy = ?';
+    connection.query(sql, [tokenPayload.username], (err, result) => {
+        if (!err) {
+            if(result.length == 0){
+                return res.status(404).json({message: tokenPayload.username + ": has no program history "});
+            }
             return res.status(200).json(result);
         } else {
             return res.status(500).json(err);
@@ -42,9 +67,9 @@ router.get('/:id', (req, res, next) => {
 //create program
 router.post('/add', auth.authenticateToken, (req, res, next) => {
     let program = req.body;
-    var sql = `INSERT INTO program (createdBy, description, endDate, endTime, location, programTitle, registrationLink, startDate, startTime, tag, telNo, telName, image) 
+    var sql = `INSERT INTO program (createdBy, description, endDate, endTime, location, programTitle, registrationLink, startDate, startTime, tag, telNo, telName, image, datePublished) 
                VALUES ('${program.createdBy}', '${program.description}', '${program.endDate}', '${program.endTime}', '${program.location}','${program.programTitle}',
-               '${program.registrationLink}','${program.startDate}','${program.startTime}','${program.tag}','${program.telNo}','${program.telName}','${program.image}')`;
+               '${program.registrationLink}','${program.startDate}','${program.startTime}','${program.tag}','${program.telNo}','${program.telName}','${program.image}','${program.datePublished}')`; //${program.datePublished} should be replaced with CURDATE() after complete testing using Postman
     connection.query(sql, (err, result) => {
         if (!err) {
             return res.status(200).json({ message: "Program added successfully" });
@@ -86,4 +111,7 @@ router.delete('/delete/:id', auth.authenticateToken, (req, res, next) => {
     });
 });
 
-module.exports = router;
+module.exports = { 
+    router: router,
+    getProgramHistory: getProgramHistory
+};
