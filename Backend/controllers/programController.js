@@ -1,4 +1,3 @@
-const connection = require('../connection');
 const programModel = require('../models/program');
 
 //get all programs
@@ -58,6 +57,9 @@ const updateProgram = (req, res) => {
     const program = req.body;
     programModel.updateProgram(id, program, (err, result) => {
         if (!err) {
+            if(result.affectedRows == 0){
+                return res.status(404).json({message: "Program id not found"});
+            }
             return res.status(200).json({ message: "Program updated successfully" });
         } else {
             return res.status(500).json(err); 

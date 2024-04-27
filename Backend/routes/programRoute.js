@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const programController = require('../controllers/programController');
 
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 require('dotenv').config();
 var auth = require('../services/authentication');
 
