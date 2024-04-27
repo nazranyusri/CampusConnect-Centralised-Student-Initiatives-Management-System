@@ -3,7 +3,7 @@ const connection = require('../connection');
 const router = express.Router();
 
 const jwt = require('jsonwebtoken');
-const progHistory = require('./program').getProgramHistory;
+const progHistory = require('../controllers/programController').getProgramHistory;
 require('dotenv').config();
 var auth = require('../services/authentication');
 

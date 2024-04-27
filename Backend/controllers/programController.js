@@ -1,0 +1,90 @@
+const connection = require('../connection');
+const programModel = require('../models/program');
+
+//get all programs
+const getAllProgram = (req, res) => {
+    programModel.getAllProgram((err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//get specific user programs -- viewed in Profile page
+const getProgramHistory = (username) => {
+    return new Promise((resolve, reject) => {
+        programModel.getProgramHistory(username, (err, result) => {
+            if (!err) {
+                resolve(result);
+            } else {
+                reject(err);
+            }
+        });
+    });
+};
+
+//get program by id
+const getProgramById = (req, res) => {
+    const id = req.params.id;
+    programModel.getProgramById(id, (err, result) => {
+        if (!err) {
+            if(result.length == 0){
+                return res.status(404).json({message: "Program id not found"});
+            }
+            return res.status(200).json(result[0]);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//create program
+const addProgram = (req, res) => {
+    const program = req.body;
+    programModel.addProgram(program, (err, result) => {
+        if (!err) {
+            return res.status(200).json({ message: "Program added successfully" });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//update program
+const updateProgram = (req, res) => {
+    const id = req.params.id;
+    const program = req.body;
+    programModel.updateProgram(id, program, (err, result) => {
+        if (!err) {
+            return res.status(200).json({ message: "Program updated successfully" });
+        } else {
+            return res.status(500).json(err); 
+        }
+    });
+};
+
+//delete program
+const deleteProgram = (req, res) => {
+    const id = req.params.id;
+    programModel.deleteProgram(id, (err, result) => {
+        if(!err){
+            if(result.affectedRows == 0){
+                return res.status(404).json({message: "Program id not found"});
+            }
+            return res.status(200).json({message: "Program deleted successfully"});
+        }else{
+            return res.status(500).json(err);
+        }
+    });
+};
+
+module.exports = {
+    getAllProgram,
+    getProgramHistory,
+    getProgramById,
+    addProgram,
+    updateProgram,
+    deleteProgram
+};
