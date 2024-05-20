@@ -22,13 +22,13 @@
   </mat-toolbar>
 
   <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav>
+    <mat-sidenav #sidenav style="height: 100%;">
       <mat-nav-list>
-          <a href="#" mat-button>Program</a><br>
-          <a href="#" mat-button>Business</a><br>
-          <a href="#" mat-button>Survey</a><br>
-          <a href="#" mat-button>About Persaka</a><br>
-          <a href="#" mat-button>Login</a>
+        <a mat-button routerLinkActive="active-link" routerLink="program">Program</a><br>
+        <a mat-button routerLinkActive="active-link" routerLink="business">Business</a><br>
+        <a mat-button routerLinkActive="active-link" routerLink="survey">Survey</a><br>
+        <a mat-button routerLinkActive="active-link" routerLink="persaka">About Persaka</a><br>
+        <a mat-button routerLinkActive="active-link" routerLink="login">Login</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>

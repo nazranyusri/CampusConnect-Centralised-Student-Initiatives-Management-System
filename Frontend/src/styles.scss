@@ -1,7 +1,15 @@
 @use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } 
+html, body { height: 100%; width: 100%;}
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+}
+.custom-snackbar {
+  color: white;
+  position: absolute !important;
+  z-index: 99999 !important; /* Ensure it appears above other content */
+}
 
 // Define custom color palettes
 $custom-primary-pallette: (

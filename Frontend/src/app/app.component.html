@@ -1,4 +1,10 @@
 <body>
-    <app-nav-bar></app-nav-bar>
-    <ngx-ui-loader></ngx-ui-loader>
+    <div class="container">
+        <app-nav-bar></app-nav-bar>
+        <ngx-ui-loader></ngx-ui-loader>
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer></app-footer>
+    </div>
 </body>

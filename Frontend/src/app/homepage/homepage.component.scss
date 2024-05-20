@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    height: auto;
     background-color: #1D203E;
 }
 
@@ -12,7 +13,6 @@ p {
 }
 
 .test{
-    float: right;
     height: 500px;
     width: 500px;
     background-color: red;
