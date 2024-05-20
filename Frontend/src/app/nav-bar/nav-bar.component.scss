@@ -1,0 +1,35 @@
+.menu-spacer {
+    flex: 1 1 auto;
+}
+
+a:link {
+    text-decoration: none;
+    color: white;
+}
+
+// #toolbar a:hover {
+//     animation: bigger-font 0.1s;
+// }
+
+// @keyframes bigger-font {
+//     from {
+//         font-size: 16px;
+//     }
+//     to {
+//         font-size: 18px;
+//     }
+// }
+
+#toolbar a:hover {
+    font-size: 18px;
+    color: #F38D11;
+}
+
+#toolbar a {
+    margin: 0px 5px 0px 5px;
+}
+
+a:active {
+    text-decoration: none;
+    color: #F38D11;
+}

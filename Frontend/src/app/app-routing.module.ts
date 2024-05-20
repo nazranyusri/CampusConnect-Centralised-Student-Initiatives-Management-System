@@ -1,8 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomepageComponent } from './homepage/homepage.component';
+import { ProgramComponent } from './program/program.component';
+import { BusinessComponent } from './business/business.component';
+import { SurveyComponent } from './survey/survey.component';
+import { PersakaComponent } from './persaka/persaka.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/homepage', pathMatch: 'full'},
+  {path: '', component: HomepageComponent},
+  {path: 'program', component: ProgramComponent},
+  {path: 'business', component: BusinessComponent},
+  {path: 'survey', component: SurveyComponent},
+  {path: 'persaka', component: PersakaComponent},
+  {path: 'login', component: LoginComponent},
+  {path: '**', component: HomepageComponent} // Wildcard route for a 404 page
 ];
 
 @NgModule({
