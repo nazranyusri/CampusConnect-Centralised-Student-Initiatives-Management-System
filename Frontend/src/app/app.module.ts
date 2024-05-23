@@ -18,6 +18,7 @@ import { BusinessComponent } from './business/business.component';
 import { SurveyComponent } from './survey/survey.component';
 import { PersakaComponent } from './persaka/persaka.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -42,7 +43,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     BusinessComponent,
     SurveyComponent,
     PersakaComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { BusinessComponent } from './business/business.component';
 import { SurveyComponent } from './survey/survey.component';
 import { PersakaComponent } from './persaka/persaka.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'survey', component: SurveyComponent},
   {path: 'persaka', component: PersakaComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
   {path: '**', component: HomepageComponent} // Wildcard route for a 404 page
 ];
 

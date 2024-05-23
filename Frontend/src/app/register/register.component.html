@@ -1,0 +1,43 @@
+<body>
+    <div class="page-format">
+        <div class="white-section" fxShow="true" fxHide.lt-md></div>
+        <div class="register-section">
+            <form [formGroup]="registerForm">
+                <h2>Join us!</h2><br>
+                <p>
+                    <mat-form-field appearance="outline" fxFlex class="custom-outline">
+                        <mat-label>Username</mat-label>
+                        <mat-icon matPrefix>person</mat-icon>
+                        <input matInput formControlName="username" required>
+                        <mat-error *ngIf="registerForm.controls.username.touched && registerForm.controls.username.invalid">
+                            <span *ngIf="registerForm.controls.username.errors.pattern">Username is invalid</span>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline" fxFlex class="custom-outline">
+                        <mat-label>Email</mat-label>
+                        <mat-icon matPrefix>person</mat-icon>
+                        <input matInput formControlName="email" required>
+                        <mat-error *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
+                            <span *ngIf="registerForm.controls.email.errors.pattern">Email is invalid</span>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline" fxFlex class="custom-outline">
+                        <mat-label>Password</mat-label>
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput formControlName="password" required>
+                        <mat-error *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
+                            <span *ngIf="registerForm.controls.password.errors.pattern">Password is invalid</span>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <button mat-raised-button [disabled]="!(registerForm.valid && registerForm.dirty)" (click)="register()" class="custom-button">Login</button>
+                <br><br>
+                <p class="login">Already have an account? <a routerLink="/login">Log in</a></p>
+            </form>
+        </div>
+    </div>
+</body>

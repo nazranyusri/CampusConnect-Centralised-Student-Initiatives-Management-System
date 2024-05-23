@@ -8,7 +8,7 @@
     height: 100vh;
 }
 
-.login-section {
+.register-section {
     background-color: #1D203E;
     width: 70%;
     height: 100vh;
@@ -22,7 +22,7 @@ a {
     color: #F38D11;
 }
 
-.register {
+.login {
     text-align: center;
     font-size: 0.8em;
 }
@@ -63,7 +63,7 @@ a {
     }
 }
 
-::ng-deep .custom-button{                                                                                                       // Change button format
+::ng-deep .custom-button{                                                                                                       // Change button color
     background-color: white !important;
     color: #F38D11 !important;
     width: 100%;
