@@ -63,9 +63,16 @@ a {
     }
 }
 
-::ng-deep .custom-button{                                                                                                       // Change button format
-    background-color: white !important;
+::ng-deep .mat-mdc-raised-button {                                                                                              // Change button color
+    background-color: white !important; 
     color: #F38D11 !important;
+    width: 100%;
+    font-weight: bolder;
+}
+
+::ng-deep .mat-mdc-raised-button[disabled]{                                                                                     // Change button color when disabled
+    background-color: rgb(202, 202, 202) !important;
+    color: rgba(24, 19, 19, 0.12) !important;
     width: 100%;
     font-weight: bolder;
 }

@@ -32,40 +32,58 @@ a {
         display: none;
     }
 
-    .login-section {
+    .register-section {
         width: 100%;
     }
 }
 
 ::ng-deep .custom-outline {
 
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,                                     // Change border color
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+    // Change border color
     .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing,    
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,             // Change border color when focused
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+    // Change border color when focused
     .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
         border-color: white !important;
     }
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__leading,             // Change border color when invalid
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__leading,
+    // Change border color when invalid
     .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__notch,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__trailing {
         border-color: red !important;
     }
-    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label,                                                         // Change label color
-    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label,                                                // Change label color when focused                   
-    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {                                                     // Change input text color                       
+
+    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label,
+    // Change label color
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label,
+    // Change label color when focused                   
+    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        // Change input text color                       
         color: white !important;
     }
-    .mdc-text-field:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label,                                 // Change label color when invalid
-    .mat-mdc-form-field-required-marker {                                                                                       // Change label's asterisk color
+
+    .mdc-text-field:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label,
+    // Change label color when invalid
+    .mat-mdc-form-field-required-marker {
+        // Change label's asterisk color
         color: red !important;
     }
 }
 
-::ng-deep .custom-button{                                                                                                       // Change button color
-    background-color: white !important;
+::ng-deep .mat-mdc-raised-button { // Change button color
+    background-color: white !important; 
     color: #F38D11 !important;
+    width: 100%;
+    font-weight: bolder;
+}
+
+::ng-deep .mat-mdc-raised-button[disabled]{ // Change button color when disabled
+    background-color: rgb(202, 202, 202) !important;
+    color: rgba(24, 19, 19, 0.12) !important;
     width: 100%;
     font-weight: bolder;
 }
