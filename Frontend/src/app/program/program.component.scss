@@ -5,4 +5,97 @@ body {
     width: 100%;
     min-height: 100vh;
     background-color: #1D203E;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    img{
+        max-width: 200px;
+    }
+    
+    mat-card {
+        text-align: center;
+        width: 1150px;
+        border-radius: 15px;
+        height: auto;
+        background-color: #1E1E1E;
+        color: white;
+    }
+
+    @media screen and (max-width: 1192px) {
+        mat-card {
+          max-width: 760px;
+          
+        }
+    }
+
+    @media screen and (max-width: 810px) {
+        mat-card {
+          max-width: 370px;
+          
+        }
+    }
+}
+
+.custom-picture {
+    width: 100%;
+}
+
+.program-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 3;
+    justify-content: center;
+    gap: 15px;
+
+    mat-card {
+        width: 100%;
+        max-width: 370px;
+        background-color: #1E1E1E;
+        height: auto;
+        border-radius: 15px;
+        transition: transform 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(1.01);
+        }
+
+        mat-card-title a {
+            color: #F38D11;
+            font-weight: bolder;
+            font-size: 1.3em;
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 1300px) {
+            mat-card-title a {
+              text-decoration: underline;
+            }
+        }
+
+        mat-card-header {
+            padding: 10px;
+            text-align: justify;
+        }
+
+        mat-card-content {
+            padding-left: 10px;
+            padding-bottom: 20px;
+
+        }
+
+        p {
+            display: flex;
+        }
+
+        mat-icon {
+            margin-right: 15px;
+        }
+    }
 }

@@ -10,6 +10,7 @@
                         <mat-icon matPrefix>person</mat-icon>
                         <input matInput formControlName="username" required>
                         <mat-error *ngIf="registerForm.controls.username.touched && registerForm.controls.username.invalid">
+                            <span *ngIf="registerForm.controls.username.errors.required">Username is required</span>
                             <span *ngIf="registerForm.controls.username.errors.pattern">Username is invalid</span>
                         </mat-error>
                     </mat-form-field>
@@ -20,6 +21,7 @@
                         <mat-icon matPrefix>mail</mat-icon>
                         <input matInput formControlName="email" required>
                         <mat-error *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
+                            <span *ngIf="registerForm.controls.email.errors.required">Email is required</span>
                             <span *ngIf="registerForm.controls.email.errors.pattern">Email is invalid</span>
                         </mat-error>
                     </mat-form-field>
@@ -30,7 +32,19 @@
                         <mat-icon matPrefix>lock</mat-icon>
                         <input matInput formControlName="password" required>
                         <mat-error *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
+                            <span *ngIf="registerForm.controls.password.errors.required">Password is required</span>
                             <span *ngIf="registerForm.controls.password.errors.pattern">Password is invalid</span>
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field appearance="outline" fxFlex class="custom-outline">
+                        <mat-label>Re-enter password</mat-label>
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput formControlName="confirmPassword" required>
+                        <mat-error *ngIf="registerForm.controls.confirmPassword.touched && registerForm.controls.confirmPassword.invalid">
+                            <span *ngIf="registerForm.controls.confirmPassword.errors.required">Re-enter password is required</span>
+                            <span *ngIf="registerForm.controls.confirmPassword.errors?.['passwordMatchValidator']">Passwords did not match</span>
                         </mat-error>
                     </mat-form-field>
                 </p>

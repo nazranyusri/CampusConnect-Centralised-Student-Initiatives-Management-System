@@ -10,6 +10,7 @@
                         <mat-icon matPrefix>person</mat-icon>
                         <input matInput formControlName="email" required class="custom-input">
                         <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+                            <span *ngIf="loginForm.controls.email.errors.required">Email is required</span>
                             <span *ngIf="loginForm.controls.email.errors.pattern">Email is invalid</span>
                         </mat-error>
                     </mat-form-field>
@@ -20,7 +21,7 @@
                         <mat-icon matPrefix>lock</mat-icon>
                         <input matInput formControlName="password" required>
                         <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
-                            <span *ngIf="loginForm.controls.password.errors.pattern">Password is invalid</span>
+                            <span *ngIf="loginForm.controls.password.errors.required">Password is required</span>
                         </mat-error>
                     </mat-form-field>
                 </p>

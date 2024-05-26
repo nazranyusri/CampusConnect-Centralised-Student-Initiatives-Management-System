@@ -27,6 +27,16 @@ a {
     font-size: 0.8em;
 }
 
+.error-message {
+  &-underline {
+    position: relative;
+    bottom: auto;
+  }
+  &-subscript-wrapper {
+    position: static;
+  }
+}
+
 @media (max-width: 1000px) {
     .white-section {
         display: none;

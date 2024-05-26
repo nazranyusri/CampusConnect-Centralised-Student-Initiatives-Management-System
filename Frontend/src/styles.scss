@@ -11,6 +11,10 @@ body {
   z-index: 99999 !important; /* Ensure it appears above other content */
 }
 
+mat-error {
+  font-size: small;
+}
+
 // Define custom color palettes
 $custom-primary-pallette: (
   50: #2c2f48, // Primary color
@@ -37,42 +41,17 @@ $custom-primary-pallette: (
   ),
 );
 
-$custom-accent-pallette: (
-  50: #e0e0e0,
-  100: #b3b3b3,
-  200: #808080,
-  300: #4d4d4d,
-  400: #262626,
-  500: #1E1F1E, // Accent color
-  600: #1a1a1a,
-  700: #141414,
-  800: #0f0f0f,
-  900: #050505,
-  contrast: (
-    50: #000,
-    100: #000,
-    200: #000,
-    300: white,
-    400: white,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-  ),
-);
-
 // $custom-accent-pallette: (
-//   50: #fde8d1,
-//   100: #fbce9f,
-//   200: #f9b26b,
-//   300: #f79537,
-//   400: #f57d11,
-//   500: #F38D11, // Accent color
-//   600: #ec740d,
-//   700: #e45a0a,
-//   800: #dd4106,
-//   900: #d32402,
+//   50: #e0e0e0,
+//   100: #b3b3b3,
+//   200: #808080,
+//   300: #4d4d4d,
+//   400: #262626,
+//   500: #1E1F1E, // Accent color
+//   600: #1a1a1a,
+//   700: #141414,
+//   800: #0f0f0f,
+//   900: #050505,
 //   contrast: (
 //     50: #000,
 //     100: #000,
@@ -86,6 +65,31 @@ $custom-accent-pallette: (
 //     900: white,
 //   ),
 // );
+
+$custom-accent-pallette: (
+  50: #fde8d1,
+  100: #fbce9f,
+  200: #f9b26b,
+  300: #f79537,
+  400: #f57d11,
+  500: #F38D11, // Accent color
+  600: #ec740d,
+  700: #e45a0a,
+  800: #dd4106,
+  900: #d32402,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
 
 $custom-warn-pallette: (
   50: #ffebee,

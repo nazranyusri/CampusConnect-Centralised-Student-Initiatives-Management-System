@@ -26,12 +26,23 @@ const authenticateUser = (req, res) => {
 //register
 const register = (req, res) => {
     const user = req.body;
-    userModel.register(user, (err, result) => {
-        if (!err) {
-            return res.status(200).json({ message: "User registered successfully" });
-        } else {
+
+    userModel.checkExistingUser(user, (err, result) => {
+        if (err) {
             return res.status(500).json(err);
         }
+
+        if (result) {
+            return res.status(401).json({ message: "Email or username already exists" });
+        }
+
+        userModel.register(user, (err, result) => {
+            if (!err) {
+                return res.status(200).json({ message: "User registered successfully" });
+            } else {
+                return res.status(500).json(err);
+            }
+        });
     });
 };
 

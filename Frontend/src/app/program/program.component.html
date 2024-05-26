@@ -1,3 +1,30 @@
 <body>
- Program content
+    <div class="search-section">
+        <mat-card>
+            <mat-card-content>
+                <div class="pageTitle"><img src="assets\resources\programTitle.png" alt="Discover upcoming program"></div>
+                hello card
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="program-container">
+        <mat-card *ngFor="let program of programs" routerLink = "/homepage">
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"
+                class="custom-picture">
+            <mat-card-header>
+                <mat-card-title><a routerLink="/homepage">{{ program.programTitle }}</a></mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p><mat-icon>calendar_today</mat-icon>{{ program.startDate }}</p>
+                <p><mat-icon>access_time</mat-icon>{{ program.startTime }}</p>
+                <p><mat-icon> location_on</mat-icon>{{ program.location }}</p>
+            </mat-card-content>
+            <!-- <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+            </mat-card-actions> -->
+        </mat-card>
+    </div>
+
 </body>
