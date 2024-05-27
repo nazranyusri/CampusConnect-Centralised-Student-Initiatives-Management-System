@@ -13,4 +13,8 @@ export class ProgramService {
   getAllProgram(){
     return this.http.get(this.apiUrl);
   }
+
+  getProgramById(id: number){
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProgramService } from '../services/program.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-program',
@@ -25,18 +26,24 @@ export class ProgramComponent {
   //   datePublished: new Date()
   // };
 
-  constructor(private programService: ProgramService){}
+  constructor(
+    private programService: ProgramService,
+    private ngxService: NgxUiLoaderService
+  ){}
 
   ngOnInit(){
+    this.ngxService.start();
     this.getAllProgram();
   }
 
   getAllProgram(){
     this.programService.getAllProgram().subscribe((result: any) => {
+        this.ngxService.stop();
         this.programs = result;
         console.log(result);
       },
       (error: any) => {
+        this.ngxService.stop();
         console.error(error);
       }
     );

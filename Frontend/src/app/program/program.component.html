@@ -3,28 +3,23 @@
         <mat-card>
             <mat-card-content>
                 <div class="pageTitle"><img src="assets\resources\programTitle.png" alt="Discover upcoming program"></div>
-                hello card
-
+                Search bar and filters here
             </mat-card-content>
         </mat-card>
     </div>
     <div class="program-container">
-        <mat-card *ngFor="let program of programs" routerLink = "/homepage">
+        <mat-card *ngFor="let program of programs" [routerLink]="['/detailedprogram', program.id]">
             <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"
                 class="custom-picture">
             <mat-card-header>
-                <mat-card-title><a routerLink="/homepage">{{ program.programTitle }}</a></mat-card-title>
+                <mat-card-title><a routerLink="/detailedprogram">{{ program.programTitle }}</a></mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <p><mat-icon>calendar_today</mat-icon>{{ program.startDate }}</p>
-                <p><mat-icon>access_time</mat-icon>{{ program.startTime }}</p>
+                <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'dd/MM/yyyy' }} - {{ program.endDate | date:'dd/MM/yyyy' }}</p>
+                <p><mat-icon>access_time</mat-icon>{{ program.startTime }} - {{ program.endTime }}</p>
                 <p><mat-icon> location_on</mat-icon>{{ program.location }}</p>
+                <div id="datePublished">Published on {{ program.datePublished | date:'d MMM, yyyy' }}</div>
             </mat-card-content>
-            <!-- <mat-card-actions>
-              <button mat-button>LIKE</button>
-              <button mat-button>SHARE</button>
-            </mat-card-actions> -->
         </mat-card>
     </div>
-
 </body>

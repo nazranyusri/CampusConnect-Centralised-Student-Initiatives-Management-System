@@ -2,7 +2,7 @@ const connection = require('../connection');
 
 //get all programs
 const getAllProgram = (callback) => {
-    const sql = 'SELECT * FROM program';
+    const sql = 'SELECT id, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program';
     connection.query(sql, callback);
 };
 

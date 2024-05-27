@@ -19,6 +19,8 @@ import { SurveyComponent } from './survey/survey.component';
 import { PersakaComponent } from './persaka/persaka.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
+import { DetailedProgramComponent } from './detailed-program/detailed-program.component';
+import { WildcardComponent } from './wildcard/wildcard.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -44,7 +46,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SurveyComponent,
     PersakaComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    DetailedProgramComponent,
+    WildcardComponent
   ],
   imports: [
     BrowserModule,
