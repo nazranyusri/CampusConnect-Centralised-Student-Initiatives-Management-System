@@ -1,4 +1,5 @@
 @import '../../styles.scss';
+@import '../../plain-header.scss';
 
 body {
     margin: 0;
@@ -12,53 +13,97 @@ body {
     align-items: center;
 }
 
-.header {
+.custom-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detailed-content {
+    width: 100%;
+    height: 100%;
+    max-width: 1140px;
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
 
-    img{
-        max-width: 200px;
-    }
-    
     mat-card {
-        text-align: center;
+        display: flex;
         width: 1140px;
-        border-radius: 15px;
-        height: auto;
-        background-color: map-get($custom-primary-pallette, 500);
-        color: white;
-    }
-
-    @media screen and (max-width: 1192px) {
-        mat-card {
-          max-width: 760px;
-        }
-        img {
-            max-width: 150px;
-        }
-    }
-
-    @media screen and (max-width: 810px) {
-        mat-card {
-          max-width: 370px;
-        }
-    }
-}
-
-.custom-picture {
-    width: 40%;
-}
-
-.detailed-program-content {
-    width: 100%;
-    max-width: 1140px;
-
-    mat-card {
-        background-color: #1E1E1E;
-        color: white;
         border-radius: 15px;
         padding: 20px;
         margin-bottom: 20px;
+        background-color: #1E1E1E;
+        color: white;
+    }
+
+    .upper-section {
+        display: flex;
+
+        .content-image {
+            flex: 2;
+        }
+
+        .content-details {
+            flex: 1;
+            padding-left: 20px;
+
+            #title {
+                color: map-get($custom-accent-pallette, 500) !important;
+                font-weight: bolder;
+                font-size: 1.5em;
+            }
+
+            p {
+                padding-bottom: 10px;
+            }
+
+            mat-icon {
+                margin-right: 15px;
+            }
+
+            .mat-mdc-raised-button {                                                                                              // Change button color
+                background-color: map-get($custom-accent-pallette, 500) !important;
+                color: black !important;
+                width: 100%;
+                font-weight: bolder;
+                text-decoration: none;
+                padding: 25px 0px 25px 0px;
+            
+                &:hover {
+                    transition: transform 0.3s;
+                    transform: scale(1.01);
+                }
+            }
+        }
+    }
+
+    .lower-section {
+        margin-top: 25px;
+        text-align: justify;
+    }
+}
+
+@media screen and (max-width: 1192px) {
+    mat-card {
+      max-width: 760px;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    mat-card {
+      max-width: 370px;
+    }
+
+    .upper-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-details {
+        padding-left: 0px !important;
+    }
+
+    #title {
+        margin-top: 10px;
     }
 }

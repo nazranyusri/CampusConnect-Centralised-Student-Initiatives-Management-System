@@ -20,7 +20,7 @@ export class DetailedProgramComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Accessing the id parameter from route parameters
+    //Accessing the id parameter from route parameters
     this.route.params.subscribe(params => {
       this.id = +params['id']; // '+' is used to convert string to number
       this.ngxService.start();

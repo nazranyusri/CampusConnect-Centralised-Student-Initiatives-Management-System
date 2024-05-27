@@ -21,6 +21,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { DetailedProgramComponent } from './detailed-program/detailed-program.component';
 import { WildcardComponent } from './wildcard/wildcard.component';
+import { AddProgramComponent } from './add-program/add-program.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -48,7 +49,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProfileComponent,
     RegisterComponent,
     DetailedProgramComponent,
-    WildcardComponent
+    WildcardComponent,
+    AddProgramComponent
   ],
   imports: [
     BrowserModule,

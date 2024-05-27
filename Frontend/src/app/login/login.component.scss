@@ -16,15 +16,29 @@
     justify-content: center;
     align-items: center;
     color: white;
-}
 
-a {
-    color: #F38D11;
-}
+    .mat-mdc-raised-button {                                                                                              // Change button color
+        background-color: white !important; 
+        color: #F38D11 !important;
+        width: 100% !important;
+        font-weight: bolder !important;
+    }
+    
+    .mat-mdc-raised-button[disabled]{                                                                                     // Change button color when disabled
+        background-color: rgb(202, 202, 202) !important;
+        color: rgba(24, 19, 19, 0.12) !important;
+        width: 100%;
+        font-weight: bolder;
+    }
 
-.register {
-    text-align: center;
-    font-size: 0.8em;
+    a {
+        color: #F38D11;
+    }
+    
+    .register {
+        text-align: center;
+        font-size: 0.8em;
+    }
 }
 
 @media (max-width: 1000px) {
@@ -61,18 +75,4 @@ a {
     .mat-mdc-form-field-required-marker {                                                                                       // Change label's asterisk color
         color: red !important;
     }
-}
-
-::ng-deep .mat-mdc-raised-button {                                                                                              // Change button color
-    background-color: white !important; 
-    color: #F38D11 !important;
-    width: 100%;
-    font-weight: bolder;
-}
-
-::ng-deep .mat-mdc-raised-button[disabled]{                                                                                     // Change button color when disabled
-    background-color: rgb(202, 202, 202) !important;
-    color: rgba(24, 19, 19, 0.12) !important;
-    width: 100%;
-    font-weight: bolder;
 }

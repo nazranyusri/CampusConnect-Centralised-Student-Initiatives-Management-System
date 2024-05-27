@@ -9,12 +9,14 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DetailedProgramComponent } from './detailed-program/detailed-program.component';
 import { WildcardComponent } from './wildcard/wildcard.component';
+import { AddProgramComponent } from './add-program/add-program.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'homepage', component: HomepageComponent},
   {path: 'program', component: ProgramComponent},
   {path: 'detailedprogram/:id', component: DetailedProgramComponent},
+  {path: 'addprogram', component: AddProgramComponent},
   {path: 'business', component: BusinessComponent},
   {path: 'survey', component: SurveyComponent},
   {path: 'persaka', component: PersakaComponent},

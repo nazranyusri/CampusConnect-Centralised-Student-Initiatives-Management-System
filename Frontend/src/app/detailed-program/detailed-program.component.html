@@ -6,21 +6,23 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="detailed-program-content">
+    <div class="detailed-content">
         <mat-card>
             <div class="upper-section">
-                <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" class="custom-picture">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>{{ program.programTitle }}</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'d MMMM, yyyy' }}</p>
-                        <p><mat-icon>access_time</mat-icon>{{ program.startTime }}</p>
-                        <p><mat-icon> location_on</mat-icon>{{ program.location }}</p>
-                        <div id="datePublished">Published on {{ program.datePublished | date:'d MMM, yyyy' }}</div>
-                    </mat-card-content>
-                </mat-card>
+                <div class="content-image">
+                    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" class="custom-picture">
+                </div>
+                <div class="content-details">
+                    <p id="title">{{ program?.programTitle }}</p>
+                    <p><mat-icon> location_on</mat-icon>{{ program?.location }}</p>
+                    <p><mat-icon>calendar_today</mat-icon>{{ program?.startDate | date:'dd/MM/yyyy' }} - {{ program?.endDate | date:'dd/MM/yyyy' }}</p>
+                    <p><mat-icon>access_time</mat-icon>{{ program?.startTime }} - {{ program?.endTime }}</p>
+                    <p><mat-icon>call</mat-icon>{{ program?.telNo }}</p>
+                    <a mat-raised-button [attr.href]="program?.registrationLink" target="_blank">Register now!</a>
+                </div>
+            </div>
+            <div class="lower-section">
+                <p>{{ program?.description }}</p>
             </div>
         </mat-card>
     </div>

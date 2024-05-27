@@ -1,4 +1,5 @@
 @import '../../styles.scss';
+@import '../../search-header.scss';
 
 body {
     margin: 0;
@@ -12,45 +13,35 @@ body {
     align-items: center;
 }
 
-.search-section {
+.add-item{
     display: flex;
     justify-content: center;
+    width: 1140px;
+    height: auto;
     margin-bottom: 20px;
 
-    img{
-        max-width: 200px;
-    }
+    .mat-mdc-raised-button {                                                                                              // Change button color
+        background-color: map-get($custom-primary-pallette, 500) !important;
+        color: white !important;
+        width: 100%;
+        height: 100%;
+        padding: 30px 0px 30px 0px;
+        border-radius: 10px;
+        text-decoration: none;
     
-    mat-card {
-        text-align: center;
-        width: 1140px;
-        border-radius: 15px;
-        height: auto;
-        background-color: map-get($custom-primary-pallette, 500);
-        color: white;
-    }
-
-    @media screen and (max-width: 1192px) {
-        mat-card {
-          max-width: 760px;
-        }
-        img {
-            max-width: 150px;
-        }
-    }
-
-    @media screen and (max-width: 810px) {
-        mat-card {
-          max-width: 370px;
+        &:hover {
+            transition: transform 0.3s;
+            transform: scale(1.01);
         }
     }
 }
+
 
 .custom-picture {
     width: 100%;
 }
 
-.program-container {
+.content-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -71,13 +62,13 @@ body {
         }
 
         mat-card-title a {
-            color: #F38D11;
+            color: map-get($custom-accent-pallette, 500) !important;
             font-weight: bolder;
             font-size: 1.3em;
             text-decoration: none;
         }
 
-        @media screen and (max-width: 1300px) {
+        @media screen and (max-width: 1280px) {
             mat-card-title a {
               text-decoration: underline;
             }
@@ -85,7 +76,6 @@ body {
 
         mat-card-header {
             padding: 10px;
-            text-align: justify;
         }
 
         mat-card-content {
