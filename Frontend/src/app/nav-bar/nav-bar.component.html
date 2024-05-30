@@ -13,18 +13,21 @@
           <a mat-button routerLinkActive="active-link" routerLink="survey">Survey</a>
           <a mat-button routerLinkActive="active-link" routerLink="persaka">About Persaka</a>
           <a mat-button routerLinkActive="active-link" routerLink="login">Login</a>
+          <a mat-button (click)="logout()">Logout</a>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
 
   <mat-sidenav-container fxFlexFill>
-    <mat-sidenav #sidenav style="height: 100%;">
+    <mat-sidenav #sidenav>
+      <!-- style="height: 100%;" -->
       <mat-nav-list>
         <a mat-button routerLinkActive="active-link" routerLink="program">Program</a><br>
         <a mat-button routerLinkActive="active-link" routerLink="business">Business</a><br>
         <a mat-button routerLinkActive="active-link" routerLink="survey">Survey</a><br>
         <a mat-button routerLinkActive="active-link" routerLink="persaka">About Persaka</a><br>
         <a mat-button routerLinkActive="active-link" routerLink="login">Login</a>
+        <a mat-button (click)="logout()">Logout</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>

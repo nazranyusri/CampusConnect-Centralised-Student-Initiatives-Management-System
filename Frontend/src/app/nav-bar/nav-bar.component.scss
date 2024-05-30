@@ -2,21 +2,23 @@
     flex: 1 1 auto;
 }
 
-a:link {
-    text-decoration: none;
-    color: white;
-}
-
-#toolbar a:hover {
-    font-size: 18px;
-    color: #F38D11;
-}
-
 #toolbar a {
+    
+    text-decoration: none; 
+    color: white;
     margin: 0px 5px 0px 5px;
-}
 
-a:active {
-    text-decoration: none;
-    color: #F38D11;
+    &:hover {
+        transition: transform 0.3s;
+        transform: scale(1.1);
+        color: #F38D11;
+    }
+
+    &:active {
+        text-decoration: none;
+        color: #F38D11;
+    }
+}
+mat-sidenav-content {
+    position: relative;
 }

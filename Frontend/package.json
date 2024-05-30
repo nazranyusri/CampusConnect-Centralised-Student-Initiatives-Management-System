@@ -23,6 +23,8 @@
     "@angular/router": "^16.1.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "moment": "^2.30.1",
+    "ngx-material-timepicker": "^13.1.1",
     "ngx-ui-loader": "^13.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

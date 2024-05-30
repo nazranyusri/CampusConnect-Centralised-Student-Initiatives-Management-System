@@ -22,6 +22,8 @@ import { RegisterComponent } from './register/register.component';
 import { DetailedProgramComponent } from './detailed-program/detailed-program.component';
 import { WildcardComponent } from './wildcard/wildcard.component';
 import { AddProgramComponent } from './add-program/add-program.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -50,7 +52,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     RegisterComponent,
     DetailedProgramComponent,
     WildcardComponent,
-    AddProgramComponent
+    AddProgramComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     HttpClientModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-MY' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

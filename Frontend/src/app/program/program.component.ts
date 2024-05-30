@@ -9,6 +9,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ProgramComponent {
   programs: Array<any> = [];
+  // isLoggedIn: boolean = false;
+  
   // program: any = {
   //   createdBy: '',
   //   description: '',
@@ -33,6 +35,7 @@ export class ProgramComponent {
 
   ngOnInit(){
     this.ngxService.start();
+    // this.checkToken();
     this.getAllProgram();
   }
 
@@ -48,4 +51,8 @@ export class ProgramComponent {
       }
     );
   }
+
+  // checkToken(){
+  //   this.isLoggedIn = !!localStorage.getItem('token');
+  // }
 }
