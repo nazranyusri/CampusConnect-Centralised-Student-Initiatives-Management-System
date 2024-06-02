@@ -1,9 +1,9 @@
 <body>
     <h2>Post a program</h2>
-
     <div class="add-form">
         <form [formGroup]="programForm">
             <div class="upper-section">
+                <!-- Title -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
                         <mat-label>Title</mat-label>
@@ -11,6 +11,7 @@
                         <input matInput formControlName="programTitle" required>
                     </mat-form-field>
                 </p>
+                <!-- Location -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
                         <mat-label>Location</mat-label>
@@ -18,18 +19,19 @@
                         <input matInput formControlName="location" required>
                     </mat-form-field>
                 </p>
+                <!-- Date range -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
                         <mat-label>Date range</mat-label>
                         <mat-date-range-input [rangePicker]="picker">
-                            <input matStartDate placeholder="Start date" formControlName="startDate">
-                            <input matEndDate placeholder="End date" formControlName="endDate">
+                            <input matStartDate placeholder="Start date" formControlName="startDate" readonly>
+                            <input matEndDate placeholder="End date" formControlName="endDate" readonly>
                         </mat-date-range-input>
-                        <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker></mat-date-range-picker>
                     </mat-form-field>
                 </p>
-
+                <!-- Time range -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
                         <mat-label>Start time</mat-label>
@@ -42,7 +44,7 @@
                         <input matInput type="time" formControlName="endTime" required>
                     </mat-form-field>
                 </p>
-
+                <!-- Contact name -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
                         <mat-label>Contact name</mat-label>
@@ -50,6 +52,7 @@
                         <input matInput formControlName="telName" required>
                     </mat-form-field>
                 </p>
+                <!-- Contact number -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
                         <mat-label>Contact number</mat-label>
@@ -58,74 +61,55 @@
                     </mat-form-field>
                 </p>
             </div>
-
             <div class="lower-section">
+                <!-- Upload photo -->
                 <p>
                     <label class="form-label" for="customFile">Upload a photo</label>
-                    <input type="file" formControlName="image" class="form-control" id="customFile" accept=".png, .jpg" />
+                    <input type="file" formControlName="image" class="form-control" id="customFile" accept=".png, .jpg"
+                        required />
                 </p>
                 <div id="spacer"></div>
+                <!-- Registration link -->
                 <p>
                     <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Contact number</mat-label>
-                        <mat-icon matPrefix>call</mat-icon>
-                        <input matInput formControlName="telNo" required>
+                        <mat-label>Registration link</mat-label>
+                        <mat-icon matPrefix>link</mat-icon>
+                        <input matInput formControlName="registrationLink" required>
+                    </mat-form-field>
+                </p>
+                <!-- Description -->
+                <p>
+                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                        <mat-label>Description</mat-label>
+                        <mat-icon matPrefix>receipt</mat-icon>
+                        <textarea matInput formControlName="description" cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="9"></textarea>
+                    </mat-form-field>
+                </p>
+                <!-- Program category -->
+                <p>
+                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                        <mat-label>Choose the program category</mat-label>
+                        <mat-select formControlName="tag" required>
+                            <mat-option value="">--</mat-option>
+                            <mat-option value="Career">Career</mat-option>
+                            <mat-option value="Award">Award</mat-option>
+                            <mat-option value="Innovation">Innovation</mat-option>
+                            <mat-option value="Entrepreneurship">Entrepreneurship</mat-option>
+                            <mat-option value="Cultural">Cultural</mat-option>
+                            <mat-option value="Leadership">Leadership</mat-option>
+                            <mat-option value="Academic">Academic</mat-option>
+                            <mat-option value="Volunteer">Volunteer</mat-option>
+                            <mat-option value="Sport">Sport</mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </p>
             </div>
         </form>
     </div>
+    <div class="button-section">
+        <button mat-raised-button routerLinkActive routerLink="/program">Cancel</button>
+        <button mat-raised-button [disabled]="!(programForm.valid && programForm.dirty)" (click)="addProgram()" class="custom-button">Submit</button>
+        <br><br>
+    </div>
 </body>
-
-<!-- 
-<form [formGroup]="registerForm">
-    <h2>Join us!</h2><br>
-    <p>
-        <mat-form-field appearance="outline" fxFlex class="custom-outline">
-            <mat-label>Username</mat-label>
-            <mat-icon matPrefix>person</mat-icon>
-            <input matInput formControlName="username" required>
-            <mat-error *ngIf="registerForm.controls.username.touched && registerForm.controls.username.invalid">
-                <span *ngIf="registerForm.controls.username.errors.required">Username is required</span>
-                <span *ngIf="registerForm.controls.username.errors.pattern">Username is invalid</span>
-            </mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline" fxFlex class="custom-outline">
-            <mat-label>Email</mat-label>
-            <mat-icon matPrefix>mail</mat-icon>
-            <input matInput formControlName="email" required>
-            <mat-error *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
-                <span *ngIf="registerForm.controls.email.errors.required">Email is required</span>
-                <span *ngIf="registerForm.controls.email.errors.pattern">Email is invalid</span>
-            </mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline" fxFlex class="custom-outline">
-            <mat-label>Password</mat-label>
-            <mat-icon matPrefix>lock</mat-icon>
-            <input matInput formControlName="password" required>
-            <mat-error *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
-                <span *ngIf="registerForm.controls.password.errors.required">Password is required</span>
-                <span *ngIf="registerForm.controls.password.errors.pattern">Password is invalid</span>
-            </mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline" fxFlex class="custom-outline">
-            <mat-label>Re-enter password</mat-label>
-            <mat-icon matPrefix>lock</mat-icon>
-            <input matInput formControlName="confirmPassword" required>
-            <mat-error *ngIf="registerForm.controls.confirmPassword.touched && registerForm.controls.confirmPassword.invalid">
-                <span *ngIf="registerForm.controls.confirmPassword.errors.required">Re-enter password is required</span>
-                <span *ngIf="registerForm.controls.confirmPassword.errors?.['passwordMatchValidator']">Passwords did not match</span>
-            </mat-error>
-        </mat-form-field>
-    </p>
-    <button mat-raised-button [disabled]="!(registerForm.valid && registerForm.dirty)" (click)="register()" class="custom-button">Login</button>
-    <br><br>
-    <p class="login">Already have an account? <a routerLink="/login">Log in</a></p>
-</form>  
--->
