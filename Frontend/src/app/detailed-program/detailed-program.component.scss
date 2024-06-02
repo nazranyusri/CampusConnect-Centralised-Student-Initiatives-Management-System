@@ -39,8 +39,15 @@ body {
     .upper-section {
         display: flex;
 
-        .content-image {
+        .image-wrapper {
             flex: 2;
+            position: relative;
+            height: 100%;
+            overflow-y: auto;
+
+            .custom-picture {
+
+            }
         }
 
         .content-details {
@@ -51,9 +58,26 @@ body {
                 color: map-get($custom-accent-pallette, 500) !important;
                 font-weight: bolder;
                 font-size: 1.5em;
+                margin: 10px 0 0 0;
+                padding: 5px;
+            }
+
+            #tag {
+                background-color: rgb(182, 184, 187);
+                color: black;
+                font-weight: bold;
+                font-size: small;
+                height: auto;
+                padding: 5px 10px 5px 10px;
+                border-radius: 5px;
+            }
+
+            #first-item {
+                margin-top: 30px;
             }
 
             p {
+                display: flex;
                 padding-bottom: 10px;
             }
 
@@ -68,18 +92,20 @@ body {
                 font-weight: bolder;
                 text-decoration: none;
                 padding: 25px 0px 25px 0px;
+                margin: 0 0 20px 0;
             
                 &:hover {
                     transition: transform 0.3s;
                     transform: scale(1.01);
                 }
             }
-        }
-    }
 
-    .lower-section {
-        margin-top: 25px;
-        text-align: justify;
+            #textarea {
+                line-height: 1.5em;
+                letter-spacing: 0.15;
+                text-align: justify;
+            }
+        }
     }
 }
 

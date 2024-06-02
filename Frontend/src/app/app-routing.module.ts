@@ -11,6 +11,7 @@ import { DetailedProgramComponent } from './detailed-program/detailed-program.co
 import { WildcardComponent } from './wildcard/wildcard.component';
 import { AddProgramComponent } from './add-program/add-program.component';
 import { RouterGuardService } from './services/router-guard.service';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -26,6 +27,10 @@ const routes: Routes = [
   {path: 'persaka', component: PersakaComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {
+    path: 'profile', component: ProfileComponent,
+    canActivate: [RouterGuardService]
+  },
   {path: '**', component: WildcardComponent} // Wildcard route for a 404 page
 ];
 

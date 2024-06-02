@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -8,11 +8,24 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/user`;
-
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
+  
   constructor(private http: HttpClient) { }
 
   authenticate(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, data);
+    return this.http.post(`${this.apiUrl}/login`, data).pipe(
+      tap(() => {
+        this.loggedIn.next(true); // Set to true on successful login
+      }),
+      catchError(error => {
+        this.loggedIn.next(false); // Ensure it's false on failure
+        return throwError(error);
+      })
+    );
   }
 
   register(data: any): Observable<any> {

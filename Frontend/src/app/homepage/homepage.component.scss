@@ -7,10 +7,33 @@ body {
     background-color: #1D203E;
 }
 
-.test{
-    height: 500px;
-    width: 100%;
-    max-width: 500px;
-    background-color: red;
-    text-align: right;
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    mat-card {
+        text-align: center;
+        width: 1140px;
+        border-radius: 15px;
+        height: auto;
+        background-color: white;
+        color: black;
+        margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 1192px) {
+        mat-card {
+            max-width: 760px;
+        }
+        img {
+            max-width: 150px;
+        }
+    }
+
+    @media screen and (max-width: 810px) {
+        mat-card {
+            max-width: 370px;
+        }
+    }
 }

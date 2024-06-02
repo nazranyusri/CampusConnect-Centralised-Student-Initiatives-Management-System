@@ -14,7 +14,7 @@ const getProgramHistory = (username, callback) => {
 
 //get program by id
 const getProgramById = (id, callback) => {
-    const sql = 'SELECT * FROM program WHERE id = ?';
+    const sql = 'SELECT id, createdBy, description, endDate, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, programTitle, registrationLink, startDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, tag, telNo, telName, image, datePublished FROM program WHERE id = ?';
     connection.query(sql, id, callback);
 };
 

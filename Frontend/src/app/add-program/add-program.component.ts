@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ProgramService } from '../services/program.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../services/snackbar.service';
 import { Router } from '@angular/router';
 import { GlobalConstants } from '../shared/global-constants';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
+import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-add-program',
@@ -24,22 +25,45 @@ export class AddProgramComponent implements OnInit {
     private router: Router,
     private jwtDecode: JwtDecoderService) { }
 
-    ngOnInit() {
-      this.programForm = this.formBuilder.group({
-        programTitle: ['', Validators.required],
-        location: ['', Validators.required],
-        startDate: ['', Validators.required],
-        endDate: ['', Validators.required],
-        startTime: ['', Validators.required],
-        endTime: ['', Validators.required],
-        telName: ['', Validators.required],
-        telNo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-        image: ['', Validators.required],
-        registrationLink: ['', Validators.required],
-        description: ['', Validators.required],
-        tag: ['', Validators.required]
-      });
+  ngOnInit() {
+    this.programForm = this.formBuilder.group({
+      programTitle: ['', Validators.required],
+      location: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      telName: ['', Validators.required],
+      telNo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      image: ['', Validators.required],
+      registrationLink: ['', Validators.required],
+      description: ['', Validators.required],
+      tag: ['', Validators.required]
+    },
+    {
+      validators: this.timeRangeValidator('startTime', 'endTime'),
+    });
+  }
+
+  timeRangeValidator(startTime: string, endTime: string): ValidatorFn {
+    return (abstractControl: AbstractControl) => {
+      const control = abstractControl.get(startTime);
+      const matchingControl = abstractControl.get(endTime);
+
+      if (matchingControl!.errors && !matchingControl!.errors?.['timeRangeValidator']) {
+        return null;
+      }
+
+      if (control!.value >= matchingControl!.value) {
+        const error = { timeRangeValidator: true };
+        matchingControl!.setErrors(error);
+        return error;
+      } else {
+        matchingControl!.setErrors(null);
+        return null;
+      }
     }
+  }
 
   onImageSelected(event: any) {
     if (event.target.files.length > 0) {
@@ -59,13 +83,16 @@ export class AddProgramComponent implements OnInit {
     const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
     const username = decodedToken?.username;
 
+    const formattedStartDate = new Date(this.programForm.get('startDate').value).toISOString().split('T')[0];
+    const formattedEndDate = new Date(this.programForm.get('endDate').value).toISOString().split('T')[0];
+
     if (username) {
       const formData = new FormData();
       formData.append('createdBy', username);
       formData.append('programTitle', this.programForm.get('programTitle').value);
       formData.append('location', this.programForm.get('location').value);
-      formData.append('startDate', this.programForm.get('startDate').value);
-      formData.append('endDate', this.programForm.get('endDate').value);
+      formData.append('startDate', formattedStartDate);
+      formData.append('endDate', formattedEndDate);
       formData.append('startTime', this.programForm.get('startTime').value);
       formData.append('endTime', this.programForm.get('endTime').value);
       formData.append('telName', this.programForm.get('telName').value);
