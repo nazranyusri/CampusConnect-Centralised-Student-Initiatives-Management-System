@@ -18,12 +18,12 @@ const getProgramById = (id, callback) => {
     connection.query(sql, id, callback);
 };
 
-//create program
+// Create program
 const addProgram = (program, callback) => {
     const sql = `INSERT INTO program (createdBy, description, endDate, endTime, location, programTitle, registrationLink, startDate, startTime, tag, telNo, telName, image, datePublished) 
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     connection.query(sql, [program.createdBy, program.description, program.endDate, program.endTime, program.location, program.programTitle, program.registrationLink, program.startDate,
-    program.startTime, program.tag, program.telNo, program.telName, program.image, program.datePublished], callback); //program.datePublished should be replaced with CURDATE() after complete testing using Postman
+    program.startTime, program.tag, program.telNo, program.telName, program.image, program.datePublished], callback);
 };
 
 //update program

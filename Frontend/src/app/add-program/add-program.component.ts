@@ -12,9 +12,10 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
   templateUrl: './add-program.component.html',
   styleUrls: ['./add-program.component.scss']
 })
-export class AddProgramComponent implements OnInit{
+export class AddProgramComponent implements OnInit {
   programForm: any = FormGroup;
   responseMessage: any;
+  image: any;
 
   constructor(private formBuilder: FormBuilder,
     private programService: ProgramService,
@@ -40,31 +41,46 @@ export class AddProgramComponent implements OnInit{
       });
     }
 
-    addProgram() {
-      this.ngxService.start();
-      const token = localStorage.getItem('token');
-      const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
-      const username = decodedToken?.username;
-      var formData = this.programForm.value;
-      var data = {
-        createdBy: username,
-        programTitle: formData.programTitle,
-        location: formData.location,
-        startDate: formData.startDate,
-        endDate: formData.endDate,
-        startTime: formData.startTime,
-        endTime: formData.endTime,
-        telName: formData.telName,
-        telNo: formData.telNo,
-        image: formData.image,
-        registrationLink: formData.registrationLink,
-        description: formData.description,
-        tag: formData.tag,
-        datePublished: new Date().toISOString()
-      }
-      console.log(data.createdBy);
-  
-      this.programService.addProgram(data).subscribe(() => {
+  onImageSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      console.log(file);
+      this.image = file;
+      console.log(this.image);
+    }
+  }
+
+  addProgram() {
+    const testMessage = 'Clicked';
+    this.snackbarService.openSnackBar(testMessage);
+
+    this.ngxService.start();
+    const token = localStorage.getItem('token');
+    const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
+    const username = decodedToken?.username;
+
+    if (username) {
+      const formData = new FormData();
+      formData.append('createdBy', username);
+      formData.append('programTitle', this.programForm.get('programTitle').value);
+      formData.append('location', this.programForm.get('location').value);
+      formData.append('startDate', this.programForm.get('startDate').value);
+      formData.append('endDate', this.programForm.get('endDate').value);
+      formData.append('startTime', this.programForm.get('startTime').value);
+      formData.append('endTime', this.programForm.get('endTime').value);
+      formData.append('telName', this.programForm.get('telName').value);
+      formData.append('telNo', this.programForm.get('telNo').value);
+      formData.append('image', this.image);
+      formData.append('registrationLink', this.programForm.get('registrationLink').value);
+      formData.append('description', this.programForm.get('description').value);
+      formData.append('tag', this.programForm.get('tag').value);
+      formData.append('datePublished', new Date().toISOString());
+
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+
+      this.programService.addProgram(formData).subscribe(() => {
         this.ngxService.stop();
         this.router.navigate(['/program']);
       }, (error) => {
@@ -76,6 +92,7 @@ export class AddProgramComponent implements OnInit{
           this.responseMessage = GlobalConstants.genericError;
         }
         this.snackbarService.openSnackBar(this.responseMessage);
-      })
+      });
     }
+  }
 }

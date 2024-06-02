@@ -15,7 +15,7 @@
     <!-- <span id="errorMessage" *ngIf="!isLoggedIn">Please login first</span> -->
     <div class="content-container">
         <mat-card *ngFor="let program of programs" [routerLink]="['/detailedprogram', program.id]">
-            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"
+            <img mat-card-image [src]="program?.image" alt="Photo of a Shiba Inu"
                 class="custom-picture">
             <mat-card-header>
                 <mat-card-title><a [routerLink]="['/detailedprogram', program.id]">{{ program.programTitle }}</a></mat-card-title>

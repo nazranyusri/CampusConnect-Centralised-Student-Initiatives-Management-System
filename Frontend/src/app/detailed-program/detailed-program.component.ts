@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProgramService } from '../services/program.service';
 import { ActivatedRoute, Data } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-detailed-program',
@@ -32,6 +33,8 @@ export class DetailedProgramComponent implements OnInit {
     this.programService.getProgramById(id).subscribe((result: any) => {
         this.ngxService.stop();
         this.program = result;
+        this.program.image = `${environment.apiUrl}/${this.program.image}`;
+        console.log(this.program.image);
         console.log(result);
       },
       (error: any) => {

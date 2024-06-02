@@ -22,7 +22,7 @@ export class JwtDecoderService {
     try {
       return jwtDecode<DecodedToken>(token);
     } catch (Error) {
-      console.error('Error decoding token:', Error);
+      console.log('Error decoding token:', Error);
       return null;
     }
   }

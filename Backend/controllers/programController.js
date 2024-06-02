@@ -42,6 +42,11 @@ const getProgramById = (req, res) => {
 //create program
 const addProgram = (req, res) => {
     const program = req.body;
+    if (req.file) {
+        program.image = req.file.path; // Store the path of the uploaded image
+    } else {
+        return res.status(400).json({ message: "Image file is required" });
+    }
     programModel.addProgram(program, (err, result) => {
         if (!err) {
             return res.status(200).json({ message: "Program added successfully" });

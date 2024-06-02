@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProgramService } from '../services/program.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-program',
@@ -9,25 +10,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ProgramComponent {
   programs: Array<any> = [];
-  // isLoggedIn: boolean = false;
   
-  // program: any = {
-  //   createdBy: '',
-  //   description: '',
-  //   endDate: new Date(),
-  //   endTime: '',
-  //   location: '',
-  //   programTitle: '',
-  //   registrationLink: '',
-  //   startDate: new Date(),
-  //   startTime: '',
-  //   tag: '',
-  //   telNo: '',
-  //   telName: '',
-  //   image: '',
-  //   datePublished: new Date()
-  // };
-
   constructor(
     private programService: ProgramService,
     private ngxService: NgxUiLoaderService
@@ -35,15 +18,17 @@ export class ProgramComponent {
 
   ngOnInit(){
     this.ngxService.start();
-    // this.checkToken();
     this.getAllProgram();
   }
 
   getAllProgram(){
     this.programService.getAllProgram().subscribe((result: any) => {
         this.ngxService.stop();
-        this.programs = result;
-        console.log(result);
+        this.programs = result.map((program: any) => {
+          program.image = `${environment.apiUrl}/${program.image}`;
+          return program;
+        });
+        console.log(this.programs);
       },
       (error: any) => {
         this.ngxService.stop();
@@ -51,8 +36,4 @@ export class ProgramComponent {
       }
     );
   }
-
-  // checkToken(){
-  //   this.isLoggedIn = !!localStorage.getItem('token');
-  // }
 }

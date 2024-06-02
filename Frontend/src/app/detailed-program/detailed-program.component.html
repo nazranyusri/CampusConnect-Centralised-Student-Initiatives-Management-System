@@ -10,7 +10,7 @@
         <mat-card>
             <div class="upper-section">
                 <div class="content-image">
-                    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" class="custom-picture">
+                    <img [src]="program?.image" alt="Photo of a Shiba Inu" class="custom-picture">
                 </div>
                 <div class="content-details">
                     <p id="title">{{ program?.programTitle }}</p>
