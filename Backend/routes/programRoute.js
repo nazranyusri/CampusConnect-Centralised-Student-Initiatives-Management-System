@@ -25,6 +25,9 @@ router.get('/', programController.getAllProgram);
 //get program by id
 router.get('/:id', programController.getProgramById);
 
+//get program history
+router.get('/history/:username', programController.getProgramHistory);
+
 //create program
 router.post('/add', auth.authenticateToken, upload.single('image'), programController.addProgram);
 

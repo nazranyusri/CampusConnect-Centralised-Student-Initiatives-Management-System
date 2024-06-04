@@ -11,19 +11,6 @@ const getAllSurvey = (req, res) => {
     });
 };
 
-//get specific user surveys -- viewed in Profile page
-const getSurveyHistory = (username) => {
-    return new Promise((resolve, reject) => {
-        surveyModel.getSurveyHistory(username, (err, result) => {
-            if (!err) {
-                resolve(result);
-            } else {
-                reject(err);
-            }
-        });
-    });
-};
-
 //get survey by id
 const getSurveyById = (req, res) => {
     const id = req.params.id;
@@ -38,6 +25,18 @@ const getSurveyById = (req, res) => {
         }
     });
 };
+
+//get specific user survey -- viewed in Profile 
+const getSurveyHistory = (req, res) => {
+    const username = req.params.username;
+    surveyModel.getSurveyHistory(username, (err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+}
 
 //create survey
 const addSurvey = (req, res) => {
@@ -84,8 +83,8 @@ const deleteSurvey = (req, res) => {
 
 module.exports = {
     getAllSurvey,
-    getSurveyHistory,
     getSurveyById,
+    getSurveyHistory,
     addSurvey,
     updateSurvey,
     deleteSurvey

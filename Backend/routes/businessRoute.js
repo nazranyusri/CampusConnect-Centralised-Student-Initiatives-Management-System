@@ -12,6 +12,9 @@ router.get('/', businessController.getAllBusiness);
 //get business by id
 router.get('/:id', businessController.getBusinessById);
 
+//get business history
+router.get('/history/:username', businessController.getBusinessHistory);
+
 //create business
 router.post('/add', auth.authenticateToken, businessController.addBusiness);
 

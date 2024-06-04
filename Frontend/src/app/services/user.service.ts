@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/user`;
+  private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   get isLoggedIn() {
@@ -31,4 +32,12 @@ export class UserService {
   register(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
+
+  getUser(){
+    return this.http.get(`${this.apiUrl}/profile`, { headers: this.headers });
+  }
+
+  // getPostHistory(){
+  //   return this.http.get(`${this.apiUrl}/user/profile`, { headers: this.headers });
+  // }
 }

@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 20px;
+    color: white;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #1D203E;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    mat-card {
+        text-align: center;
+        width: 1140px;
+        border-radius: 15px;
+        height: auto;
+        background-color: white;
+        color: black;
+        margin-bottom: 20px;
+    }
+
+    .post-history-container {
+        height: 500px;
+        width: 1140px;
+        background-color: red;
+
+    }
+}

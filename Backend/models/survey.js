@@ -6,16 +6,16 @@ const getAllSurvey = (callback) => {
     connection.query(sql, callback);
 };
 
-//get specific user surveys -- viewed in Profile page
-const getSurveyHistory = (username, callback) => {
-    const sql = 'SELECT * FROM survey WHERE createdBy = ?';
-    connection.query(sql, [username], callback);
-};
-
 //get survey by id
 const getSurveyById = (id, callback) => {
     const sql = 'SELECT * FROM survey WHERE id = ?';
     connection.query(sql, id, callback);
+};
+
+//get specific user surveys -- viewed in Profile page
+const getSurveyHistory = (username, callback) => {
+    const sql = 'SELECT * FROM survey WHERE createdBy = ?';
+    connection.query(sql, [username], callback);
 };
 
 //create survey

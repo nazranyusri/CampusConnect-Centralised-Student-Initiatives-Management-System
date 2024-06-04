@@ -11,19 +11,6 @@ const getAllBusiness = (req, res) => {
     });
 };
 
-//get specific user businesses -- viewed in Profile page
-const getBusinessHistory = (username) => {
-    return new Promise((resolve, reject) => {
-        businessModel.getBusinessHistory(username, (err, result) => {
-            if (!err) {
-                resolve(result);
-            } else {
-                reject(err);
-            }
-        });
-    });
-};
-
 //get business by id
 const getBusinessById = (req, res) => {
     const id = req.params.id;
@@ -38,6 +25,18 @@ const getBusinessById = (req, res) => {
         }
     });
 };
+
+//get specific user business -- viewed in Profile 
+const getBusinessHistory = (req, res) => {
+    const username = req.params.username;
+    businessModel.getBusinessHistory(username, (err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+}
 
 //create busines
 const addBusiness = (req, res) => {
@@ -84,8 +83,8 @@ const deleteBusiness = (req, res) => {
 
 module.exports = {
     getAllBusiness,
-    getBusinessHistory,
     getBusinessById,
+    getBusinessHistory,
     addBusiness,
     updateBusiness,
     deleteBusiness

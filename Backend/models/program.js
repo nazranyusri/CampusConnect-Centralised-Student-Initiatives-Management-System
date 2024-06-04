@@ -6,16 +6,16 @@ const getAllProgram = (callback) => {
     connection.query(sql, callback);
 };
 
-//get specific user programs -- viewed in Profile page
-const getProgramHistory = (username, callback) => {
-    const sql = 'SELECT * FROM program WHERE createdBy = ?';
-    connection.query(sql, [username], callback);
-};
-
 //get program by id
 const getProgramById = (id, callback) => {
     const sql = 'SELECT id, createdBy, description, endDate, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, programTitle, registrationLink, startDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, tag, telNo, telName, image, datePublished FROM program WHERE id = ?';
     connection.query(sql, id, callback);
+};
+
+//get specific user programs -- viewed in Profile page
+const getProgramHistory = (username, callback) => {
+    const sql = 'SELECT * FROM program WHERE createdBy = ?';
+    connection.query(sql, [username], callback);
 };
 
 // Create program

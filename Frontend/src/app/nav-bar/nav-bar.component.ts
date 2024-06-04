@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { UserService } from '../services/user.service';
+import { JwtDecoderService } from '../services/jwt-decoder.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,15 +12,34 @@ import { UserService } from '../services/user.service';
 })
 export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;
+  username: string = '';
 
-  constructor(private userService:UserService, private dialog: MatDialog, private router: Router) {}
+  constructor(
+    private userService:UserService,
+    private dialog: MatDialog, 
+    private router: Router,
+    private jwtDecode: JwtDecoderService
+  ) {}
 
   ngOnInit() {
     this.userService.isLoggedIn.subscribe((response: any) => {
       this.isLoggedIn = response;
     });
-    if(localStorage.getItem('token') != null) {
+
+    if(localStorage.getItem('token') != null){
       this.isLoggedIn = true;
+    }
+    
+    if (this.isLoggedIn) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = this.jwtDecode.decodeToken(token);
+        this.username = decodedToken?.username || '';
+      } else {
+        this.username = '';
+      }
+    } else {
+      this.username = '';
     }
   }
 

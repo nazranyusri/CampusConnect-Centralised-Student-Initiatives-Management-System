@@ -6,7 +6,6 @@ import { SnackbarService } from '../services/snackbar.service';
 import { Router } from '@angular/router';
 import { GlobalConstants } from '../shared/global-constants';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
-import { Time } from '@angular/common';
 
 @Component({
   selector: 'app-add-program',

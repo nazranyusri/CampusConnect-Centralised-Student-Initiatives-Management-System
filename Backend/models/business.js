@@ -6,16 +6,16 @@ const getAllBusiness = (callback) => {
     connection.query(sql, callback);
 };
 
-//get specific user businesses -- viewed in Profile page
-const getBusinessHistory = (username, callback) => {
-    const sql = 'SELECT * FROM business WHERE createdBy = ?';
-    connection.query(sql, [username], callback);
-};
-
 //get business by id
 const getBusinessById = (id, callback) => {
     const sql = 'SELECT * FROM business WHERE id = ?';
     connection.query(sql, id, callback);
+};
+
+//get specific user businesses -- viewed in Profile page
+const getBusinessHistory = (username, callback) => {
+    const sql = 'SELECT * FROM business WHERE createdBy = ?';
+    connection.query(sql, [username], callback);
 };
 
 //create business

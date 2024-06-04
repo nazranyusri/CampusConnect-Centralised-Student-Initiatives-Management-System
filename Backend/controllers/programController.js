@@ -11,20 +11,7 @@ const getAllProgram = (req, res) => {
     });
 };
 
-//get specific user programs -- viewed in Profile page
-const getProgramHistory = (username) => {
-    return new Promise((resolve, reject) => {
-        programModel.getProgramHistory(username, (err, result) => {
-            if (!err) {
-                resolve(result);
-            } else {
-                reject(err);
-            }
-        });
-    });
-};
-
-//get program by id
+// get program by id
 const getProgramById = (req, res) => {
     const id = req.params.id;
     programModel.getProgramById(id, (err, result) => {
@@ -33,6 +20,18 @@ const getProgramById = (req, res) => {
                 return res.status(404).json({message: "Program id not found"});
             }
             return res.status(200).json(result[0]);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//get specific user programs -- viewed in Profile 
+const getProgramHistory = (req, res) => {
+    const username = req.params.username;
+    programModel.getProgramHistory(username, (err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
         } else {
             return res.status(500).json(err);
         }
@@ -89,8 +88,8 @@ const deleteProgram = (req, res) => {
 
 module.exports = {
     getAllProgram,
-    getProgramHistory,
     getProgramById,
+    getProgramHistory,
     addProgram,
     updateProgram,
     deleteProgram

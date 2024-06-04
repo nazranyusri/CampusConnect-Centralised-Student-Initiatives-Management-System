@@ -28,7 +28,11 @@ const register = (user, callback) => {
     connection.query(sql, [user.username, user.email, user.password, 'user'], callback);
 };
 
-//view profile and posts history
+//view profile
+const getUser = (userId, callback) => {
+    const sql = 'SELECT id, username, email, role FROM user WHERE id = ?';
+    connection.query(sql, [userId], callback);
+};
 
 //update profile
 const updateProfile = (user, userId, callback) => {
@@ -40,5 +44,6 @@ module.exports = {
     authenticateUser,
     checkExistingUser,
     register,
+    getUser,
     updateProfile
 };
