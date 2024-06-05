@@ -14,7 +14,7 @@ const getProgramById = (id, callback) => {
 
 //get specific user programs -- viewed in Profile page
 const getProgramHistory = (username, callback) => {
-    const sql = 'SELECT * FROM program WHERE createdBy = ?';
+    const sql = 'SELECT id, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program WHERE createdBy = ?';
     connection.query(sql, [username], callback);
 };
 
@@ -27,11 +27,10 @@ const addProgram = (program, callback) => {
 };
 
 //update program
-const updateProgram = (id, program, callback) => {
-    const sql = 'UPDATE program SET description = ?, endDate = ?, endTime = ?, location = ?, programTitle = ?, registrationLink = ?, startDate = ?, startTime = ?,'
-        + 'tag = ?, telNo = ?, telName = ?, image = ? WHERE id = ?';
+const updateProgram = (program, callback) => {
+    const sql = 'UPDATE program SET description = ?, endDate = ?, endTime = ?, location = ?, programTitle = ?, registrationLink = ?, startDate = ?, startTime = ?, tag = ?, telNo = ?, telName = ?, image = ? WHERE id = ?';
     connection.query(sql, [program.description, program.endDate, program.endTime, program.location, program.programTitle, program.registrationLink, program.startDate,
-    program.startTime, program.tag, program.telNo, program.telName, program.image, id], callback);
+    program.startTime, program.tag, program.telNo, program.telName, program.image, program.id], callback);
 };
 
 //delete program

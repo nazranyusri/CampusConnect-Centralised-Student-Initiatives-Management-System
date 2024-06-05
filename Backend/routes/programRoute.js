@@ -32,9 +32,9 @@ router.get('/history/:username', programController.getProgramHistory);
 router.post('/add', auth.authenticateToken, upload.single('image'), programController.addProgram);
 
 //update program
-router.patch('/update/:id', auth.authenticateToken, programController.updateProgram);
+router.patch('/update', auth.authenticateToken, upload.single('image'), programController.updateProgram);
 
 //delete program
-router.delete('/delete/:id', auth.authenticateToken, programController.deleteProgram);
+router.delete('/delete/:id/:imagePath', auth.authenticateToken, programController.deleteProgram);
 
 module.exports = router;

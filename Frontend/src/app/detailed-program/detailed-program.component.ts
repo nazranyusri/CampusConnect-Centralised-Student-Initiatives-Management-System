@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgramService } from '../services/program.service';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
 

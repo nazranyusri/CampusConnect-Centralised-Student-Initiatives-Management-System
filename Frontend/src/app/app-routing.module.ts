@@ -12,6 +12,7 @@ import { WildcardComponent } from './wildcard/wildcard.component';
 import { AddProgramComponent } from './add-program/add-program.component';
 import { RouterGuardService } from './services/router-guard.service';
 import { ProfileComponent } from './profile/profile.component';
+import { UpdateProgramComponent } from './update-program/update-program.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -20,6 +21,10 @@ const routes: Routes = [
   {path: 'detailedprogram/:id', component: DetailedProgramComponent},
   {
     path: 'addprogram', component: AddProgramComponent,
+    canActivate: [RouterGuardService]
+  },
+  {
+    path: 'updateprogram/:id', component: UpdateProgramComponent,
     canActivate: [RouterGuardService]
   },
   {path: 'business', component: BusinessComponent},

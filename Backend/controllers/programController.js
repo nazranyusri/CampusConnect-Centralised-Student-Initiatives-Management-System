@@ -1,4 +1,5 @@
 const programModel = require('../models/program');
+const fs = require('fs');
 
 //get all programs
 const getAllProgram = (req, res) => {
@@ -57,9 +58,11 @@ const addProgram = (req, res) => {
 
 //update program
 const updateProgram = (req, res) => {
-    const id = req.params.id;
     const program = req.body;
-    programModel.updateProgram(id, program, (err, result) => {
+    if (req.file) {
+        program.image = req.file.path; // Store the path of the uploaded image
+    }
+    programModel.updateProgram(program, (err, result) => {
         if (!err) {
             if(result.affectedRows == 0){
                 return res.status(404).json({message: "Program id not found"});
@@ -72,15 +75,40 @@ const updateProgram = (req, res) => {
 };
 
 //delete program
+// const deleteProgram = (req, res) => {
+//     const id = req.params.id;
+//     programModel.deleteProgram(id, (err, result) => {
+//         if(!err){
+//             if(result.affectedRows == 0){
+//                 return res.status(404).json({message: "Program id not found"});
+//             }
+//             return res.status(200).json({message: "Program deleted successfully"});
+//         }else{
+//             return res.status(500).json(err);
+//         }
+//     });
+// };
+
 const deleteProgram = (req, res) => {
     const id = req.params.id;
+    const imagePath = req.params.imagePath; 
+
+    console.log(imagePath);
     programModel.deleteProgram(id, (err, result) => {
-        if(!err){
-            if(result.affectedRows == 0){
-                return res.status(404).json({message: "Program id not found"});
+        if (!err) {
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Program id not found" });
             }
-            return res.status(200).json({message: "Program deleted successfully"});
-        }else{
+
+            // Delete the corresponding image file from the 'uploads/' directory
+            fs.unlink(`uploads/${imagePath}`, (err) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ message: "Error deleting image file" });
+                }
+                return res.status(200).json({ message: "Program and corresponding image deleted successfully" });
+            });
+        } else {
             return res.status(500).json(err);
         }
     });

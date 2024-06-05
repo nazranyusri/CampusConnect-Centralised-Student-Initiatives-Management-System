@@ -6,6 +6,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { Router } from '@angular/router';
 import { GlobalConstants } from '../shared/global-constants';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-program',
@@ -16,6 +17,7 @@ export class AddProgramComponent implements OnInit {
   programForm: any = FormGroup;
   responseMessage: any;
   image: any;
+  imagePath: string = '';
 
   constructor(private formBuilder: FormBuilder,
     private programService: ProgramService,
@@ -67,16 +69,18 @@ export class AddProgramComponent implements OnInit {
   onImageSelected(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      console.log(file);
       this.image = file;
-      console.log(this.image);
+      this.imagePath = `${environment.apiUrl}/${this.image}`;
+
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event: any) => {
+        this.imagePath = event.target.result;
     }
   }
+}
 
   addProgram() {
-    const testMessage = 'Clicked';
-    this.snackbarService.openSnackBar(testMessage);
-
     this.ngxService.start();
     const token = localStorage.getItem('token');
     const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;

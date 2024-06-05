@@ -26,6 +26,7 @@ body {
             flex-direction: row;
             padding: 20px;
             background-color: map-get($custom-primary-pallette, 500) !important;
+            border-radius: 15px;
 
             .profile-picture {
                 // background-color: red;
@@ -37,48 +38,37 @@ body {
                 }
             }
 
-            .user-details {
+            .profile-details {
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-                text-align: left;
-                margin-left: 40px;
-                flex-grow: 3;
-                // background-color: blue;
-            }
+                flex-grow: 2;
+                flex-direction: row;
 
-            .update-section {
-                flex-grow: 1;
-                display: flex;
-                justify-content: right;
-                align-items: center;
-                padding-right: 20px;    
-                // background-color: purple;
-
-                .mat-mdc-raised-button:hover {
-                    transition: transform 0.3s;
-                    transform: scale(1.03);
+                .user-details {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    text-align: left;
+                    margin: 0 40px 0 40px;
+                    flex-grow: 3;
+                    // background-color: blue;
+                }
+    
+                .update-section {
+                    flex-grow: 1;
+                    display: flex;
+                    justify-content: right;
+                    align-items: center;
+                    padding-right: 20px;    
+                    // background-color: purple;
+    
+                    .mat-mdc-raised-button:hover {
+                        transition: transform 0.3s;
+                        transform: scale(1.03);
+                    }
                 }
             }
         }
     }
-
-    .image-wrapper {
-        position: relative;
-        width: 100%;
-        padding-top: 100%; /* 1:1 Aspect Ratio */
-        overflow: hidden;
-    
-        img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    }
-    
 
     .heading {
         width: 1140px;
@@ -95,30 +85,34 @@ body {
         overflow-y: auto;
         margin-bottom: 20px;
 
-    
         mat-card {
             width: 300px !important;
             background-color: #1E1E1E;
             height: auto;
             border-radius: 15px;
-            transition: transform 0.3s;
             cursor: pointer;
-    
-            &:hover {
-                transform: scale(1.01);
+
+            .image-wrapper {
+                position: relative;
+                width: 100%;
+                padding-top: 100%; /* 1:1 Aspect Ratio */
+                overflow: hidden;
+            
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 15px 15px 0px 0px;
+                }
             }
-    
+
             mat-card-title a {
                 color: map-get($custom-accent-pallette, 500) !important;
                 font-weight: bolder;
                 font-size: 1.3em;
-                text-decoration: none;
-            }
-    
-            @media screen and (max-width: 1280px) {
-                mat-card-title a {
-                  text-decoration: underline;
-                }
             }
     
             mat-card-header {
@@ -144,10 +138,17 @@ body {
                 margin-right: 15px;
             }
 
-            #actions mat-icon {
-                color: map-get($custom-accent-pallette, 500) !important;
-                margin: 0;
-                padding: 0;
+            #actions {
+                mat-icon {
+                    color: map-get($custom-accent-pallette, 500) !important;
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            button:hover {
+                transform: scale(1.2);
+                transition: transform 0.3s;
             }
     
             #datePublished {
@@ -168,5 +169,76 @@ body {
         background-color: rgba(255, 255, 255, 0.068);
         border-radius: 10px;
         margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 1192px) {
+    body {
+        padding: 10px;
+    }
+
+    .profile-container, .heading, .program-history-container, .business-history-container, .survey-history-container {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .program-history-container mat-card,
+    .business-history-container mat-card,
+    .survey-history-container mat-card,
+    .program-history-container mat-card-header,
+    .business-history-container mat-card-header,
+    .survey-history-container mat-card-header,
+    .program-history-container mat-card-content,
+    .business-history-container mat-card-content,
+    .survey-history-container mat-card-content {
+        max-width: 250px !important;
+    }
+}
+// 626px
+@media screen and (max-width: 643px) {
+    .profile-container, .heading, .program-history-container, .business-history-container, .survey-history-container {
+        max-width: 100%;
+        min-width: 350px;
+        margin: 0px;
+    }
+
+    .profile-container mat-card{
+        padding: 10px !important;
+
+        // .profile-picture {
+
+        // }
+
+        .profile-details {
+            display: flex;
+            flex-direction: column !important;
+            width: auto !important;
+
+            .user-details {
+                margin: 0px 0px 0px 40px !important;
+
+                p {
+                    font-size: 0.7em !important;
+                }
+            }
+    
+            .update-section {
+                justify-content: flex-start !important;
+                padding: 0 !important;
+                margin: 0px 0px 0px 40px !important;
+            }
+        }
+    }
+
+    .program-history-container mat-card,
+    .business-history-container mat-card,
+    .survey-history-container mat-card,
+    .program-history-container mat-card-header,
+    .business-history-container mat-card-header,
+    .survey-history-container mat-card-header,
+    .program-history-container mat-card-content,
+    .business-history-container mat-card-content,
+    .survey-history-container mat-card-content {
+        max-width: 250px !important;
     }
 }

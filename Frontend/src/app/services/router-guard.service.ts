@@ -16,8 +16,8 @@ export class RouterGuardService implements CanActivate {
 
   canActivate(): boolean {
     const token = localStorage.getItem('token');
-    console.log('Guard activated');
-    console.log(token);
+    // console.log('Guard activated');
+    // console.log(token);
     if (!token) {
       this.router.navigate(['/login']);
       this.snackbarService.openSnackBar('Please login to access this page');

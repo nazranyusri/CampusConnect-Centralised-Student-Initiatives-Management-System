@@ -13,9 +13,26 @@
     width: 70%;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
+
+    .back-button {
+        position: absolute;
+        top: 5%;
+        left: 35%;
+
+        button {
+            background-color: white !important;
+            color: black !important;
+
+            &:hover {
+                transition: transform(0.3s);
+                transform: scale(1.1);
+            }
+        }
+    }
 
     .mat-mdc-raised-button {                                                                                              // Change button color
         background-color: white !important; 

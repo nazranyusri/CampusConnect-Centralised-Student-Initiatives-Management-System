@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ActivatedRoute } from '@angular/router';
 import { ProgramService } from '../services/program.service';
 import { BusinessService } from '../services/business.service';
 import { SurveyService } from '../services/survey.service';
 import { environment } from 'src/environments/environment';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
   userDetails: any = '';
   programs: Array<any> = [];
   businesses: Array<any> = [];
   surveys: Array<any> = [];
-  username: string = '';
 
   constructor(
     private userService: UserService,
@@ -26,8 +28,10 @@ export class ProfileComponent implements OnInit{
     private businessService: BusinessService,
     private surveyService: SurveyService,
     private ngxService: NgxUiLoaderService,
-    private route: ActivatedRoute,
-    private jwtDecode: JwtDecoderService
+    private jwtDecode: JwtDecoderService,
+    private dialog: MatDialog,
+    private router: Router,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -42,22 +46,13 @@ export class ProfileComponent implements OnInit{
       this.getBusinessHistory(username);
       this.getSurveyHistory(username);
     }
-
-    // this.route.params.subscribe(params => {
-    //   this.username = params['username'];
-    //   this.ngxService.start();
-    //   this.getUserDetails();
-    //   this.getProgramHistory(this.username);
-    //   this.getBusinessHistory(this.username);
-    //   this.getSurveyHistory(this.username);
-    // });
   }
 
   getUserDetails(id: number) {
     this.userService.getUser(id).subscribe((result: any) => {
-      this.ngxService.stop();
+      // this.ngxService.stop();
       this.userDetails = result;
-      console.log("User details this.user:", this.userDetails);
+      // console.log("User details this.user:", this.userDetails);
       return result;
     },
       (error: any) => {
@@ -69,7 +64,7 @@ export class ProfileComponent implements OnInit{
 
   getProgramHistory(username: string) {
     this.programService.getProgramHistory(username).subscribe((result: any) => {
-      this.ngxService.stop();
+      // this.ngxService.stop();
       this.programs = result.map((program: any) => {
         program.image = `${environment.apiUrl}/${program.image}`;
         return program;
@@ -85,9 +80,9 @@ export class ProfileComponent implements OnInit{
 
   getBusinessHistory(username: string) {
     this.businessService.getBusinessHistory(username).subscribe((result: any) => {
-      this.ngxService.stop();
+      // this.ngxService.stop();
       this.businesses = result;
-      console.log("Businesses:", this.businesses);
+      // console.log("Businesses:", this.businesses);
       return result;
       // this.businesses = result.map((business: any) => {
       //   business.image = `${environment.apiUrl}/${business.image}`;
@@ -106,7 +101,7 @@ export class ProfileComponent implements OnInit{
     this.surveyService.getSurveyHistory(username).subscribe((result: any) => {
       this.ngxService.stop();
       this.surveys = result;
-      console.log("Surveys:", this.surveys);
+      // console.log("Surveys:", this.surveys);
       return result;
     },
       (error: any) => {
@@ -114,5 +109,36 @@ export class ProfileComponent implements OnInit{
         console.error(error);
       }
     );
+  }
+
+  confirmDeleteProgram(id: number, image: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete the program'
+    };
+
+    const imagePathParts = image.split(/[\\/]/);
+    const relativeImagePath = imagePathParts[imagePathParts.length - 1];
+    
+    console.log("Program ID:", id);
+    console.log("Image path before split:", image);
+    console.log("Image Path:", relativeImagePath);
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+    const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response: any) => {
+      dialogRef.close();
+        this.programService.deleteProgram(id, relativeImagePath).subscribe((result: any) => {
+          this.snackbarService.openSnackBar(result.message);
+          this.programs = this.programs.filter(program => program.id !== id);
+          return result;
+        },
+        (error: any) => {
+          console.error(error);
+        });
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      response.unsubscribe();
+    });
   }
 }
