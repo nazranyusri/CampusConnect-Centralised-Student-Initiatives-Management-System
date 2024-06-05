@@ -33,11 +33,7 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
 
-  getUser(){
-    return this.http.get(`${this.apiUrl}/profile`, { headers: this.headers });
+  getUser(id: number){
+    return this.http.get(`${this.apiUrl}/profile/${id}`, { headers: this.headers });
   }
-
-  // getPostHistory(){
-  //   return this.http.get(`${this.apiUrl}/user/profile`, { headers: this.headers });
-  // }
 }

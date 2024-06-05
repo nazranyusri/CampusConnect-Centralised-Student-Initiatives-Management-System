@@ -29,9 +29,9 @@ const register = (user, callback) => {
 };
 
 //view profile
-const getUser = (userId, callback) => {
+const getUser = (username, callback) => {
     const sql = 'SELECT id, username, email, role FROM user WHERE id = ?';
-    connection.query(sql, [userId], callback);
+    connection.query(sql, username, callback);
 };
 
 //update profile

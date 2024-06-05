@@ -28,7 +28,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {
-    path: 'profile/:username', component: ProfileComponent,
+    path: 'profile', component: ProfileComponent,
+    // path: 'profile/:username', component: ProfileComponent,
     canActivate: [RouterGuardService]
   },
   {path: '**', component: WildcardComponent} // Wildcard route for a 404 page

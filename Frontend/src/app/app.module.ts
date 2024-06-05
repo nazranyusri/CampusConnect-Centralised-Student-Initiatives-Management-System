@@ -24,6 +24,7 @@ import { WildcardComponent } from './wildcard/wildcard.component';
 import { AddProgramComponent } from './add-program/add-program.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { TruncatePipe } from './pipe/truncate.pipe';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -54,6 +55,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     WildcardComponent,
     AddProgramComponent,
     ConfirmationDialogComponent,
+    TruncatePipe,
   ],
   imports: [
     BrowserModule,

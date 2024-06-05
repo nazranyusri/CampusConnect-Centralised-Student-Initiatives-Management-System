@@ -48,8 +48,8 @@ const register = (req, res) => {
 
 //view profile
 const getUser = (req, res) => {
-    const tokenPayload = res.userLocal;
-    userModel.getUser(tokenPayload.id, (err, result) => {
+    const id = req.params.id;
+    userModel.getUser(id, (err, result) => {
         if (!err) {
             return res.status(200).json(result);
         } else {

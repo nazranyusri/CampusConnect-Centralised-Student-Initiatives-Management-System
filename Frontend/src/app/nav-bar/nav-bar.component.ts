@@ -12,7 +12,7 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
 })
 export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;
-  username: string = '';
+  // username: string = '';
 
   constructor(
     private userService:UserService,
@@ -30,17 +30,17 @@ export class NavBarComponent implements OnInit {
       this.isLoggedIn = true;
     }
     
-    if (this.isLoggedIn) {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const decodedToken = this.jwtDecode.decodeToken(token);
-        this.username = decodedToken?.username || '';
-      } else {
-        this.username = '';
-      }
-    } else {
-      this.username = '';
-    }
+    // if (this.isLoggedIn) {
+    //   const token = localStorage.getItem('token');
+    //   if (token) {
+    //     const decodedToken = this.jwtDecode.decodeToken(token);
+    //     this.username = decodedToken?.username || '';
+    //   } else {
+    //     this.username = '';
+    //   }
+    // } else {
+    //   this.username = '';
+    // }
   }
 
   logout() {
@@ -53,6 +53,7 @@ export class NavBarComponent implements OnInit {
     const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response:any) => {
       dialogRef.close();
       localStorage.removeItem('token');
+      // this.username = '';
       this.router.navigate(['/']);
       this.isLoggedIn = false;
     });
