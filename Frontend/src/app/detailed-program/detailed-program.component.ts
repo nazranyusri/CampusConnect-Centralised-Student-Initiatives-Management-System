@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgramService } from '../services/program.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SnackbarService } from '../services/snackbar.service';
+import { GlobalConstants } from '../shared/global-constants';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { JwtDecoderService } from '../services/jwt-decoder.service';
 
 @Component({
   selector: 'app-detailed-program',
@@ -11,13 +17,20 @@ import { environment } from 'src/environments/environment';
 })
 
 export class DetailedProgramComponent implements OnInit {
-  program: any;
   id: number = 0;
+  program: any;
+  token: any;
+  userId: number = 0;
 
   constructor(
     private programService: ProgramService,
     private route: ActivatedRoute,
     private ngxService: NgxUiLoaderService,
+    private formBuilder: FormBuilder,
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog,
+    private jwtDecode: JwtDecoderService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,6 +40,13 @@ export class DetailedProgramComponent implements OnInit {
       this.ngxService.start();
       this.getProgramById(this.id);
     });
+    
+    // Get user id
+    this.token = localStorage.getItem('token');
+    if (this.token) {
+      const decodedToken = this.jwtDecode.decodeToken(this.token);
+      this.userId = decodedToken?.userId || 0;
+    }
   }
 
   getProgramById(id: number) {
@@ -42,5 +62,32 @@ export class DetailedProgramComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  registerProgram(programId: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'register'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+    const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response: any) => {
+      dialogRef.close();
+      var data = {
+        programId: programId,
+        userId: this.userId
+      }
+      this.programService.registerProgram(data).subscribe((result: any) => {
+        this.snackbarService.openSnackBar(result.message);
+          return result;
+      },
+      (error: any) => {
+        console.error(error);
+      });
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      response.unsubscribe();
+    });
   }
 }

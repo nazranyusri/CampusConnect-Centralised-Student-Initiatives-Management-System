@@ -13,7 +13,7 @@ router.post('/login', userController.authenticateUser);
 router.post('/register', userController.register);
 
 //view profile
-router.get('/profile/:id', auth.authenticateToken, userController.getUser);
+router.get('/profile/:userId', auth.authenticateToken, userController.getUser);
 
 //update profile
 router.patch('/update', auth.authenticateToken, userController.updateProfile);

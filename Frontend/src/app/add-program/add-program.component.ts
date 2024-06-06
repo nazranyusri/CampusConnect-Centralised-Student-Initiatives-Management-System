@@ -37,7 +37,6 @@ export class AddProgramComponent implements OnInit {
       telName: ['', Validators.required],
       telNo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       image: ['', Validators.required],
-      registrationLink: ['', Validators.required],
       description: ['', Validators.required],
       tag: ['', Validators.required]
     },
@@ -101,7 +100,6 @@ export class AddProgramComponent implements OnInit {
       formData.append('telName', this.programForm.get('telName').value);
       formData.append('telNo', this.programForm.get('telNo').value);
       formData.append('image', this.image);
-      formData.append('registrationLink', this.programForm.get('registrationLink').value);
       formData.append('description', this.programForm.get('description').value);
       formData.append('tag', this.programForm.get('tag').value);
       formData.append('datePublished', new Date().toISOString());

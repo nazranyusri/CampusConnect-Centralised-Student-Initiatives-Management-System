@@ -19,7 +19,7 @@ body {
         width: 1140px;
         border-radius: 15px;
         color: white;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
 
         mat-card {
             display: flex;
@@ -72,9 +72,19 @@ body {
 
     .heading {
         width: 1140px;
-        h5 {
-            margin-bottom: 0px;
+        h6 {
+            margin-top: 20px;
         }
+    }
+
+    mat-expansion-panel {
+        width: 1140px;
+        background-color: #1E1F1E !important;
+        color: white !important;
+    }
+
+    mat-panel-title {
+        color: white !important;
     }
     
     .program-history-container, .business-history-container, .survey-history-container {
@@ -87,7 +97,7 @@ body {
 
         mat-card {
             width: 300px !important;
-            background-color: #1E1E1E;
+            background-color: #353535;
             height: auto;
             border-radius: 15px;
             cursor: pointer;
@@ -109,7 +119,7 @@ body {
                 }
             }
 
-            mat-card-title a {
+            mat-card-title a, mat-card-title p {
                 color: map-get($custom-accent-pallette, 500) !important;
                 font-weight: bolder;
                 font-size: 1.3em;
@@ -124,9 +134,11 @@ body {
                 padding-left: 10px;
                 padding-bottom: 2px;
 
+                &:last-child {
+                    margin-bottom: 30px;
+                }
                 &#business, #survey {
                     padding: 0px 10px 0px 10px;
-                    margin: 0px;
                 }
             }
 
@@ -137,20 +149,25 @@ body {
             mat-icon {
                 margin-right: 15px;
             }
+            .button-container {
+                margin-top: 58px;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                padding: 10px 10px 0px 7px;
 
-            #actions {
                 mat-icon {
                     color: map-get($custom-accent-pallette, 500) !important;
                     margin: 0;
                     padding: 0;
                 }
+    
+                button:hover {
+                    transform: scale(1.2);
+                    transition: transform 0.3s;
+                }
             }
 
-            button:hover {
-                transform: scale(1.2);
-                transition: transform 0.3s;
-            }
-    
             #datePublished {
                 position: absolute;
                 bottom: 0;
@@ -164,12 +181,16 @@ body {
     }
 
     .empty-results {
-        width: 1140px;
+        width: 100%;
         height: 200px; 
         background-color: rgba(255, 255, 255, 0.068);
         border-radius: 10px;
         margin-bottom: 20px;
     }
+}
+
+::ng-deep .mat-expansion-indicator::after {
+    color: white !important;
 }
 
 @media screen and (max-width: 1192px) {

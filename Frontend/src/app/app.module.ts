@@ -26,6 +26,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TruncatePipe } from './pipe/truncate.pipe';
 import { UpdateProgramComponent } from './update-program/update-program.component';
+import { ProgramRegistrantComponent } from './program-registrant/program-registrant.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -58,6 +59,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ConfirmationDialogComponent,
     TruncatePipe,
     UpdateProgramComponent,
+    ProgramRegistrantComponent,
   ],
   imports: [
     BrowserModule,

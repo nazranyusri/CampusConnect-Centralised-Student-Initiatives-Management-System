@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Registrant } from '../interface/registrant';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ export class ProgramService {
   }
 
   addProgram(data: any){
+    console.log("addProgram called");
     return this.http.post(`${this.apiUrl}/add`, data, { headers: this.headers });
   }
 
@@ -31,7 +34,20 @@ export class ProgramService {
     return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`, { headers: this.headers });
   }
 
+  registerProgram(data: any) {
+    console.log("registerProgram called");
+    return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  getRegistrantList(programId: number): Observable<Registrant[]> {
+    return this.http.get<Registrant[]>(`${this.apiUrl}/registrant/${programId}`, { headers: this.headers });
+  }
+
   getProgramHistory(username: string){
     return this.http.get(`${this.apiUrl}/history/${username}`, { headers: this.headers });
+  }
+
+  getUserRegisteredPrograms(userId: number){
+    return this.http.get(`${this.apiUrl}/registered/${userId}`, { headers: this.headers });
   }
 }

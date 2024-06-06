@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProgramService } from '../services/program.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
+import { JwtDecoderService } from '../services/jwt-decoder.service';
 
 @Component({
   selector: 'app-program',
@@ -10,10 +11,12 @@ import { environment } from 'src/environments/environment';
 })
 export class ProgramComponent implements OnInit{
   programs: Array<any> = [];
+  isAuthorized: boolean = false;
   
   constructor(
     private programService: ProgramService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private jwtDecode: JwtDecoderService
   ){}
 
   ngOnInit(){

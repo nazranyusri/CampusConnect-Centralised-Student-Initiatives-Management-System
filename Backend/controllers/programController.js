@@ -39,6 +39,18 @@ const getProgramHistory = (req, res) => {
     });
 };
 
+//get user registered program
+const getUserRegisteredProgram = (req, res) => {
+    const userId = req.params.userId;
+    programModel.getUserRegisteredProgram(userId, (err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
 //create program
 const addProgram = (req, res) => {
     const program = req.body;
@@ -75,20 +87,6 @@ const updateProgram = (req, res) => {
 };
 
 //delete program
-// const deleteProgram = (req, res) => {
-//     const id = req.params.id;
-//     programModel.deleteProgram(id, (err, result) => {
-//         if(!err){
-//             if(result.affectedRows == 0){
-//                 return res.status(404).json({message: "Program id not found"});
-//             }
-//             return res.status(200).json({message: "Program deleted successfully"});
-//         }else{
-//             return res.status(500).json(err);
-//         }
-//     });
-// };
-
 const deleteProgram = (req, res) => {
     const id = req.params.id;
     const imagePath = req.params.imagePath; 
@@ -114,11 +112,39 @@ const deleteProgram = (req, res) => {
     });
 };
 
+//register program
+const registerProgram = (req, res) => {
+    const id = req.body;
+    programModel.registerProgram(id, (err, result) => {
+        if (!err) {
+            return res.status(200).json({ message: "Program registered successfully" });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//get program registrant
+const getRegistrant = (req, res) => {
+    const programId = req.params.programId;
+    console.log('Received programId:', programId);
+    programModel.getRegistrant(programId, (err, result) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ error: 'Database query error', details: err });
+        }
+        return res.status(200).json(result);
+    });
+};
+
 module.exports = {
     getAllProgram,
     getProgramById,
     getProgramHistory,
+    getUserRegisteredProgram,
     addProgram,
     updateProgram,
-    deleteProgram
+    deleteProgram,
+    registerProgram,
+    getRegistrant
 };

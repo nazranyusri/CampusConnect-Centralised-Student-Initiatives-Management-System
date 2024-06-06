@@ -24,19 +24,19 @@ const checkExistingUser = (user, callback) => {
 
 //register
 const register = (user, callback) => {
-    const sql = 'INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)';
-    connection.query(sql, [user.username, user.email, user.password, 'user'], callback);
+    const sql = 'INSERT INTO user (username, email, password, role, fullName, matricNo, telNo) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    connection.query(sql, [user.username, user.email, user.password, user.role, user.fullName, user.matricNo, user.telNo], callback);
 };
 
 //view profile
-const getUser = (username, callback) => {
-    const sql = 'SELECT id, username, email, role FROM user WHERE id = ?';
-    connection.query(sql, username, callback);
+const getUser = (userId, callback) => {
+    const sql = 'SELECT userId, username, email, role FROM user WHERE userId = ?';
+    connection.query(sql, userId, callback);
 };
 
 //update profile
 const updateProfile = (user, userId, callback) => {
-    const sql = 'UPDATE user SET username = ?, email = ?, password = ? WHERE id = ?';
+    const sql = 'UPDATE user SET username = ?, email = ?, password = ? WHERE userId = ?';
     connection.query(sql, [user.username, user.email, user.password, userId], callback);
 };
 

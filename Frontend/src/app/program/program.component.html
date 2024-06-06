@@ -7,17 +7,19 @@
             </mat-card-content>
         </mat-card>
     </div>
+
     <div class="add-item">
         <a mat-raised-button routerLinkActive="active-link" routerLink="/addprogram">Add new program<mat-icon color="accent">add_circle</mat-icon></a>
     </div>
 
+
     <div class="content-container">
-        <mat-card *ngFor="let program of programs" [routerLink]="['/detailedprogram', program.id]">
+        <mat-card *ngFor="let program of programs" [routerLink]="['/detailedprogram', program.programId]">
             <div class="image-wrapper">
                 <img mat-card-image [src]="program?.image" class="custom-picture">
             </div>
             <mat-card-header>
-                <mat-card-title><a [routerLink]="['/detailedprogram', program.id]">{{ program.programTitle }}</a></mat-card-title>
+                <mat-card-title><a [routerLink]="['/detailedprogram', program.programId]">{{ program.programTitle }}</a></mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'dd/MM/yyyy' }} - {{ program.endDate | date:'dd/MM/yyyy' }}</p>

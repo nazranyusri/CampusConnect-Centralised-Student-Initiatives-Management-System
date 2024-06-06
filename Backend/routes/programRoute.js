@@ -28,6 +28,9 @@ router.get('/:id', programController.getProgramById);
 //get program history
 router.get('/history/:username', programController.getProgramHistory);
 
+//get user registered program
+router.get('/registered/:userId', programController.getUserRegisteredProgram);
+
 //create program
 router.post('/add', auth.authenticateToken, upload.single('image'), programController.addProgram);
 
@@ -36,5 +39,11 @@ router.patch('/update', auth.authenticateToken, upload.single('image'), programC
 
 //delete program
 router.delete('/delete/:id/:imagePath', auth.authenticateToken, programController.deleteProgram);
+
+//register program
+router.post('/register', programController.registerProgram);
+
+//get program registrant
+router.get('/registrant/:programId', auth.authenticateToken, programController.getRegistrant);
 
 module.exports = router;

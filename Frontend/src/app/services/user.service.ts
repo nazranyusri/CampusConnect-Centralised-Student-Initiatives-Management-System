@@ -33,7 +33,7 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
 
-  getUser(id: number){
-    return this.http.get(`${this.apiUrl}/profile/${id}`, { headers: this.headers });
+  getUser(userId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/profile/${userId}`, { headers: this.headers });
   }
 }

@@ -24,9 +24,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: [null, [Validators.required, Validators.pattern(GlobalConstants.usernameRegex)]],
+      fullName: [null, Validators.required],
+      matricNo: [null, Validators.required],
+      telNo: [null, [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
       password: [null, [Validators.required, Validators.pattern(GlobalConstants.passwordRegex)]],
-      confirmPassword: [null, [Validators.required]]
+      confirmPassword: [null, [Validators.required]],
     },
     {
       validators: this.passwordMatchValidator('password', 'confirmPassword'),
@@ -58,9 +61,14 @@ export class RegisterComponent implements OnInit {
     var formData = this.registerForm.value;
     var data = {
       username: formData.username,
+      fullName: formData.fullName,
+      matricNo: formData.matricNo,
+      telNo: formData.telNo,
       email: formData.email,
-      password: formData.password
+      password: formData.password,
+      role: 'user'
     }
+    console.log(data);
 
     this.userService.register(data).subscribe(() => {
       this.ngxService.stop();

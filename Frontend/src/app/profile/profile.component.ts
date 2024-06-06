@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
@@ -17,10 +16,13 @@ import { SnackbarService } from '../services/snackbar.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  userDetails: any = '';
+  isClub: boolean = false;
+  panelOpenState = false;
+  userDetails: any;
   programs: Array<any> = [];
   businesses: Array<any> = [];
   surveys: Array<any> = [];
+  registeredPrograms: Array<any> = [];
 
   constructor(
     private userService: UserService,
@@ -30,7 +32,6 @@ export class ProfileComponent implements OnInit {
     private ngxService: NgxUiLoaderService,
     private jwtDecode: JwtDecoderService,
     private dialog: MatDialog,
-    private router: Router,
     private snackbarService: SnackbarService
   ) { }
 
@@ -39,20 +40,30 @@ export class ProfileComponent implements OnInit {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = this.jwtDecode.decodeToken(token);
+      const userId = decodedToken?.userId || 0;
       const username = decodedToken?.username || '';
-      const id = decodedToken?.id || 0;
-      this.getUserDetails(id);
+      const role = decodedToken?.role || '';
+      if (role === 'club') {
+        this.isClub = true;
+      }
+      console.log("Updated isClub value:", this.isClub);
+
+      console.log("Profile component: ", userId, username, decodedToken);
+      this.getUserDetails(userId);
       this.getProgramHistory(username);
       this.getBusinessHistory(username);
       this.getSurveyHistory(username);
+      if (!this.isClub) {
+        this.getUserRegisteredPrograms(userId);
+      }
     }
   }
 
-  getUserDetails(id: number) {
-    this.userService.getUser(id).subscribe((result: any) => {
-      // this.ngxService.stop();
+  getUserDetails(userId: number) {
+    this.userService.getUser(userId).subscribe((result: any) => {
       this.userDetails = result;
-      // console.log("User details this.user:", this.userDetails);
+
+      console.log(this.userDetails);
       return result;
     },
       (error: any) => {
@@ -111,6 +122,21 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  getUserRegisteredPrograms(userId: number) {
+    this.programService.getUserRegisteredPrograms(userId).subscribe((result: any) => {
+      this.ngxService.stop();
+      this.registeredPrograms = result.map((program: any) => {
+        program.image = `${environment.apiUrl}/${program.image}`;
+        return program;
+      });
+    },
+      (error: any) => {
+        this.ngxService.stop();
+        console.error(error);
+      }
+    );
+  }
+
   confirmDeleteProgram(id: number, image: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -129,7 +155,7 @@ export class ProfileComponent implements OnInit {
       dialogRef.close();
         this.programService.deleteProgram(id, relativeImagePath).subscribe((result: any) => {
           this.snackbarService.openSnackBar(result.message);
-          this.programs = this.programs.filter(program => program.id !== id);
+          this.programs = this.programs.filter(program => program.programId !== id);
           return result;
         },
         (error: any) => {
