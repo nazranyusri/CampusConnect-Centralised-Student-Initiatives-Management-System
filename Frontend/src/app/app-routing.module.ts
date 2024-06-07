@@ -15,9 +15,14 @@ import { AddProgramComponent } from './add-program/add-program.component';
 import { UpdateProgramComponent } from './update-program/update-program.component';
 import { ProgramRegistrantComponent } from './program-registrant/program-registrant.component';
 import { ClubGuardService } from './services/club-guard.service';
+import { AddBusinessComponent } from './add-business/add-business.component';
+import { UpdateBusinessComponent } from './update-business/update-business.component';
+import { ClubadminGuardService } from './services/clubadmin-guard.service';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
+
+  // USER ROUTES
   {path: 'homepage', component: HomepageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
@@ -31,22 +36,32 @@ const routes: Routes = [
   {path: 'detailedprogram/:id', component: DetailedProgramComponent},
   {
     path: 'addprogram', component: AddProgramComponent,
-    canActivate: [RouterGuardService, ClubGuardService]
+    canActivate: [RouterGuardService, ClubadminGuardService]
   },
   {
     path: 'updateprogram/:id', component: UpdateProgramComponent,
-    canActivate: [RouterGuardService, ClubGuardService]
+    canActivate: [RouterGuardService, ClubadminGuardService]
   },
   {
     path: 'programregistrant/:programId', component: ProgramRegistrantComponent,
-    canActivate: [RouterGuardService, ClubGuardService]
+    canActivate: [RouterGuardService, ClubadminGuardService]
   },
   
+  // BUSINESS ROUTES
   {path: 'business', component: BusinessComponent},
+  {path: 'addbusiness', component: AddBusinessComponent},
+  {
+    path: 'updatebusiness/:businessId', component: UpdateBusinessComponent,
+    canActivate: [RouterGuardService]
+  },
+
+  //SURVEY ROUTES
   {path: 'survey', component: SurveyComponent},
+
+  //PERSAKA ROUTES
   {path: 'persaka', component: PersakaComponent},
 
-  {path: '**', component: WildcardComponent} // Wildcard route for a 404 page
+  {path: '**', component: WildcardComponent}
 ];
 
 @NgModule({

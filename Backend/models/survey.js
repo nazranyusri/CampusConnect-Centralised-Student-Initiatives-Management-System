@@ -13,15 +13,15 @@ const getSurveyById = (id, callback) => {
 };
 
 //get specific user surveys -- viewed in Profile page
-const getSurveyHistory = (username, callback) => {
-    const sql = 'SELECT * FROM survey WHERE createdBy = ?';
-    connection.query(sql, [username], callback);
+const getSurveyHistory = (userId, callback) => {
+    const sql = 'SELECT * FROM survey WHERE userId = ?';
+    connection.query(sql, [userId], callback);
 };
 
 //create survey
 const addSurvey = (survey, callback) => {
-    const sql = `INSERT INTO survey (fullName, createdBy, description, surveyLink, surveyTitle, time, datePublished) VALUES (?, ?, ?, ?, ?, ?, ?)`; 
-    connection.query(sql, [survey.fullName, survey.createdBy, survey.description, survey.surveyLink, survey.surveyTitle, survey.time, survey.datePublished], callback); //survey.datePublished should be replaced with CURDATE() after complete testing using Postman  
+    const sql = `INSERT INTO survey (fullName, userId, description, surveyLink, surveyTitle, time, datePublished) VALUES (?, ?, ?, ?, ?, ?, ?)`; 
+    connection.query(sql, [survey.fullName, survey.userId, survey.description, survey.surveyLink, survey.surveyTitle, survey.time, survey.datePublished], callback); //survey.datePublished should be replaced with CURDATE() after complete testing using Postman  
 };
 
 //update survey

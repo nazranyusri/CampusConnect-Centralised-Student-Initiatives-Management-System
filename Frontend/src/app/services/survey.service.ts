@@ -10,7 +10,7 @@ export class SurveyService {
   private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
   constructor(private http: HttpClient) {}
 
-  getSurveyHistory(username: string){
-    return this.http.get(`${this.apiUrl}/history/${username}`, { headers: this.headers });
+  getSurveyHistory(userId: number){
+    return this.http.get(`${this.apiUrl}/history/${userId}`, { headers: this.headers });
   }
 }

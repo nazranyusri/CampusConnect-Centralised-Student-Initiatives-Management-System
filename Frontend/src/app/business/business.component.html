@@ -1,1 +1,61 @@
-<p>business works!</p>
+<body>
+    <div class="search-section">
+      <mat-card>
+        <mat-card-content class="search-section-content">
+          <div class="pageTitle">
+            <img src="assets/resources/businessTitle.png" alt="Discover upcoming business">
+          </div>
+          <div class="search-bar">
+            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+              <input matInput placeholder="Search by business title.." [(ngModel)]="searchKey">
+            </mat-form-field>
+            <button mat-icon-button (click)="toggleFilterContainer()" [ngClass]="{'orange' : isFilter, 'white': !isFilter}">
+                <mat-icon>filter_list</mat-icon>
+            </button>
+          </div>
+          <div class ="filter-container" *ngIf="isFilter">
+            <button mat-raised-button (click)="toggleButton('KDOJ')" [ngClass]="{'active': filterCategory === 'KDOJ'}">KDOJ</button>
+            <button mat-raised-button (click)="toggleButton('KDSE')" [ngClass]="{'active': filterCategory === 'KDSE'}">KDSE</button>
+            <button mat-raised-button (click)="toggleButton('KTR')" [ngClass]="{'active': filterCategory === 'KTR'}">KTR</button>
+            <button mat-raised-button (click)="toggleButton('KTHO')" [ngClass]="{'active': filterCategory === 'KTHO'}">KTHO</button>
+            <button mat-raised-button (click)="toggleButton('KRP')" [ngClass]="{'active': filterCategory === 'KRP'}">KRP</button>
+            <button mat-raised-button (click)="toggleButton('KTF')" [ngClass]="{'active': filterCategory === 'KTF'}">KTF</button>
+            <button mat-raised-button (click)="toggleButton('KTDI')" [ngClass]="{'active': filterCategory === 'KTDI'}">KTDI</button>
+            <button mat-raised-button (click)="toggleButton('KTC')" [ngClass]="{'active': filterCategory === 'KTC'}">KTC</button>
+            <button mat-raised-button (click)="toggleButton('KP')" [ngClass]="{'active': filterCategory === 'KP'}">KP</button>
+            <button mat-raised-button (click)="toggleButton('K9')" [ngClass]="{'active': filterCategory === 'K9'}">K9</button>
+            <button mat-raised-button (click)="toggleButton('K10')" [ngClass]="{'active': filterCategory === 'K10'}">K10</button>
+            <button mat-raised-button (click)="toggleButton('Others')" [ngClass]="{'active': filterCategory === 'Others'}">Others</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <div class="add-item">
+    <a mat-raised-button routerLinkActive="active-link" routerLink="/addbusiness">
+        Add new business
+        <mat-icon color="accent">add_circle</mat-icon>
+    </a>
+    </div>
+  
+    <div class="content-container">
+      <ng-container *ngIf="(businesses | businessQuery : searchKey : filterCategory) as results">
+        <mat-card *ngFor="let business of results" [routerLink]="['/detailedbusiness', business.businessId]">
+          <div class="image-wrapper">
+            <img mat-card-image [src]="business?.image" class="custom-picture">
+          </div>
+          <mat-card-header>
+            <mat-card-title>
+              <a [routerLink]="['/detailedbusiness', business.businessId]">{{ business.businessTitle }}</a>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ business.description | truncate: 30 }}</p>
+            <div id="datePublished">Published on {{ business.datePublished | date:'d MMM, yyyy' }}</div>
+          </mat-card-content>
+        </mat-card>
+        <p class="empty-results" *ngIf="results.length == 0">No business found</p>
+      </ng-container>
+    </div>
+  </body>
+  

@@ -13,8 +13,8 @@ const getAllBusiness = (req, res) => {
 
 //get business by id
 const getBusinessById = (req, res) => {
-    const id = req.params.id;
-    businessModel.getBusinessById(id, (err, result) => {
+    const businessId = req.params.businessId;
+    businessModel.getBusinessById(businessId, (err, result) => {
         if (!err) {
             if(result.length == 0){
                 return res.status(404).json({message: "Business id not found"});
@@ -28,8 +28,8 @@ const getBusinessById = (req, res) => {
 
 //get specific user business -- viewed in Profile 
 const getBusinessHistory = (req, res) => {
-    const username = req.params.username;
-    businessModel.getBusinessHistory(username, (err, result) => {
+    const userId = req.params.userId;
+    businessModel.getBusinessHistory(userId, (err, result) => {
         if (!err) {
             return res.status(200).json(result);
         } else {
@@ -41,6 +41,11 @@ const getBusinessHistory = (req, res) => {
 //create busines
 const addBusiness = (req, res) => {
     const business = req.body;
+    if (req.file) {
+        business.image = req.file.path; // Store the path of the uploaded image
+    } else {
+        return res.status(400).json({ message: "Image file is required" });
+    }
     businessModel.addBusiness(business, (err, result) => {
         if (!err) {
             return res.status(200).json({ message: "Business added successfully" });
@@ -50,34 +55,68 @@ const addBusiness = (req, res) => {
     });
 };
 
-//update business
+// Update business
 const updateBusiness = (req, res) => {
-    const id = req.params.id;
     const business = req.body;
-    businessModel.updateBusiness(id, business, (err, result) => {
-        if (!err) {
-            if(result.affectedRows == 0){
-                return res.status(404).json({message: "Business id not found"});
-            }
-            return res.status(200).json({ message: "Business updated successfully" });
-        } else {
+    if (req.file) {
+        business.image = req.file.path; // Store the path of the uploaded image
+    }
+    businessModel.getBusinessById(business.id, (err, result) => {
+        if (err) {
             return res.status(500).json(err);
         }
+
+        if (result.length == 0) {
+            return res.status(404).json({ message: "Business id not found" });
+        }
+
+        // Ownership check
+        if (result[0].userId !== res.userLocal.userId) {
+            console.log(result[0].userId, res.userLocal.userId)
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        businessModel.updateBusiness(business, (err, result) => {
+            if (!err) {
+                if (result.affectedRows == 0) {
+                    return res.status(404).json({ message: "Business id not found" });
+                }
+                return res.status(200).json({ message: "Business updated successfully" });
+            } else {
+                return res.status(500).json(err);
+            }
+        });
     });
 };
 
-//delete business
+// Delete business
 const deleteBusiness = (req, res) => {
     const id = req.params.id;
-    businessModel.deleteBusiness(id, (err, result) => {
-        if (!err) {
-            if(result.affectedRows == 0){
-                return res.status(404).json({message: "Business id not found"});
-            }
-            return res.status(200).json({ message: "Business deleted successfully" });
-        } else {
+
+    businessModel.getBusinessById(id, (err, result) => {
+        if (err) {
             return res.status(500).json(err);
         }
+
+        if (result.length == 0) {
+            return res.status(404).json({ message: "Business id not found" });
+        }
+
+        // Ownership check
+        if (result[0].userId !== res.userLocal.userId) {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        businessModel.deleteBusiness(id, (err, result) => {
+            if (!err) {
+                if (result.affectedRows == 0) {
+                    return res.status(404).json({ message: "Business id not found" });
+                }
+                return res.status(200).json({ message: "Business deleted successfully" });
+            } else {
+                return res.status(500).json(err);
+            }
+        });
     });
 };
 

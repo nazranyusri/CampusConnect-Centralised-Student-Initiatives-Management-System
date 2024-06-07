@@ -83,14 +83,14 @@ export class AddProgramComponent implements OnInit {
     this.ngxService.start();
     const token = localStorage.getItem('token');
     const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
-    const username = decodedToken?.username;
+    const userId = decodedToken?.userId;
 
     const formattedStartDate = new Date(this.programForm.get('startDate').value).toISOString().split('T')[0];
     const formattedEndDate = new Date(this.programForm.get('endDate').value).toISOString().split('T')[0];
 
-    if (username) {
+    if (userId) {
       const formData = new FormData();
-      formData.append('createdBy', username);
+      formData.append('userId', userId.toString());
       formData.append('programTitle', this.programForm.get('programTitle').value);
       formData.append('location', this.programForm.get('location').value);
       formData.append('startDate', formattedStartDate);
@@ -105,7 +105,7 @@ export class AddProgramComponent implements OnInit {
       formData.append('datePublished', new Date().toISOString());
 
       formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
+        // console.log(`${key}:`, value);
       });
 
       this.programService.addProgram(formData).subscribe(() => {

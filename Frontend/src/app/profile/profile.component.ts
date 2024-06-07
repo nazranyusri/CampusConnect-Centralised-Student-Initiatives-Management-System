@@ -16,7 +16,7 @@ import { SnackbarService } from '../services/snackbar.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  isClub: boolean = false;
+  isAuthorized: boolean = false;
   panelOpenState = false;
   userDetails: any;
   programs: Array<any> = [];
@@ -41,19 +41,18 @@ export class ProfileComponent implements OnInit {
     if (token) {
       const decodedToken = this.jwtDecode.decodeToken(token);
       const userId = decodedToken?.userId || 0;
-      const username = decodedToken?.username || '';
       const role = decodedToken?.role || '';
-      if (role === 'club') {
-        this.isClub = true;
+      if (role === 'club' || role === 'admin') {
+        this.isAuthorized = true;
       }
-      console.log("Updated isClub value:", this.isClub);
+      // console.log("Updated isClub value:", this.isAuthorized);
 
-      console.log("Profile component: ", userId, username, decodedToken);
+      // console.log("Profile component: ", userId, username, decodedToken);
       this.getUserDetails(userId);
-      this.getProgramHistory(username);
-      this.getBusinessHistory(username);
-      this.getSurveyHistory(username);
-      if (!this.isClub) {
+      this.getProgramHistory(userId);
+      this.getBusinessHistory(userId);
+      this.getSurveyHistory(userId);
+      if (!this.isAuthorized) {
         this.getUserRegisteredPrograms(userId);
       }
     }
@@ -61,9 +60,9 @@ export class ProfileComponent implements OnInit {
 
   getUserDetails(userId: number) {
     this.userService.getUser(userId).subscribe((result: any) => {
+      this.ngxService.stop();
       this.userDetails = result;
-
-      console.log(this.userDetails);
+      // console.log(this.userDetails);
       return result;
     },
       (error: any) => {
@@ -73,14 +72,14 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getProgramHistory(username: string) {
-    this.programService.getProgramHistory(username).subscribe((result: any) => {
-      // this.ngxService.stop();
+  getProgramHistory(userId: number) {
+    this.programService.getProgramHistory(userId).subscribe((result: any) => {
+      this.ngxService.stop();
       this.programs = result.map((program: any) => {
         program.image = `${environment.apiUrl}/${program.image}`;
         return program;
       });
-      console.log("Programs:", this.programs);
+      // console.log("Programs:", this.programs);
     },
       (error: any) => {
         this.ngxService.stop();
@@ -89,17 +88,14 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getBusinessHistory(username: string) {
-    this.businessService.getBusinessHistory(username).subscribe((result: any) => {
-      // this.ngxService.stop();
-      this.businesses = result;
-      // console.log("Businesses:", this.businesses);
-      return result;
-      // this.businesses = result.map((business: any) => {
-      //   business.image = `${environment.apiUrl}/${business.image}`;
-      //   console.log(this.businesses);
-      //   return business;
-      // });
+  getBusinessHistory(userId: number) {
+    this.businessService.getBusinessHistory(userId).subscribe((result: any) => {
+      this.ngxService.stop();
+      this.businesses = result.map((business: any) => {
+        business.image = `${environment.apiUrl}/${business.image}`;
+        // console.log(this.businesses);
+        return business;
+      });
     },
       (error: any) => {
         this.ngxService.stop();
@@ -108,8 +104,8 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getSurveyHistory(username: string) {
-    this.surveyService.getSurveyHistory(username).subscribe((result: any) => {
+  getSurveyHistory(userId: number) {
+    this.surveyService.getSurveyHistory(userId).subscribe((result: any) => {
       this.ngxService.stop();
       this.surveys = result;
       // console.log("Surveys:", this.surveys);
@@ -146,9 +142,9 @@ export class ProfileComponent implements OnInit {
     const imagePathParts = image.split(/[\\/]/);
     const relativeImagePath = imagePathParts[imagePathParts.length - 1];
     
-    console.log("Program ID:", id);
-    console.log("Image path before split:", image);
-    console.log("Image Path:", relativeImagePath);
+    // console.log("Program ID:", id);
+    // console.log("Image path before split:", image);
+    // console.log("Image Path:", relativeImagePath);
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response: any) => {

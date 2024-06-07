@@ -7,33 +7,33 @@ const getAllBusiness = (callback) => {
 };
 
 //get business by id
-const getBusinessById = (id, callback) => {
-    const sql = 'SELECT * FROM business WHERE id = ?';
-    connection.query(sql, id, callback);
+const getBusinessById = (businessId, callback) => {
+    const sql = 'SELECT * FROM business WHERE businessId = ?';
+    connection.query(sql, businessId, callback);
 };
 
 //get specific user businesses -- viewed in Profile page
-const getBusinessHistory = (username, callback) => {
-    const sql = 'SELECT * FROM business WHERE createdBy = ?';
-    connection.query(sql, [username], callback);
+const getBusinessHistory = (userId, callback) => {
+    const sql = 'SELECT * FROM business WHERE userId = ?';
+    connection.query(sql, [userId], callback);
 };
 
 //create business
 const addBusiness = (business, callback) => {
-    const sql = `INSERT INTO business (businessTitle, createdBy, description, location, othersLocation, telNo, telName, image, businessLink, datePublished) 
+    const sql = `INSERT INTO business (businessTitle, userId, description, location, othersLocation, telNo, telName, image, businessLink, datePublished) 
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    connection.query(sql, [business.businessTitle, business.createdBy, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.datePublished], callback); //business.datePublished should be replaced with CURDATE() after complete testing using Postman
+    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.datePublished], callback); //business.datePublished should be replaced with CURDATE() after complete testing using Postman
 };
 
 //update business
-const updateBusiness = (id, business, callback) => {
-    const sql = 'UPDATE business SET businessTitle = ?, description = ?, location = ?, othersLocation = ?, telNo = ?, telName = ?, image = ?, businessLink = ? WHERE id = ?';
-    connection.query(sql, [business.businessTitle, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, id], callback);
+const updateBusiness = (business, callback) => {
+    const sql = 'UPDATE business SET businessTitle = ?, description = ?, location = ?, othersLocation = ?, telNo = ?, telName = ?, image = ?, businessLink = ? WHERE businessId = ?';
+    connection.query(sql, [business.businessTitle, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.id], callback);
 };
 
 //delete business
 const deleteBusiness = (id, callback) => {
-    const sql = "DELETE FROM business WHERE id = ?";
+    const sql = "DELETE FROM business WHERE businessId = ?";
     connection.query(sql, id, callback);
 };
 

@@ -58,7 +58,7 @@ const getUser = (req, res) => {
 const updateProfile = (req, res) => {
     const tokenPayload = res.userLocal;
     let user = req.body;
-    userModel.updateProfile(user, tokenPayload.id, (err, result) => {
+    userModel.updateProfile(user, tokenPayload.userId, (err, result) => {
         if (!err) {
             return res.status(200).json({ message: "User details updated successfully" });
         } else {

@@ -28,8 +28,8 @@ const getSurveyById = (req, res) => {
 
 //get specific user survey -- viewed in Profile 
 const getSurveyHistory = (req, res) => {
-    const username = req.params.username;
-    surveyModel.getSurveyHistory(username, (err, result) => {
+    const userId = req.params.userId;
+    surveyModel.getSurveyHistory(userId, (err, result) => {
         if (!err) {
             return res.status(200).json(result);
         } else {

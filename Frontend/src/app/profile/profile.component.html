@@ -24,51 +24,53 @@
             </div>
             <mat-accordion>
                 <!-- Program Panel -->
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            Program
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="program-history-container" *ngIf="programs.length > 0; else noPrograms">
-                        <mat-card *ngFor="let program of programs">
-                            <div class="image-wrapper">
-                                <img mat-card-image [src]="program?.image" class="custom-picture">
-                            </div>
-                            <mat-card-header>
-                                <mat-card-title>
-                                    <ng-container *ngIf="isClub; else noLink">
-                                      <a [routerLink]="['/programregistrant', program.programId]">{{ program.programTitle | truncate:3 }}</a>
-                                    </ng-container>
-                                    <ng-template #noLink>
-                                      <p>{{ program.programTitle | truncate:3 }}</p>
-                                    </ng-template>
-                                  </mat-card-title>
-                            </mat-card-header>
-                            <mat-card-content>
-                                <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'dd/MM/yyyy' }} - {{ program.endDate | date:'dd/MM/yyyy' }}</p>
-                                <p><mat-icon>access_time</mat-icon>{{ program.startTime }} - {{ program.endTime }}</p>
-                                <p><mat-icon>location_on</mat-icon>{{ program.location }}</p>
-                                <div id="datePublished">Published on {{ program.datePublished | date:'d MMM, yyyy' }}  </div>
-                                <div class="button-container">
-                                    <ng-container *ngIf="isClub">
-                                        <button mat-icon-button id="actions" [routerLink]="['/updateprogram', program.programId]"><mat-icon>edit</mat-icon></button>
-                                        <button mat-icon-button id="actions" (click)="confirmDeleteProgram(program.programId, program.image)"><mat-icon>delete</mat-icon></button>
-                                    </ng-container>
+                <ng-container *ngIf="isAuthorized">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ programs.length }} Program<ng-container *ngIf="programs.length > 1">s</ng-container>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="program-history-container" *ngIf="programs.length > 0; else noPrograms">
+                            <mat-card *ngFor="let program of programs">
+                                <div class="image-wrapper">
+                                    <img mat-card-image [src]="program?.image" class="custom-picture">
                                 </div>
-                            </mat-card-content>
-                        </mat-card>
-                    </div>
-                    <ng-template #noPrograms>
-                        <div class="empty-results" fxLayoutAlign="center center">You have not posted any programs...</div>
-                    </ng-template>
-                </mat-expansion-panel>
+                                <mat-card-header>
+                                    <mat-card-title>
+                                        <ng-container *ngIf="isAuthorized; else noLink">
+                                        <a [routerLink]="['/programregistrant', program.programId]">{{ program.programTitle | truncate:3 }}</a>
+                                        </ng-container>
+                                        <ng-template #noLink>
+                                        <p>{{ program.programTitle | truncate:3 }}</p>
+                                        </ng-template>
+                                    </mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'dd/MM/yyyy' }} - {{ program.endDate | date:'dd/MM/yyyy' }}</p>
+                                    <p><mat-icon>access_time</mat-icon>{{ program.startTime }} - {{ program.endTime }}</p>
+                                    <p><mat-icon>location_on</mat-icon>{{ program.location }}</p>
+                                    <div id="datePublished">Published on {{ program.datePublished | date:'d MMM, yyyy' }}  </div>
+                                    <div class="button-container">
+                                        <ng-container *ngIf="isAuthorized">
+                                            <button mat-icon-button id="actions" [routerLink]="['/updateprogram', program.programId]"><mat-icon>edit</mat-icon></button>
+                                            <button mat-icon-button id="actions" (click)="confirmDeleteProgram(program.programId, program.image)"><mat-icon>delete</mat-icon></button>
+                                        </ng-container>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <ng-template #noPrograms>
+                            <div class="empty-results" fxLayoutAlign="center center">You have not posted any programs...</div>
+                        </ng-template>
+                    </mat-expansion-panel>
+                </ng-container>
 
                 <!-- Business Panel -->
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Business
+                            {{ businesses.length }} Business<ng-container *ngIf="businesses.length > 1">es</ng-container>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="business-history-container" *ngIf="businesses.length > 0; else noBusinesses">
@@ -84,7 +86,7 @@
                             <mat-card-content id="business">
                                 <p>{{ business.description | truncate:10 }}</p>
                                 <div class="button-container">
-                                    <button mat-icon-button id="actions" routerLink="edit"><mat-icon>edit</mat-icon></button>
+                                    <button mat-icon-button id="actions" [routerLink]="['/updatebusiness', business.businessId]"><mat-icon>edit</mat-icon></button>
                                     <button mat-icon-button id="actions" routerLink="delete"><mat-icon>delete</mat-icon></button>
                                 </div>
                                 <div id="datePublished">Published on {{ business.datePublished | date:'d MMM, yyyy' }}</div>
@@ -100,7 +102,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Survey
+                            {{ surveys.length }} Survey<ng-container *ngIf="surveys.length > 1">s</ng-container>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="survey-history-container" *ngIf="surveys.length > 0; else noSurveys">
@@ -128,7 +130,7 @@
             </mat-accordion>
         </div>
 
-        <ng-container *ngIf="!isClub">
+        <ng-container *ngIf="!isAuthorized">
             <div class="activity-container">
                 <div class="heading">
                     <h6>Your activity</h6>
@@ -138,7 +140,7 @@
                     <mat-expansion-panel color="primary">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                {{registeredPrograms.length }} Programs registered
+                                {{ registeredPrograms.length }} Program<ng-container *ngIf="registeredPrograms.length > 1">s</ng-container> registered
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="program-history-container" *ngIf="registeredPrograms.length > 0; else noProgramsJoined">

@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./update-program.component.scss']
 })
 export class UpdateProgramComponent {
+  userId: number = 0;
   programForm: any = FormGroup;
   responseMessage: any;
   programId: number = 0;
@@ -31,6 +32,7 @@ export class UpdateProgramComponent {
   ) { }
 
   ngOnInit() {
+    // console.log("Created by OnInit:", this.userId);
     this.route.params.subscribe(params => {
       this.programId = +params['id'];
       this.ngxService.start();
@@ -122,7 +124,16 @@ export class UpdateProgramComponent {
         });
         this.image = program.image;
         this.imagePath = `${environment.apiUrl}/${this.image}`;
-        console.log("Image Path:", this.imagePath);
+        // console.log("Image Path:", this.imagePath);
+        // console.log("Created By:", this.userId);
+        this.userId = program.userId;
+        const token = localStorage.getItem('token');
+        const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
+        const userIdOfProgram = decodedToken?.userId;
+        if (this.userId && this.userId !== userIdOfProgram) {
+          // console.log("Created by in if:", this.userId);
+          this.router.navigate(['/forbidden']);
+        }
         this.ngxService.stop();
       },
       error => {
@@ -134,18 +145,15 @@ export class UpdateProgramComponent {
 
   updateProgram() {
     this.ngxService.start();
-    const token = localStorage.getItem('token');
-    const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
-    const username = decodedToken?.username;
     const id = this.programId.toString();
 
     const formattedStartDate = new Date(this.programForm.get('startDate').value).toISOString().split('T')[0];
     const formattedEndDate = new Date(this.programForm.get('endDate').value).toISOString().split('T')[0];
 
-    if (username) {
+    if (this.userId) {
       const formData = new FormData();
       formData.append('id', id);
-      formData.append('createdBy', username);
+      formData.append('userId', this.userId.toString());
       formData.append('programTitle', this.programForm.get('programTitle').value);
       formData.append('location', this.programForm.get('location').value);
       formData.append('startDate', formattedStartDate);
@@ -158,9 +166,9 @@ export class UpdateProgramComponent {
       formData.append('description', this.programForm.get('description').value);
       formData.append('tag', this.programForm.get('tag').value);
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}:`, value);
+      // });
 
       this.programService.updateProgram(formData).subscribe(() => {
         this.ngxService.stop();

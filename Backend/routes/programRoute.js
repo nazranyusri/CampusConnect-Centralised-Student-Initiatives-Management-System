@@ -26,7 +26,7 @@ router.get('/', programController.getAllProgram);
 router.get('/:id', programController.getProgramById);
 
 //get program history
-router.get('/history/:username', programController.getProgramHistory);
+router.get('/history/:userId', programController.getProgramHistory);
 
 //get user registered program
 router.get('/registered/:userId', programController.getUserRegisteredProgram);

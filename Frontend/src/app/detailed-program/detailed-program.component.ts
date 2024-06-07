@@ -17,6 +17,7 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
 })
 
 export class DetailedProgramComponent implements OnInit {
+  isAuthorized: boolean = false;
   id: number = 0;
   program: any;
   token: any;
@@ -39,6 +40,18 @@ export class DetailedProgramComponent implements OnInit {
       this.id = +params['id']; // '+' is used to convert string to number
       this.ngxService.start();
       this.getProgramById(this.id);
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = this.jwtDecode.decodeToken(token);
+        const userId = decodedToken?.userId || 0;
+        const username = decodedToken?.username || '';
+        const role = decodedToken?.role || '';
+        if (role === 'club') {
+          this.isAuthorized = true;
+        } else if (role === 'admin') {
+          this.isAuthorized = true;
+        }
+      }
     });
     
     // Get user id
@@ -54,8 +67,8 @@ export class DetailedProgramComponent implements OnInit {
         this.ngxService.stop();
         this.program = result;
         this.program.image = `${environment.apiUrl}/${this.program.image}`;
-        console.log(this.program.image);
-        console.log(result);
+        // console.log(this.program.image);
+        // console.log(result);
       },
       (error: any) => {
         this.ngxService.stop();

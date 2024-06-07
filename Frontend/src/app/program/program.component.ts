@@ -10,8 +10,11 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
   styleUrls: ['./program.component.scss']
 })
 export class ProgramComponent implements OnInit{
+  searchKey: string = '';
   programs: Array<any> = [];
   isAuthorized: boolean = false;
+  isFilter: boolean = false;
+  filterCategory: string = '';
   
   constructor(
     private programService: ProgramService,
@@ -22,6 +25,30 @@ export class ProgramComponent implements OnInit{
   ngOnInit(){
     this.ngxService.start();
     this.getAllProgram();
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtDecode.decodeToken(token);
+      const userId = decodedToken?.userId || 0;
+      const username = decodedToken?.username || '';
+      const role = decodedToken?.role || '';
+      if (role === 'club') {
+        this.isAuthorized = true;
+      } else if (role === 'admin') {
+        this.isAuthorized = true;
+      }
+    }
+  }
+
+  toggleFilterContainer(){
+    this.isFilter = !this.isFilter;
+  }
+
+  toggleButton(buttonName: string) {
+    if (this.filterCategory === buttonName) {
+      this.filterCategory = ''; 
+    } else {
+      this.filterCategory = buttonName;
+    }
   }
 
   getAllProgram(){
@@ -31,7 +58,7 @@ export class ProgramComponent implements OnInit{
           program.image = `${environment.apiUrl}/${program.image}`;
           return program;
         });
-        console.log(this.programs);
+        // console.log(this.programs);
       },
       (error: any) => {
         this.ngxService.stop();

@@ -13,7 +13,7 @@ router.get('/', surveyController.getAllSurvey);
 router.get('/:id', surveyController.getSurveyById);
 
 //get survey history
-router.get('/history/:username', surveyController.getSurveyHistory);
+router.get('/history/:userId', surveyController.getSurveyHistory);
 
 //create survey
 router.post('/add', auth.authenticateToken, surveyController.addSurvey);

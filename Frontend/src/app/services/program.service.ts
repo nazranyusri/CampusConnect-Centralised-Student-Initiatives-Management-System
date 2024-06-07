@@ -21,7 +21,7 @@ export class ProgramService {
   }
 
   addProgram(data: any){
-    console.log("addProgram called");
+    // console.log("addProgram called");
     return this.http.post(`${this.apiUrl}/add`, data, { headers: this.headers });
   }
 
@@ -30,12 +30,12 @@ export class ProgramService {
   }
 
   deleteProgram(id: number, imagePath: string){
-    console.log("deleteProgram imagePath:", imagePath);
+    // console.log("deleteProgram imagePath:", imagePath);
     return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`, { headers: this.headers });
   }
 
   registerProgram(data: any) {
-    console.log("registerProgram called");
+    // console.log("registerProgram called");
     return this.http.post(`${this.apiUrl}/register`, data);
   }
 
@@ -43,8 +43,8 @@ export class ProgramService {
     return this.http.get<Registrant[]>(`${this.apiUrl}/registrant/${programId}`, { headers: this.headers });
   }
 
-  getProgramHistory(username: string){
-    return this.http.get(`${this.apiUrl}/history/${username}`, { headers: this.headers });
+  getProgramHistory(userId: number){
+    return this.http.get(`${this.apiUrl}/history/${userId}`, { headers: this.headers });
   }
 
   getUserRegisteredPrograms(userId: number){

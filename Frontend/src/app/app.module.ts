@@ -27,6 +27,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { TruncatePipe } from './pipe/truncate.pipe';
 import { UpdateProgramComponent } from './update-program/update-program.component';
 import { ProgramRegistrantComponent } from './program-registrant/program-registrant.component';
+import { ProgramQueryPipe } from './pipe/program-query.pipe';
+import { BusinessQueryPipe } from './pipe/business-query.pipe';
+import { AddBusinessComponent } from './add-business/add-business.component';
+import { UpdateBusinessComponent } from './update-business/update-business.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -60,6 +64,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     TruncatePipe,
     UpdateProgramComponent,
     ProgramRegistrantComponent,
+    ProgramQueryPipe,
+    BusinessQueryPipe,
+    AddBusinessComponent,
+    UpdateBusinessComponent,
   ],
   imports: [
     BrowserModule,

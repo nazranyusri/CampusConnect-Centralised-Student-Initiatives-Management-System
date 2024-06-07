@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
       password: formData.password,
       role: 'user'
     }
-    console.log(data);
+    // console.log(data);
 
     this.userService.register(data).subscribe(() => {
       this.ngxService.stop();

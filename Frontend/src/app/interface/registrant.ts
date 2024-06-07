@@ -4,5 +4,5 @@ export interface Registrant {
     matricNo: string;
     email: string;
     telNo: string;
-    registeredDate: string;
+    registrationdate: string;
 }

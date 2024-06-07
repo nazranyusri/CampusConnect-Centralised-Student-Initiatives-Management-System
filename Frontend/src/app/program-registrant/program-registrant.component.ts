@@ -3,12 +3,13 @@ import html2canvas from 'html2canvas';
 
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProgramService } from '../services/program.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Registrant } from '../interface/registrant';
 import { environment } from 'src/environments/environment';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
+import { JwtDecoderService } from '../services/jwt-decoder.service';
 
 @Component({
   selector: 'app-program-registrant',
@@ -18,6 +19,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 export class ProgramRegistrantComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['position', 'fullName', 'matricNo', 'email', 'telNo', 'registeredDate'];
   dataSource = new MatTableDataSource<Registrant>();
+  userId: number = 0;
   programId: number = 0;
   program: any;
 
@@ -32,6 +34,8 @@ export class ProgramRegistrantComponent implements AfterViewInit, OnInit {
     private programService: ProgramService,
     private route: ActivatedRoute,
     private ngxService: NgxUiLoaderService,
+    private router: Router,
+    private jwtDecode: JwtDecoderService
   ) { }
 
   ngOnInit() {
@@ -50,8 +54,17 @@ export class ProgramRegistrantComponent implements AfterViewInit, OnInit {
         this.ngxService.stop();
         this.program = result;
         this.program.image = `${environment.apiUrl}/${this.program.image}`;
-        console.log(this.program.image);
-        console.log(result);
+
+        this.userId = this.program.userId;
+        const token = localStorage.getItem('token');
+        const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
+        const userId = decodedToken?.userId;
+        if (this.userId && this.userId !== userId) {
+          // console.log("Created by in if:", this.userId);
+          this.router.navigate(['/forbidden']);
+        }
+        // console.log(this.program.image);
+        // console.log(result);
       },
       (error: any) => {
         this.ngxService.stop();
@@ -63,8 +76,9 @@ export class ProgramRegistrantComponent implements AfterViewInit, OnInit {
   getRegistrantList(programId: number) {
     this.programService.getRegistrantList(programId).subscribe((result: Registrant[]) => {
         this.ngxService.stop();
-        console.log(result); // Added log for debugging
+        // console.log(result);
         this.dataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
+        // console.log(this.dataSource.data);
       },
       (error: any) => {
         this.ngxService.stop();
