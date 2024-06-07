@@ -53,8 +53,8 @@ export class NavBarComponent implements OnInit {
     const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response:any) => {
       dialogRef.close();
       localStorage.removeItem('token');
-      // this.username = '';
       this.router.navigate(['/']);
+      window.location.reload();
       this.isLoggedIn = false;
     });
   }
