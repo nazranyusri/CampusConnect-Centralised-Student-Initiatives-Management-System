@@ -31,6 +31,11 @@ import { ProgramQueryPipe } from './pipe/program-query.pipe';
 import { BusinessQueryPipe } from './pipe/business-query.pipe';
 import { AddBusinessComponent } from './add-business/add-business.component';
 import { UpdateBusinessComponent } from './update-business/update-business.component';
+import { SurveyQueryPipe } from './pipe/survey-query.pipe';
+import { AddSurveyComponent } from './add-survey/add-survey.component';
+import { DetailedSurveyComponent } from './detailed-survey/detailed-survey.component';
+import { UpdateSurveyComponent } from './update-survey/update-survey.component';
+import { DetailedBusinessComponent } from './detailed-business/detailed-business.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -68,6 +73,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     BusinessQueryPipe,
     AddBusinessComponent,
     UpdateBusinessComponent,
+    SurveyQueryPipe,
+    AddSurveyComponent,
+    DetailedSurveyComponent,
+    UpdateSurveyComponent,
+    DetailedBusinessComponent,
   ],
   imports: [
     BrowserModule,

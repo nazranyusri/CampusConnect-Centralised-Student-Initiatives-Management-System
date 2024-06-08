@@ -28,8 +28,6 @@ export class ProgramComponent implements OnInit{
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken = this.jwtDecode.decodeToken(token);
-      const userId = decodedToken?.userId || 0;
-      const username = decodedToken?.username || '';
       const role = decodedToken?.role || '';
       if (role === 'club') {
         this.isAuthorized = true;

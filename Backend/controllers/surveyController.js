@@ -13,8 +13,8 @@ const getAllSurvey = (req, res) => {
 
 //get survey by id
 const getSurveyById = (req, res) => {
-    const id = req.params.id;
-    surveyModel.getSurveyById(id, (err, result) => {
+    const surveyId = req.params.surveyId;
+    surveyModel.getSurveyById(surveyId, (err, result) => {
         if (!err) {
             if(result.length == 0){
                 return res.status(404).json({message: "Survey id not found"});
@@ -52,12 +52,12 @@ const addSurvey = (req, res) => {
 
 //update survey
 const updateSurvey = (req, res) => {
-    const id = req.params.id;
+    const surveyId = req.params.surveyId;
     const survey = req.body;
-    surveyModel.updateSurvey(id, survey, (err, result) => {
+    surveyModel.updateSurvey(surveyId, survey, (err, result) => {
         if (!err) {
             if(result.affectedRows == 0){
-                return res.status(404).json({message: "Business id not found"});
+                return res.status(404).json({message: "Survey id not found"});
             }
             return res.status(200).json({ message: "Survey updated successfully" });
         } else {
@@ -68,8 +68,8 @@ const updateSurvey = (req, res) => {
 
 //delete survey
 const deleteSurvey = (req, res) => {
-    const id = req.params.id;
-    surveyModel.deleteSurvey(id, (err, result) => {
+    const surveyId = req.params.surveyId;
+    surveyModel.deleteSurvey(surveyId, (err, result) => {
         if (!err) {
             if(result.affectedRows == 0){
                 return res.status(404).json({message: "Survey id not found"});

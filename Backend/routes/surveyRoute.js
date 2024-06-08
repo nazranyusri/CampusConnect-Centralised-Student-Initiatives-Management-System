@@ -10,7 +10,7 @@ var auth = require('../services/authentication');
 router.get('/', surveyController.getAllSurvey);
 
 //get survey by id
-router.get('/:id', surveyController.getSurveyById);
+router.get('/:surveyId', surveyController.getSurveyById);
 
 //get survey history
 router.get('/history/:userId', surveyController.getSurveyHistory);

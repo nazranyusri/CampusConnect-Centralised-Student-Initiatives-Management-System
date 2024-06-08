@@ -163,4 +163,31 @@ export class ProfileComponent implements OnInit {
       response.unsubscribe();
     });
   }
+
+  confirmDeleteBusiness(id: number, image: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete the business'
+    };
+
+    const imagePathParts = image.split(/[\\/]/);
+    const relativeImagePath = imagePathParts[imagePathParts.length - 1];
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+    const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response: any) => {
+      dialogRef.close();
+        this.businessService.deleteBusiness(id, relativeImagePath).subscribe((result: any) => {
+          this.snackbarService.openSnackBar(result.message);
+          this.businesses = this.businesses.filter(business => business.businessId !== id);
+          return result;
+        },
+        (error: any) => {
+          console.error(error);
+        });
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      response.unsubscribe();
+    });
+  }
 }

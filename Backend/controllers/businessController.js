@@ -1,4 +1,5 @@
 const businessModel = require('../models/business');
+const fs = require('fs');
 
 //get all business
 const getAllBusiness = (req, res) => {
@@ -89,10 +90,11 @@ const updateBusiness = (req, res) => {
     });
 };
 
-// Delete business
+//delete program
 const deleteBusiness = (req, res) => {
     const id = req.params.id;
-
+    const imagePath = req.params.imagePath; 
+    
     businessModel.getBusinessById(id, (err, result) => {
         if (err) {
             return res.status(500).json(err);
@@ -104,15 +106,25 @@ const deleteBusiness = (req, res) => {
 
         // Ownership check
         if (result[0].userId !== res.userLocal.userId) {
+            console.log("this business", result[0].userId, "logged in as", res.userLocal.userId)
             return res.status(403).json({ message: "Forbidden" });
         }
 
+        // console.log(imagePath);
         businessModel.deleteBusiness(id, (err, result) => {
             if (!err) {
-                if (result.affectedRows == 0) {
+                if (result.affectedRows === 0) {
                     return res.status(404).json({ message: "Business id not found" });
                 }
-                return res.status(200).json({ message: "Business deleted successfully" });
+
+                // Delete the corresponding image file from the 'uploads/' directory
+                fs.unlink(`uploads/${imagePath}`, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({ message: "Error deleting image file" });
+                    }
+                    return res.status(200).json({ message: "Business and corresponding image deleted successfully" });
+                });
             } else {
                 return res.status(500).json(err);
             }

@@ -1,0 +1,25 @@
+<body>
+    <div class="header">
+        <mat-card>
+            <mat-card-content>
+                <div class="pageTitle"><img src="assets\resources\surveyTitle.png" alt="Discover upcoming survey"></div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="detailed-content">
+        <mat-card>
+            <div class="upper-section">
+                <div class="image-wrapper">
+                    <img [src]="survey?.image" class="custom-picture">
+                </div>
+                <div class="content-details">
+                    <p id="title">{{ survey?.surveyTitle }}</p>
+                    <p id="first-item"><mat-icon>person</mat-icon>{{ survey?.fullName }}</p>
+                    <p><mat-icon>access_time</mat-icon> Approximately {{ survey?.time }} minute(s)</p>
+                    <a mat-raised-button [href]="survey?.surveyLink" target="_blank">Help answer my survey!</a>
+                    <p id="textarea">{{ survey?.description }}</p>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</body>

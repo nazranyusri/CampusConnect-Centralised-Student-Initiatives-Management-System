@@ -29,18 +29,6 @@ export class NavBarComponent implements OnInit {
     if(localStorage.getItem('token') != null){
       this.isLoggedIn = true;
     }
-    
-    // if (this.isLoggedIn) {
-    //   const token = localStorage.getItem('token');
-    //   if (token) {
-    //     const decodedToken = this.jwtDecode.decodeToken(token);
-    //     this.username = decodedToken?.username || '';
-    //   } else {
-    //     this.username = '';
-    //   }
-    // } else {
-    //   this.username = '';
-    // }
   }
 
   logout() {

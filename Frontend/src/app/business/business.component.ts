@@ -17,14 +17,12 @@ export class BusinessComponent implements OnInit {
   
   constructor(
     private businessService: BusinessService,
-    private ngxService: NgxUiLoaderService,
-    private jwtDecode: JwtDecoderService
+    private ngxService: NgxUiLoaderService
   ){}
 
   ngOnInit(){
     this.ngxService.start();
     this.getAllBusiness();
-    const token = localStorage.getItem('token');
   }
 
   toggleFilterContainer(){

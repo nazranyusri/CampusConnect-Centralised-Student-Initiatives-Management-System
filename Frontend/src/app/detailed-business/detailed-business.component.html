@@ -1,0 +1,26 @@
+<body>
+    <div class="header">
+        <mat-card>
+            <mat-card-content>
+                <div class="pageTitle"><img src="assets\resources\businessTitle.png" alt="Discover upcoming business"></div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="detailed-content">
+        <mat-card>
+            <div class="upper-section">
+                <div class="image-wrapper">
+                    <img [src]="business?.image" class="custom-picture">
+                </div>
+                <div class="content-details">
+                    <p id="title">{{ business?.businessTitle }}</p>
+                    <span id="tag">{{ business?.location }}</span>
+                    <p id="first-item"><mat-icon>person</mat-icon>{{ business?.telName }}</p>
+                    <p><mat-icon>call</mat-icon>{{ business?.telNo }}</p>
+                    <a mat-raised-button [href]="business?.businessLink" target="_blank">Buy now!</a>
+                    <p id="textarea">{{ business?.description }}</p>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</body>

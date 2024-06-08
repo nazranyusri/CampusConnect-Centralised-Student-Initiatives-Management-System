@@ -7,9 +7,9 @@ const getAllSurvey = (callback) => {
 };
 
 //get survey by id
-const getSurveyById = (id, callback) => {
-    const sql = 'SELECT * FROM survey WHERE id = ?';
-    connection.query(sql, id, callback);
+const getSurveyById = (surveyId, callback) => {
+    const sql = 'SELECT * FROM survey WHERE surveyId = ?';
+    connection.query(sql, surveyId, callback);
 };
 
 //get specific user surveys -- viewed in Profile page
@@ -25,15 +25,15 @@ const addSurvey = (survey, callback) => {
 };
 
 //update survey
-const updateSurvey = (id, survey, callback) => {
-    const sql = 'UPDATE survey SET fullName = ?, description = ?, surveyLink = ?, surveyTitle = ?, time = ? WHERE id = ?';
-    connection.query(sql, [survey.fullName, survey.description, survey.surveyLink, survey.surveyTitle, survey.time, id], callback);
+const updateSurvey = (surveyId, survey, callback) => {
+    const sql = 'UPDATE survey SET fullName = ?, description = ?, surveyLink = ?, surveyTitle = ?, time = ? WHERE surveyId = ?';
+    connection.query(sql, [survey.fullName, survey.description, survey.surveyLink, survey.surveyTitle, survey.time, surveyId], callback);
 };
 
 //delete survey
-const deleteSurvey = (id, callback) => {
-    const sql = "DELETE FROM survey WHERE id = ?";
-    connection.query(sql, id, callback);
+const deleteSurvey = (surveyId, callback) => {
+    const sql = "DELETE FROM survey WHERE surveyId = ?";
+    connection.query(sql, surveyId, callback);
 };
 
 module.exports = {

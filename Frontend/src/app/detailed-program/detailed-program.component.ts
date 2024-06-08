@@ -3,9 +3,7 @@ import { ProgramService } from '../services/program.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SnackbarService } from '../services/snackbar.service';
-import { GlobalConstants } from '../shared/global-constants';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
@@ -27,24 +25,20 @@ export class DetailedProgramComponent implements OnInit {
     private programService: ProgramService,
     private route: ActivatedRoute,
     private ngxService: NgxUiLoaderService,
-    private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private jwtDecode: JwtDecoderService,
-    private router: Router
   ) { }
 
   ngOnInit() {
     //Accessing the id parameter from route parameters
     this.route.params.subscribe(params => {
-      this.id = +params['id']; // '+' is used to convert string to number
+      this.id = +params['programId']; // '+' is used to convert string to number
       this.ngxService.start();
       this.getProgramById(this.id);
       const token = localStorage.getItem('token');
       if (token) {
         const decodedToken = this.jwtDecode.decodeToken(token);
-        const userId = decodedToken?.userId || 0;
-        const username = decodedToken?.username || '';
         const role = decodedToken?.role || '';
         if (role === 'club') {
           this.isAuthorized = true;

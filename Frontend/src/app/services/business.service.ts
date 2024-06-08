@@ -25,6 +25,10 @@ export class BusinessService {
   updateBusiness(data: any){
     return this.http.patch(`${this.apiUrl}/update`, data, { headers: this.headers });
   }
+
+  deleteBusiness(id: number, imagePath: string){
+    return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`, { headers: this.headers });
+  }
   
   getBusinessHistory(userId: number){
     return this.http.get(`${this.apiUrl}/history/${userId}`, { headers: this.headers });

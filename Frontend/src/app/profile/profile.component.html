@@ -87,7 +87,7 @@
                                 <p>{{ business.description | truncate:10 }}</p>
                                 <div class="button-container">
                                     <button mat-icon-button id="actions" [routerLink]="['/updatebusiness', business.businessId]"><mat-icon>edit</mat-icon></button>
-                                    <button mat-icon-button id="actions" routerLink="delete"><mat-icon>delete</mat-icon></button>
+                                    <button mat-icon-button id="actions" (click)="confirmDeleteBusiness(business.businessId, business.image)"><mat-icon>delete</mat-icon></button>
                                 </div>
                                 <div id="datePublished">Published on {{ business.datePublished | date:'d MMM, yyyy' }}</div>
                             </mat-card-content>

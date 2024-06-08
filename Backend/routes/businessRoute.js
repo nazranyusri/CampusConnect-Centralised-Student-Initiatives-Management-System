@@ -35,6 +35,6 @@ router.post('/add', auth.authenticateToken, upload.single('image'), businessCont
 router.patch('/update', auth.authenticateToken, upload.single('image'), businessController.updateBusiness);
 
 //delete business
-router.delete('/delete/:id', auth.authenticateToken, businessController.deleteBusiness);
+router.delete('/delete/:id/:imagePath', auth.authenticateToken, businessController.deleteBusiness);
 
 module.exports = router;
