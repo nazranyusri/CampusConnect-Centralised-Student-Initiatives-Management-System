@@ -12,7 +12,7 @@ const authenticateUser = (req, res) => {
             else if (result[0].password == user.password) {
                 const response = { userId: result[0].userId, username: result[0].username, role: result[0].role, email: result[0].email };
                 const accessToken = jwt.sign(response, process.env.ACCESS_TOKEN, { expiresIn: '2h' });
-                console.log(accessToken);
+                // console.log(accessToken);
                 return res.status(200).json({ token: accessToken });
             }
         } else {

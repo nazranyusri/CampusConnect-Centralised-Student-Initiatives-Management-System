@@ -12,6 +12,12 @@ const getBusinessById = (businessId, callback) => {
     connection.query(sql, businessId, callback);
 };
 
+//get total business -- viewed in Homepage
+const getTotalBusiness = (callback) => {
+    const sql = 'SELECT COUNT(*) AS totalBusiness FROM business';
+    connection.query(sql, callback);
+};
+
 //get specific user businesses -- viewed in Profile page
 const getBusinessHistory = (userId, callback) => {
     const sql = 'SELECT * FROM business WHERE userId = ?';
@@ -41,6 +47,7 @@ module.exports = {
     getAllBusiness,
     getBusinessHistory,
     getBusinessById,
+    getTotalBusiness,
     addBusiness,
     updateBusiness,
     deleteBusiness

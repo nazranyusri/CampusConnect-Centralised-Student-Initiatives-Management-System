@@ -17,17 +17,50 @@ body {
         width: 1140px;
         border-radius: 15px;
         height: auto;
-        background-color: white;
+        background-color: #1e1e1e;
         color: black;
         margin-bottom: 20px;
+    }
+
+    .statistic {
+        display: flex;
+        flex-direction: column;
+        color: white;
+        padding: 10px;
+
+        .statistic-container {
+            margin-top: 5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            .total-program, .total-business, .total-survey {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 33.33%;
+            }
+    
+            .total-program, .total-business {
+                border-right: 1px solid white;
+            }
+    
+            .numbers {
+                font-weight: bolder;
+                font-size: 2em;
+            }
+    
+            .subtitle {
+                font-size: 0.8em;
+            }
+        }
     }
 
     @media screen and (max-width: 1192px) {
         mat-card {
             max-width: 760px;
-        }
-        img {
-            max-width: 150px;
         }
     }
 

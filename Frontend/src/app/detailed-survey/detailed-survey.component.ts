@@ -11,10 +11,10 @@ import { SurveyService } from '../services/survey.service';
   styleUrls: ['./detailed-survey.component.scss']
 })
 export class DetailedSurveyComponent {
+  userId: number = 0;
   id: number = 0;
   survey: any;
   token: any;
-  userId: number = 0;
 
   constructor(
     private surveyService: SurveyService,
@@ -28,7 +28,7 @@ export class DetailedSurveyComponent {
     this.route.params.subscribe(params => {
       this.id = +params['surveyId'];
       this.ngxService.start();
-      console.log("Survey id from params: ", this.id);
+      // console.log("Survey id from params: ", this.id);
       this.getSurveyById(this.id);
     });
     
@@ -40,13 +40,11 @@ export class DetailedSurveyComponent {
     }
   }
 
-  getSurveyById(id: number) {
-    this.surveyService.getSurveyById(id).subscribe((result: any) => {
+  getSurveyById(surveyId: number) {
+    this.surveyService.getSurveyById(surveyId).subscribe((result: any) => {
         this.ngxService.stop();
+        // console.log("Survey: ", result);
         this.survey = result;
-        this.survey.image = `${environment.apiUrl}/${this.survey.image}`;
-        // console.log(this.survey.image);
-        // console.log(result);
       },
       (error: any) => {
         this.ngxService.stop();

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BusinessService {
   private apiUrl = `${environment.apiUrl}/business`;
-  private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+  // private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
   constructor(private http: HttpClient) {}
 
   getAllBusiness(){
@@ -18,19 +18,23 @@ export class BusinessService {
     return this.http.get(`${this.apiUrl}/${businessId}`);
   }
 
+  getTotalBusiness(){
+    return this.http.get(`${this.apiUrl}/total`);
+  }
+
   addBusiness(data: any){
-    return this.http.post(`${this.apiUrl}/add`, data, { headers: this.headers });
+    return this.http.post(`${this.apiUrl}/add`, data);
   }
 
   updateBusiness(data: any){
-    return this.http.patch(`${this.apiUrl}/update`, data, { headers: this.headers });
+    return this.http.patch(`${this.apiUrl}/update`, data);
   }
 
   deleteBusiness(id: number, imagePath: string){
-    return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`, { headers: this.headers });
+    return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`);
   }
   
   getBusinessHistory(userId: number){
-    return this.http.get(`${this.apiUrl}/history/${userId}`, { headers: this.headers });
+    return this.http.get(`${this.apiUrl}/history/${userId}`);
   }
 }

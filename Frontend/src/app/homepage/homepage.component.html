@@ -9,8 +9,24 @@
 
 <body>
     <div class="content-container">
-        <mat-card>page banner here</mat-card>
-        <mat-card>items statistic here</mat-card>
+        <mat-card><img src="../../assets/resources/CampusConnect.png"></mat-card>
+        <mat-card class="statistic">
+            <div><h5>One Stop Promotion Center</h5></div>
+            <div class="statistic-container">
+                <div class="total-program">
+                    <div class="numbers">+ {{ programCount }}</div> 
+                    <div class="subtitle">programs</div>
+                </div>
+                <div class="total-business">
+                    <div class="numbers">+ {{ businessCount }}</div> 
+                    <div class="subtitle">businesses</div>
+                </div>
+                <div class="total-survey">
+                    <div class="numbers">+ {{ surveyCount }}</div> 
+                    <div class="subtitle">surveys</div>
+                </div>
+            </div>
+        </mat-card>
         <mat-card>latest posts here</mat-card>
     </div>
 </body>

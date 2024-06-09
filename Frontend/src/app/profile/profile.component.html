@@ -80,7 +80,7 @@
                             </div>
                             <mat-card-header>
                                 <mat-card-title>
-                                    <a [routerLink]="['/detailedbusiness', business.id]">{{ business.businessTitle | truncate:3 }}</a>
+                                    <a [routerLink]="['/detailedbusiness', business.businessId]">{{ business.businessTitle | truncate:3 }}</a>
                                 </mat-card-title>
                             </mat-card-header>
                             <mat-card-content id="business">
@@ -109,15 +109,15 @@
                         <mat-card *ngFor="let survey of surveys">
                             <mat-card-header>
                                 <mat-card-title>
-                                    <a [routerLink]="['/detailedsurvey', survey.id]">{{ survey.surveyTitle | truncate:3}}</a>
+                                    <a [routerLink]="['/detailedsurvey', survey.surveyId]">{{ survey.surveyTitle | truncate:3}}</a>
                                 </mat-card-title>
                             </mat-card-header>
                             <mat-card-content id="survey">
                                 <p>{{ survey.description | truncate:10 }}</p>
                                 <div id="datePublished">Published on {{ survey.datePublished | date:'d MMM, yyyy' }}</div>
                                 <div class="button-container">
-                                    <button mat-icon-button id="actions" routerLink="edit"><mat-icon>edit</mat-icon></button>
-                                    <button mat-icon-button id="actions" routerLink="delete"><mat-icon>delete</mat-icon></button>
+                                    <button mat-icon-button id="actions" [routerLink]="['/updatesurvey', survey.surveyId]"><mat-icon>edit</mat-icon></button>
+                                    <button mat-icon-button id="actions" (click)="confirmDeleteSurvey(survey.surveyId)"><mat-icon>delete</mat-icon></button>
                                 </div>
                             </mat-card-content>
                         </mat-card>
@@ -157,7 +157,7 @@
                                     <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'dd/MM/yyyy' }} - {{ program.endDate | date:'dd/MM/yyyy' }}</p>
                                     <p><mat-icon>access_time</mat-icon>{{ program.startTime }} - {{ program.endTime }}</p>
                                     <p><mat-icon>location_on</mat-icon>{{ program.location }}</p>
-                                    <div id="datePublished">Published on {{ program.datePublished | date:'d MMM, yyyy' }}</div>
+                                    <div id="datePublished">Registered on {{ program.registrationdate | date:'d MMM, yyyy' }}</div>
                                 </mat-card-content>
                             </mat-card>
                         </div>

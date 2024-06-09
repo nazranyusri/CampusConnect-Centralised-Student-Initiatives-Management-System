@@ -120,6 +120,7 @@ export class ProfileComponent implements OnInit {
 
   getUserRegisteredPrograms(userId: number) {
     this.programService.getUserRegisteredPrograms(userId).subscribe((result: any) => {
+      // console.log(result);
       this.ngxService.stop();
       this.registeredPrograms = result.map((program: any) => {
         program.image = `${environment.apiUrl}/${program.image}`;
@@ -156,6 +157,7 @@ export class ProfileComponent implements OnInit {
         },
         (error: any) => {
           console.error(error);
+          this.snackbarService.openSnackBar("An error occurred while deleting the program.");
         });
     });
 
@@ -183,6 +185,32 @@ export class ProfileComponent implements OnInit {
         },
         (error: any) => {
           console.error(error);
+          this.snackbarService.openSnackBar("An error occurred while deleting the business.");
+        });
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      response.unsubscribe();
+    });
+  }
+
+  confirmDeleteSurvey(id: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete the survey'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
+    const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response: any) => {
+      dialogRef.close();
+        this.surveyService.deleteSurvey(id).subscribe((result: any) => {
+          this.snackbarService.openSnackBar(result.message);
+          this.surveys = this.surveys.filter(survey => survey.surveyId !== id);
+          return result;
+        },
+        (error: any) => {
+          console.error(error);
+          this.snackbarService.openSnackBar("An error occurred while deleting the survey.");
         });
     });
 

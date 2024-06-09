@@ -9,14 +9,13 @@
     <div class="detailed-content">
         <mat-card>
             <div class="upper-section">
-                <div class="image-wrapper">
-                    <img [src]="survey?.image" class="custom-picture">
-                </div>
                 <div class="content-details">
                     <p id="title">{{ survey?.surveyTitle }}</p>
                     <p id="first-item"><mat-icon>person</mat-icon>{{ survey?.fullName }}</p>
-                    <p><mat-icon>access_time</mat-icon> Approximately {{ survey?.time }} minute(s)</p>
-                    <a mat-raised-button [href]="survey?.surveyLink" target="_blank">Help answer my survey!</a>
+                    <p><mat-icon>access_time</mat-icon> Approximately {{ survey?.time }} minute(s) to complete the survey</p>
+                    <ng-container *ngIf="userId !== survey?.userId">
+                        <a mat-raised-button [href]="survey?.surveyLink" target="_blank">Help answer my survey!</a>
+                    </ng-container>
                     <p id="textarea">{{ survey?.description }}</p>
                 </div>
             </div>

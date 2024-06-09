@@ -27,6 +27,17 @@ const getBusinessById = (req, res) => {
     });
 };
 
+//get total business -- viewed in Homepage
+const getTotalBusiness = (req, res) => {
+    businessModel.getTotalBusiness((err, result) => {
+        if (!err) {
+            return res.status(200).json({ totalBusiness: result[0].totalBusiness });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
 //get specific user business -- viewed in Profile 
 const getBusinessHistory = (req, res) => {
     const userId = req.params.userId;
@@ -73,9 +84,23 @@ const updateBusiness = (req, res) => {
 
         // Ownership check
         if (result[0].userId !== res.userLocal.userId) {
-            console.log(result[0].userId, res.userLocal.userId)
+            // console.log(result[0].userId, res.userLocal.userId)
             return res.status(403).json({ message: "Forbidden" });
         }
+
+        const oldImagePath = result[0].image;
+        if (business.image === oldImagePath) {
+            console.log("Same image file " + business.image + " " + oldImagePath);
+        } else (
+            console.log("Different image file " + business.image + " " + oldImagePath),
+            fs.unlink(oldImagePath, (err) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ message: "Error deleting old image file" });
+                }
+                console.log("Old image file deleted successfully");
+            })
+        )
 
         businessModel.updateBusiness(business, (err, result) => {
             if (!err) {
@@ -90,7 +115,7 @@ const updateBusiness = (req, res) => {
     });
 };
 
-//delete program
+//delete business
 const deleteBusiness = (req, res) => {
     const id = req.params.id;
     const imagePath = req.params.imagePath; 
@@ -106,7 +131,7 @@ const deleteBusiness = (req, res) => {
 
         // Ownership check
         if (result[0].userId !== res.userLocal.userId) {
-            console.log("this business", result[0].userId, "logged in as", res.userLocal.userId)
+            // console.log("this business", result[0].userId, "logged in as", res.userLocal.userId)
             return res.status(403).json({ message: "Forbidden" });
         }
 
@@ -135,6 +160,7 @@ const deleteBusiness = (req, res) => {
 module.exports = {
     getAllBusiness,
     getBusinessById,
+    getTotalBusiness,
     getBusinessHistory,
     addBusiness,
     updateBusiness,

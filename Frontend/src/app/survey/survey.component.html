@@ -24,9 +24,6 @@
     <div class="content-container">
       <ng-container *ngIf="(surveys | surveyQuery : searchKey) as results">
         <mat-card *ngFor="let survey of results" [routerLink]="['/detailedsurvey', survey.surveyId]">
-          <div class="image-wrapper">
-            <img mat-card-image [src]="survey?.image" class="custom-picture">
-          </div>
           <mat-card-header>
             <mat-card-title>
               <a [routerLink]="['/detailedsurvey', survey.surveyId]">{{ survey.surveyTitle }}</a>

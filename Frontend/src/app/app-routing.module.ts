@@ -14,7 +14,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { AddProgramComponent } from './add-program/add-program.component';
 import { UpdateProgramComponent } from './update-program/update-program.component';
 import { ProgramRegistrantComponent } from './program-registrant/program-registrant.component';
-import { ClubGuardService } from './services/club-guard.service';
 import { AddBusinessComponent } from './add-business/add-business.component';
 import { UpdateBusinessComponent } from './update-business/update-business.component';
 import { ClubadminGuardService } from './services/clubadmin-guard.service';
@@ -22,6 +21,8 @@ import { AddSurveyComponent } from './add-survey/add-survey.component';
 import { UpdateSurveyComponent } from './update-survey/update-survey.component';
 import { DetailedSurveyComponent } from './detailed-survey/detailed-survey.component';
 import { DetailedBusinessComponent } from './detailed-business/detailed-business.component';
+import { UpdatePersakaComponent } from './update-persaka/update-persaka.component';
+import { AdminGuardService } from './services/admin-guard.service';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -63,7 +64,10 @@ const routes: Routes = [
   //SURVEY ROUTES
   {path: 'survey', component: SurveyComponent},
   {path: 'detailedsurvey/:surveyId', component: DetailedSurveyComponent},
-  {path: 'addsurvey', component: AddSurveyComponent},
+  {
+    path: 'addsurvey', component: AddSurveyComponent,
+    canActivate: [RouterGuardService]
+  },
   {
     path: 'updatesurvey/:surveyId', component: UpdateSurveyComponent,
     canActivate: [RouterGuardService]
@@ -71,6 +75,10 @@ const routes: Routes = [
 
   //PERSAKA ROUTES
   {path: 'persaka', component: PersakaComponent},
+  {
+    path: 'updatepersaka', component: UpdatePersakaComponent,
+    canActivate: [RouterGuardService, AdminGuardService]
+  },
 
   {path: '**', component: WildcardComponent}
 ];

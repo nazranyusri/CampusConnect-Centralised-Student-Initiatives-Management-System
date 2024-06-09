@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
   private apiUrl = `${environment.apiUrl}/user`;
-  private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+  // private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   get isLoggedIn() {
@@ -34,7 +34,6 @@ export class UserService {
   }
 
   getUser(userId: number) {
-    console.log("UserService:", this.headers);
-    return this.http.get(`${this.apiUrl}/profile/${userId}`, { headers: this.headers });
+    return this.http.get(`${this.apiUrl}/profile/${userId}`);
   }
 }

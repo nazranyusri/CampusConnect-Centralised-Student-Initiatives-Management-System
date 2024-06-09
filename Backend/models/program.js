@@ -12,15 +12,14 @@ const getProgramById = (id, callback) => {
     connection.query(sql, id, callback);
 };
 
+const getTotalProgram = (callback) => {
+    const sql = 'SELECT COUNT(*) AS totalProgram FROM program WHERE startDate > CURDATE()';
+    connection.query(sql, callback);
+};
+
 // Get specific user programs -- viewed in Profile page
 const getProgramHistory = (userId, callback) => {
     const sql = 'SELECT programId, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program WHERE userId = ?';
-    connection.query(sql, [userId], callback);
-};
-
-// Get user registered program
-const getUserRegisteredProgram = (userId, callback) => {
-    const sql = 'SELECT p.programId, p.programTitle, p.startDate, p.endDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.location, p.image, p.datePublished FROM registeredprogram rp JOIN program p ON rp.programId = p.programId WHERE rp.userId = ?';
     connection.query(sql, [userId], callback);
 };
 
@@ -45,26 +44,12 @@ const deleteProgram = (id, callback) => {
     connection.query(sql, id, callback);
 };
 
-// Register program
-const registerProgram = (id, callback) => {
-    const sql = 'INSERT INTO registeredprogram (programId, userId, registrationdate) VALUES (?, ?, NOW())';
-    connection.query(sql, [id.programId, id.userId], callback);
-};
-
-// Get program registrant
-const getRegistrant = (programId, callback) => {
-    const sql = 'SELECT u.fullName, u.matricNo, u.email, u.telNo, rp.registrationdate FROM registeredprogram rp JOIN user u ON rp.userId = u.userId WHERE rp.programId = ?';
-    connection.query(sql, [programId], callback);
-};
-
 module.exports = {
     getAllProgram,
     getProgramHistory,
-    getUserRegisteredProgram,
+    getTotalProgram,
     getProgramById,
     addProgram,
     updateProgram,
     deleteProgram,
-    registerProgram,
-    getRegistrant
 };

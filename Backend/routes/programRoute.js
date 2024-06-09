@@ -22,6 +22,9 @@ var auth = require('../services/authentication');
 //get all programs
 router.get('/', programController.getAllProgram);
 
+//get total program -- viewed in Homepage
+router.get('/total', programController.getTotalProgram);
+
 //get program by id
 router.get('/:id', programController.getProgramById);
 

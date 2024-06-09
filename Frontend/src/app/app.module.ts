@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './shared/material-module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomepageComponent } from './homepage/homepage.component';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, PB_DIRECTION, SPINNER } from 'ngx-ui-loader';
 import { LoginComponent } from './login/login.component';
@@ -36,6 +36,8 @@ import { AddSurveyComponent } from './add-survey/add-survey.component';
 import { DetailedSurveyComponent } from './detailed-survey/detailed-survey.component';
 import { UpdateSurveyComponent } from './update-survey/update-survey.component';
 import { DetailedBusinessComponent } from './detailed-business/detailed-business.component';
+import { TokenInterceptor } from './services/token.interceptor';
+import { UpdatePersakaComponent } from './update-persaka/update-persaka.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -78,6 +80,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DetailedSurveyComponent,
     UpdateSurveyComponent,
     DetailedBusinessComponent,
+    UpdatePersakaComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-MY' }
+    HttpClientModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-MY' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

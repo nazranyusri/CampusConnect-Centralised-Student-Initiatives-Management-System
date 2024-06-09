@@ -127,9 +127,9 @@ export class UpdateBusinessComponent {
       formData.append('description', this.businessForm.get('description').value);
       formData.append('datePublished', new Date().toISOString());
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}:`, value);
+      // });
 
       this.businessService.updateBusiness(formData).subscribe(() => {
         this.ngxService.stop();

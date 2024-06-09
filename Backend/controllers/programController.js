@@ -1,4 +1,5 @@
 const programModel = require('../models/program');
+const registeredprogramModel = require('../models/registeredprogram');
 const fs = require('fs');
 
 //get all programs
@@ -27,6 +28,17 @@ const getProgramById = (req, res) => {
     });
 };
 
+//get total program -- viewed in Homepage
+const getTotalProgram = (req, res) => {
+    programModel.getTotalProgram((err, result) => {
+        if (!err) {
+            return res.status(200).json({ totalProgram: result[0].totalProgram });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
 //get specific user programs -- viewed in Profile 
 const getProgramHistory = (req, res) => {
     const userId = req.params.userId;
@@ -42,7 +54,8 @@ const getProgramHistory = (req, res) => {
 //get user registered program
 const getUserRegisteredProgram = (req, res) => {
     const userId = req.params.userId;
-    programModel.getUserRegisteredProgram(userId, (err, result) => {
+    registeredprogramModel.getUserRegisteredProgram(userId, (err, result) => {
+        // console.log(result);
         if (!err) {
             return res.status(200).json(result);
         } else {
@@ -86,9 +99,24 @@ const updateProgram = (req, res) => {
 
         // Ownership check
         if (result[0].userId !== res.userLocal.userId) {
-            console.log("this program", result[0].userId, "logged in as", res.userLocal.userId)
+            // console.log("this program", result[0].userId, "logged in as", res.userLocal.userId);
             return res.status(403).json({ message: "Forbidden" });
         }
+
+        const oldImagePath = result[0].image;
+        if (program.image === oldImagePath) {
+            console.log("Same image file " + program.image + " " + oldImagePath);
+        } else (
+            console.log("Different image file " + program.image + " " + oldImagePath),
+            fs.unlink(oldImagePath, (err) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ message: "Error deleting old image file" });
+                }
+                console.log("Old image file deleted successfully");
+            })
+        )
+
         programModel.updateProgram(program, (err, result) => {
             if (!err) {
                 if(result.affectedRows == 0){
@@ -118,7 +146,7 @@ const deleteProgram = (req, res) => {
 
         // Ownership check
         if (result[0].userId !== res.userLocal.userId) {
-            console.log("this program", result[0].userId, "logged in as", res.userLocal.userId)
+            // console.log("this program", result[0].userId, "logged in as", res.userLocal.userId);
             return res.status(403).json({ message: "Forbidden" });
         }
 
@@ -147,7 +175,7 @@ const deleteProgram = (req, res) => {
 //register program
 const registerProgram = (req, res) => {
     const id = req.body;
-    programModel.registerProgram(id, (err, result) => {
+    registeredprogramModel.registerProgram(id, (err, result) => {
         if (!err) {
             return res.status(200).json({ message: "Program registered successfully" });
         } else {
@@ -160,7 +188,7 @@ const registerProgram = (req, res) => {
 const getRegistrant = (req, res) => {
     const programId = req.params.programId;
     // console.log('Received programId:', programId);
-    programModel.getRegistrant(programId, (err, result) => {
+    registeredprogramModel.getRegistrant(programId, (err, result) => {
         if (err) {
             console.error('Database query error:', err);
             return res.status(500).json({ error: 'Database query error', details: err });
@@ -172,6 +200,7 @@ const getRegistrant = (req, res) => {
 module.exports = {
     getAllProgram,
     getProgramById,
+    getTotalProgram,
     getProgramHistory,
     getUserRegisteredProgram,
     addProgram,

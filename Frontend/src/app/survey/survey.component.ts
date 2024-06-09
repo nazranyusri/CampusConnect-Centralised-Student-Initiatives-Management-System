@@ -28,11 +28,8 @@ export class SurveyComponent implements OnInit {
   getAllSurvey(){
     this.surveyService.getAllSurvey().subscribe((result: any) => {
         this.ngxService.stop();
-        this.surveys = result.map((survey: any) => {
-          survey.image = `${environment.apiUrl}/${survey.image}`;
-          return survey;
-        });
-        console.log(this.surveys);
+        this.surveys = result;
+        return result;
       },
       (error: any) => {
         this.ngxService.stop();

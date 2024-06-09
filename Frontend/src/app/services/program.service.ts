@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ProgramService {
   private apiUrl = `${environment.apiUrl}/program`;
-  private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+  // private headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
   constructor(private http: HttpClient) {}
 
   getAllProgram(){
@@ -20,18 +20,22 @@ export class ProgramService {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
+  getTotalProgram(){
+    return this.http.get(`${this.apiUrl}/total`);
+  }
+
   addProgram(data: any){
     // console.log("addProgram called");
-    return this.http.post(`${this.apiUrl}/add`, data, { headers: this.headers });
+    return this.http.post(`${this.apiUrl}/add`, data);
   }
 
   updateProgram(data: any){
-    return this.http.patch(`${this.apiUrl}/update`, data, { headers: this.headers });
+    return this.http.patch(`${this.apiUrl}/update`, data);
   }
 
   deleteProgram(id: number, imagePath: string){
     // console.log("deleteProgram imagePath:", imagePath);
-    return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`, { headers: this.headers });
+    return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`);
   }
 
   registerProgram(data: any) {
@@ -40,14 +44,14 @@ export class ProgramService {
   }
 
   getRegistrantList(programId: number): Observable<Registrant[]> {
-    return this.http.get<Registrant[]>(`${this.apiUrl}/registrant/${programId}`, { headers: this.headers });
+    return this.http.get<Registrant[]>(`${this.apiUrl}/registrant/${programId}`,);
   }
 
   getProgramHistory(userId: number){
-    return this.http.get(`${this.apiUrl}/history/${userId}`, { headers: this.headers });
+    return this.http.get(`${this.apiUrl}/history/${userId}`);
   }
 
   getUserRegisteredPrograms(userId: number){
-    return this.http.get(`${this.apiUrl}/registered/${userId}`, { headers: this.headers });
+    return this.http.get(`${this.apiUrl}/registered/${userId}`);
   }
 }

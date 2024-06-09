@@ -22,6 +22,9 @@ var auth = require('../services/authentication');
 //get all businesses
 router.get('/', businessController.getAllBusiness);
 
+//get total business -- viewed in Homepage
+router.get('/total', businessController.getTotalBusiness);
+
 //get business by id
 router.get('/:businessId', businessController.getBusinessById);
 

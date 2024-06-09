@@ -9,6 +9,9 @@ var auth = require('../services/authentication');
 //get all surveys
 router.get('/', surveyController.getAllSurvey);
 
+//get total survey -- viewed in Homepage
+router.get('/total', surveyController.getTotalSurvey);
+
 //get survey by id
 router.get('/:surveyId', surveyController.getSurveyById);
 
@@ -19,9 +22,9 @@ router.get('/history/:userId', surveyController.getSurveyHistory);
 router.post('/add', auth.authenticateToken, surveyController.addSurvey);
 
 //update survey
-router.patch('/update/:id', auth.authenticateToken, surveyController.updateSurvey);
+router.patch('/update', auth.authenticateToken, surveyController.updateSurvey);
 
 //delete survey
-router.delete('/delete/:id', auth.authenticateToken, surveyController.deleteSurvey);
+router.delete('/delete/:surveyId', auth.authenticateToken, surveyController.deleteSurvey);
 
 module.exports = router;

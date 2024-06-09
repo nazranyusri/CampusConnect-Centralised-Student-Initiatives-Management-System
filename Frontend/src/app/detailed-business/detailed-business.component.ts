@@ -14,6 +14,7 @@ import { BusinessService } from '../services/business.service';
   styleUrls: ['./detailed-business.component.scss']
 })
 export class DetailedBusinessComponent {
+  userId: number = 0;
   id: number = 0;
   business: any;
   token: any;
@@ -22,6 +23,7 @@ export class DetailedBusinessComponent {
     private businessService: BusinessService,
     private route: ActivatedRoute,
     private ngxService: NgxUiLoaderService,
+    private jwtDecode: JwtDecoderService,
   ) { }
 
   ngOnInit() {
@@ -32,6 +34,12 @@ export class DetailedBusinessComponent {
       console.log(this.id);
       this.getBusinessById(this.id);
     });
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtDecode.decodeToken(token);
+      this.userId = decodedToken?.userId || 0;
+    }
   }
 
   getBusinessById(id: number) {

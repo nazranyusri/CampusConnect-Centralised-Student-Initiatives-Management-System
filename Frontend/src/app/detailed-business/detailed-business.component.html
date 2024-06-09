@@ -17,7 +17,9 @@
                     <span id="tag">{{ business?.location }}</span>
                     <p id="first-item"><mat-icon>person</mat-icon>{{ business?.telName }}</p>
                     <p><mat-icon>call</mat-icon>{{ business?.telNo }}</p>
-                    <a mat-raised-button [href]="business?.businessLink" target="_blank">Buy now!</a>
+                    <ng-container *ngIf="userId !== business?.userId">
+                        <a mat-raised-button [href]="business?.businessLink" target="_blank">Buy now!</a>
+                    </ng-container>
                     <p id="textarea">{{ business?.description }}</p>
                 </div>
             </div>

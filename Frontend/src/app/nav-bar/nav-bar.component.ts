@@ -42,7 +42,7 @@ export class NavBarComponent implements OnInit {
       dialogRef.close();
       localStorage.removeItem('token');
       this.router.navigate(['/']);
-      window.location.reload();
+      // window.location.reload();
       this.isLoggedIn = false;
     });
   }
