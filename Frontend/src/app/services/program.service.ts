@@ -24,6 +24,10 @@ export class ProgramService {
     return this.http.get(`${this.apiUrl}/total`);
   }
 
+  getLatestProgram(){
+    return this.http.get(`${this.apiUrl}/latest`);
+  }
+
   addProgram(data: any){
     // console.log("addProgram called");
     return this.http.post(`${this.apiUrl}/add`, data);

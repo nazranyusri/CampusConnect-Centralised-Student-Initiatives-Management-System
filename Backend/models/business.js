@@ -18,6 +18,12 @@ const getTotalBusiness = (callback) => {
     connection.query(sql, callback);
 };
 
+//get latest business -- viewed in Homepage
+const getLatestBusiness = (callback) => {
+    const sql = 'SELECT * FROM business ORDER BY datePublished DESC LIMIT 3';
+    connection.query(sql, callback);
+};
+
 //get specific user businesses -- viewed in Profile page
 const getBusinessHistory = (userId, callback) => {
     const sql = 'SELECT * FROM business WHERE userId = ?';
@@ -48,6 +54,7 @@ module.exports = {
     getBusinessHistory,
     getBusinessById,
     getTotalBusiness,
+    getLatestBusiness,
     addBusiness,
     updateBusiness,
     deleteBusiness

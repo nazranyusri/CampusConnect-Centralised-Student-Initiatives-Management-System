@@ -25,6 +25,9 @@ router.get('/', businessController.getAllBusiness);
 //get total business -- viewed in Homepage
 router.get('/total', businessController.getTotalBusiness);
 
+//get latest business -- viewed in Homepage
+router.get('/latest', businessController.getLatestBusiness);
+
 //get business by id
 router.get('/:businessId', businessController.getBusinessById);
 

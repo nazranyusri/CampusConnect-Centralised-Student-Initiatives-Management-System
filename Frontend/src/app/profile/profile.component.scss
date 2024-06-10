@@ -28,13 +28,16 @@ body {
             background-color: map-get($custom-primary-pallette, 500) !important;
             border-radius: 15px;
 
-            .profile-picture {
-                // background-color: red;
+            .image-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
                 img {
                     border-radius: 50%;
-                    max-height: 150px;
-                    max-width: 150px;
+                    width: 150px;
+                    height: 150px;
+                    object-fit: cover;
                 }
             }
 

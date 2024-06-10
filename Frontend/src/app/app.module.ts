@@ -38,6 +38,7 @@ import { UpdateSurveyComponent } from './update-survey/update-survey.component';
 import { DetailedBusinessComponent } from './detailed-business/detailed-business.component';
 import { TokenInterceptor } from './services/token.interceptor';
 import { UpdatePersakaComponent } from './update-persaka/update-persaka.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -81,6 +82,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     UpdateSurveyComponent,
     DetailedBusinessComponent,
     UpdatePersakaComponent,
+    UpdateProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ import { GlobalConstants } from '../shared/global-constants';
 export class LoginComponent implements OnInit {
   loginForm: any = FormGroup;
   responseMessage: any;
+  isLoggedIn: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private userService: UserService,
@@ -27,6 +28,13 @@ export class LoginComponent implements OnInit {
       // password: [null, [Validators.required, Validators.pattern(GlobalConstants.passwordRegex)]]
       password: [null, [Validators.required]]
     });
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.isLoggedIn = true;
+      this.router.navigate(['/homepage']);
+      this.snackbarService.openSnackBar('You are already logged in');
+    }
   }
 
   login() {

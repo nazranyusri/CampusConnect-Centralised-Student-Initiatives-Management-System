@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
+const fs = require('fs');
 
 //login
 const authenticateUser = (req, res) => {
@@ -55,16 +56,51 @@ const getUser = (req, res) => {
     });
 }
 
-//update profile
+// Update profile
 const updateProfile = (req, res) => {
-    const tokenPayload = res.userLocal;
-    let user = req.body;
-    userModel.updateProfile(user, tokenPayload.userId, (err, result) => {
-        if (!err) {
-            return res.status(200).json({ message: "User details updated successfully" });
-        } else {
+    const user = req.body;
+    if (req.file) {
+        user.image = req.file.path; // Store the path of the uploaded image
+    }
+    userModel.getUser(user.userId, (err, result) => {
+        if (err) {
             return res.status(500).json(err);
         }
+
+        if (result.length == 0) {
+            return res.status(404).json({ message: "User id not found" });
+        }
+
+        // Ownership check
+        if (result[0].userId !== res.userLocal.userId) {
+            console.log(result[0].userId, res.userLocal.userId)
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        const oldImagePath = result[0].image;
+        if (user.image === oldImagePath) {
+            console.log("Same image file " + user.image + " " + oldImagePath);
+        } else (
+            console.log("Different image file " + user.image + " " + oldImagePath),
+            fs.unlink(oldImagePath, (err) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ message: "Error deleting old image file" });
+                }
+                console.log("Old image file deleted successfully");
+            })
+        )
+
+        userModel.updateProfile(user, (err, result) => {
+            if (!err) {
+                if (result.affectedRows == 0) {
+                    return res.status(404).json({ message: "User id not found" });
+                }
+                return res.status(200).json({ message: "Profile updated successfully" });
+            } else {
+                return res.status(500).json(err);
+            }
+        });
     });
 };
 

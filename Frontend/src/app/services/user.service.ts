@@ -36,4 +36,8 @@ export class UserService {
   getUser(userId: number) {
     return this.http.get(`${this.apiUrl}/profile/${userId}`);
   }
+
+  updateProfile(data: any): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/update`, data);
+  }
 }

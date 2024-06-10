@@ -37,6 +37,17 @@ const getTotalSurvey = (req, res) => {
     });
 };
 
+//get latest survey -- viewed in Homepage
+const getLatestSurvey = (req, res) => {
+    surveyModel.getLatestSurvey((err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
 //get specific user survey -- viewed in Profile 
 const getSurveyHistory = (req, res) => {
     const userId = req.params.userId;
@@ -132,6 +143,7 @@ module.exports = {
     getAllSurvey,
     getSurveyById,
     getTotalSurvey,
+    getLatestSurvey,
     getSurveyHistory,
     addSurvey,
     updateSurvey,

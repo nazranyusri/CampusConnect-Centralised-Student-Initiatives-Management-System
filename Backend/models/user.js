@@ -30,14 +30,14 @@ const register = (user, callback) => {
 
 //view profile
 const getUser = (userId, callback) => {
-    const sql = 'SELECT userId, username, email, role FROM user WHERE userId = ?';
+    const sql = 'SELECT userId, username, email, role, fullName, matricNo, telNo, image FROM user WHERE userId = ?';
     connection.query(sql, userId, callback);
 };
 
 //update profile
-const updateProfile = (user, userId, callback) => {
-    const sql = 'UPDATE user SET username = ?, email = ?, password = ? WHERE userId = ?';
-    connection.query(sql, [user.username, user.email, user.password, userId], callback);
+const updateProfile = (user, callback) => {
+    const sql = 'UPDATE user SET username = ?, fullName = ?, matricNo = ?, telNo = ?, image = ? WHERE userId = ?';
+    connection.query(sql, [user.username, user.fullName, user.matricNo, user.telNo, user.image, user.userId], callback);
 };
 
 module.exports = {

@@ -39,6 +39,17 @@ const getTotalProgram = (req, res) => {
     });
 };
 
+//get latest program -- viewed in Homepage
+const getLatestProgram = (req, res) => {
+    programModel.getLatestProgram((err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
 //get specific user programs -- viewed in Profile 
 const getProgramHistory = (req, res) => {
     const userId = req.params.userId;
@@ -201,6 +212,7 @@ module.exports = {
     getAllProgram,
     getProgramById,
     getTotalProgram,
+    getLatestProgram,
     getProgramHistory,
     getUserRegisteredProgram,
     addProgram,

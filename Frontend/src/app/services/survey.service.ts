@@ -19,6 +19,10 @@ export class SurveyService {
     return this.http.get(`${this.apiUrl}/total`);
   }
 
+  getLatestSurvey(){
+    return this.http.get(`${this.apiUrl}/latest`);
+  }
+
   getSurveyById(surveyId: number){
     return this.http.get(`${this.apiUrl}/${surveyId}`);
   }

@@ -25,6 +25,9 @@ router.get('/', programController.getAllProgram);
 //get total program -- viewed in Homepage
 router.get('/total', programController.getTotalProgram);
 
+//get latest program -- viewed in Homepage
+router.get('/latest', programController.getLatestProgram);
+
 //get program by id
 router.get('/:id', programController.getProgramById);
 

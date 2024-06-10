@@ -23,6 +23,7 @@ import { DetailedSurveyComponent } from './detailed-survey/detailed-survey.compo
 import { DetailedBusinessComponent } from './detailed-business/detailed-business.component';
 import { UpdatePersakaComponent } from './update-persaka/update-persaka.component';
 import { AdminGuardService } from './services/admin-guard.service';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -33,6 +34,10 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {
     path: 'profile', component: ProfileComponent,
+    canActivate: [RouterGuardService]
+  },
+  {
+    path: 'updateprofile/:userId', component: UpdateProfileComponent,
     canActivate: [RouterGuardService]
   },
 
@@ -84,7 +89,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

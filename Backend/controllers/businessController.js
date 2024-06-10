@@ -38,6 +38,17 @@ const getTotalBusiness = (req, res) => {
     });
 };
 
+//get latest business -- viewed in Homepage
+const getLatestBusiness = (req, res) => {
+    businessModel.getLatestBusiness((err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
 //get specific user business -- viewed in Profile 
 const getBusinessHistory = (req, res) => {
     const userId = req.params.userId;
@@ -161,6 +172,7 @@ module.exports = {
     getAllBusiness,
     getBusinessById,
     getTotalBusiness,
+    getLatestBusiness,
     getBusinessHistory,
     addBusiness,
     updateBusiness,

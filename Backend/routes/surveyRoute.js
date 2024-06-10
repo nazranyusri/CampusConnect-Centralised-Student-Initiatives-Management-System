@@ -12,6 +12,9 @@ router.get('/', surveyController.getAllSurvey);
 //get total survey -- viewed in Homepage
 router.get('/total', surveyController.getTotalSurvey);
 
+//get latest survey -- viewed in Homepage
+router.get('/latest', surveyController.getLatestSurvey);
+
 //get survey by id
 router.get('/:surveyId', surveyController.getSurveyById);
 

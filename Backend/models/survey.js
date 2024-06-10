@@ -18,6 +18,12 @@ const getTotalSurvey = (callback) => {
     connection.query(sql, callback);
 };
 
+//get latest survey -- viewed in Homepage
+const getLatestSurvey = (callback) => {
+    const sql = 'SELECT * FROM survey ORDER BY datePublished DESC LIMIT 3';
+    connection.query(sql, callback);
+};
+
 //get specific user surveys -- viewed in Profile page
 const getSurveyHistory = (userId, callback) => {
     const sql = 'SELECT * FROM survey WHERE userId = ?';
@@ -47,6 +53,7 @@ module.exports = {
     getSurveyHistory,
     getSurveyById,
     getTotalSurvey,
+    getLatestSurvey,
     addSurvey,
     updateSurvey,
     deleteSurvey

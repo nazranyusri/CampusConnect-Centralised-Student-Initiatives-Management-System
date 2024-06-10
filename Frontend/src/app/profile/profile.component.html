@@ -2,9 +2,8 @@
     <div class="content-container">
         <div class="profile-container" *ngFor="let user of userDetails">
             <mat-card>
-                <div class="profile-picture" fxLayoutAlign="center center">
-                    <!-- <img mat-card-image [src]="user?.image" class="custom-picture"> -->
-                    <img mat-card-image src="https://www.w3schools.com/howto/img_avatar.png">
+                <div class="image-wrapper" fxLayoutAlign="center center">
+                    <img mat-card-image [src]="user.image ? user.image : defaultAvatar" alt="User Image">
                 </div>
                 <div class="profile-details">
                     <div class="user-details">
@@ -12,7 +11,7 @@
                         <p>{{ user.email }}</p>
                     </div>
                     <div class="update-section">
-                        <button mat-raised-button color="accent" [routerLink]="['/updateprofile']">Edit Profile</button>
+                        <button mat-raised-button color="accent" [routerLink]="['/updateprofile', user.userId]">Edit Profile</button>
                     </div>
                 </div>
             </mat-card>

@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   isAuthorized: boolean = false;
   panelOpenState = false;
   userDetails: any;
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
   programs: Array<any> = [];
   businesses: Array<any> = [];
   surveys: Array<any> = [];
@@ -58,19 +59,22 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  getUserDetails(userId: number) {
+getUserDetails(userId: number) {
     this.userService.getUser(userId).subscribe((result: any) => {
       this.ngxService.stop();
-      this.userDetails = result;
-      // console.log(this.userDetails);
-      return result;
+      this.userDetails = result.map((user: any) => {
+          if (user.image) {
+              user.image = `${environment.apiUrl}/${user.image}`;
+              console.log("Image URL", user.image);
+          }
+          return user;
+      });
     },
-      (error: any) => {
+    (error: any) => {
         this.ngxService.stop();
         console.error(error);
-      }
-    );
-  }
+    });
+}
 
   getProgramHistory(userId: number) {
     this.programService.getProgramHistory(userId).subscribe((result: any) => {

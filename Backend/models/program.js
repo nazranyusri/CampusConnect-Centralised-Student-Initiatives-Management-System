@@ -12,8 +12,15 @@ const getProgramById = (id, callback) => {
     connection.query(sql, id, callback);
 };
 
+//get total upcoming program -- viewed in Homepage
 const getTotalProgram = (callback) => {
     const sql = 'SELECT COUNT(*) AS totalProgram FROM program WHERE startDate > CURDATE()';
+    connection.query(sql, callback);
+};
+
+// Get latest program -- viewed in Homepage
+const getLatestProgram = (callback) => {
+    const sql = 'SELECT programId, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program ORDER BY datePublished DESC LIMIT 3';
     connection.query(sql, callback);
 };
 
@@ -48,6 +55,7 @@ module.exports = {
     getAllProgram,
     getProgramHistory,
     getTotalProgram,
+    getLatestProgram,
     getProgramById,
     addProgram,
     updateProgram,
