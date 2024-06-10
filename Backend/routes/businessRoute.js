@@ -28,6 +28,9 @@ router.get('/total', businessController.getTotalBusiness);
 //get latest business -- viewed in Homepage
 router.get('/latest', businessController.getLatestBusiness);
 
+//get menu items
+router.get('/menu/:businessId', businessController.getMenuItems);
+
 //get business by id
 router.get('/:businessId', businessController.getBusinessById);
 

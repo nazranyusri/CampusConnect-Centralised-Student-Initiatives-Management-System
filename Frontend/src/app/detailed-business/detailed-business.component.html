@@ -16,9 +16,24 @@
                     <p id="title">{{ business?.businessTitle }}</p>
                     <span id="tag">{{ business?.location }}</span>
                     <p id="first-item"><mat-icon>person</mat-icon>{{ business?.telName }}</p>
-                    <p><mat-icon>call</mat-icon>{{ business?.telNo }}</p>
+                    <mat-card class="menu">
+                        <table>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Price(RM)</th>
+                                <th>Quantity</th>
+                                <th>Note</th>
+                            </tr>
+                            <tr *ngFor="let menuItem of menuItems">
+                                <td>{{ menuItem.itemName }}</td>
+                                <td>{{ menuItem.price }}</td>
+                                <td>{{ menuItem.quantity }}</td>
+                                <td>{{ menuItem.note }}</td>
+                            </tr>
+                        </table>
+                    </mat-card>
                     <ng-container *ngIf="userId !== business?.userId">
-                        <a mat-raised-button [href]="business?.businessLink" target="_blank">Buy now!</a>
+                        <a mat-raised-button [href]="buttonHref" target="_blank">Buy now!</a>
                     </ng-container>
                     <p id="textarea">{{ business?.description }}</p>
                 </div>

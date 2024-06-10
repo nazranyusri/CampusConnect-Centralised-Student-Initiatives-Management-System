@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BusinessService } from '../services/business.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../services/snackbar.service';
@@ -42,12 +42,13 @@ export class UpdateBusinessComponent {
     this.businessForm = this.formBuilder.group({
       businessTitle: ['', Validators.required],
       telName: ['', Validators.required],
-      telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
       location: ['', Validators.required],
       othersLocation: ['', Validators.required],
+      sellingMethod: ['', Validators.required],
+      telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
       businessLink: ['', Validators.required],
-      image: [''],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      items: this.formBuilder.array([])
     });
 
     // Dynamically set validation for othersLocation field based on location field value
@@ -61,6 +62,41 @@ export class UpdateBusinessComponent {
       othersLocationControl.setValue(''); // Clear othersLocation value
       othersLocationControl.updateValueAndValidity();
     });
+
+    // Dynamically set validation for telNo and businessLink fields based on sellingMethod field value
+    this.businessForm.get('sellingMethod').valueChanges.subscribe((value: string) => {
+      if (value === 'WhatsApp') {
+        this.businessForm.get('telNo').setValidators(Validators.required);
+        this.businessForm.get('businessLink').clearValidators();
+        this.businessForm.get('businessLink').reset();
+      } else if (value === 'Google Form') {
+        this.businessForm.get('businessLink').setValidators(Validators.required);
+        this.businessForm.get('telNo').clearValidators();
+        this.businessForm.get('telNo').reset();
+      }
+      this.businessForm.get('telNo').updateValueAndValidity();
+      this.businessForm.get('businessLink').updateValueAndValidity();
+    });
+
+    this.addItem();
+  }
+
+  get items(): FormArray {
+    return this.businessForm.get('items') as FormArray;
+  }
+
+  addItem() {
+    const itemGroup = this.formBuilder.group({
+      itemName: ['', Validators.required],
+      price: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]], // Numeric value with optional two decimal places
+      quantity: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Numeric value
+      note: ['']
+    });
+    this.items.push(itemGroup);
+  }
+
+  removeItem(index: number) {
+    this.items.removeAt(index);
   }
 
   onImageSelected(event: any) {
@@ -83,16 +119,21 @@ export class UpdateBusinessComponent {
         this.businessForm.patchValue({
           businessTitle: business.businessTitle,
           telName: business.telName,
-          telNo: business.telNo,
           location: business.location,
           othersLocation: business.othersLocation,
+          sellingMethod: business.sellingMethod,
+          telNo: business.telNo,
           businessLink: business.businessLink,
           description: business.description
         });
         this.image = business.image;
         this.imagePath = `${environment.apiUrl}/${this.image}`;
-        // console.log("Image Path:", this.imagePath);
 
+        //set value for sellingMethod
+        console.log("Selling Method:", business.sellingMethod);
+        this.businessForm.get('sellingMethod').setValue(business.sellingMethod);
+
+        //frontend authorization
         this.userIdOfBusiness = business.userId;
         const token = localStorage.getItem('token');
         const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
@@ -101,6 +142,26 @@ export class UpdateBusinessComponent {
           // console.log("Created by in if:", this.userId);
           this.router.navigate(['/forbidden']);
         }
+
+        //get menu items
+        this.businessService.getMenuItems(businessId).subscribe((menuItems: any) => {
+          const itemsFormArray = this.businessForm.get('items') as FormArray;
+          itemsFormArray.clear(); 
+
+          menuItems.forEach((menuItem: any) => {
+            itemsFormArray.push(
+              new FormGroup({
+                itemName: new FormControl(menuItem.itemName),
+                price: new FormControl(menuItem.price),
+                quantity: new FormControl(menuItem.quantity),
+                note: new FormControl(menuItem.note)
+              })
+            );
+          });
+        }, error => {
+          console.error('Error loading menu items:', error);
+        });
+
         this.ngxService.stop();
       },
       error => {
@@ -127,9 +188,12 @@ export class UpdateBusinessComponent {
       formData.append('description', this.businessForm.get('description').value);
       formData.append('datePublished', new Date().toISOString());
 
-      // formData.forEach((value, key) => {
-      //   console.log(`${key}:`, value);
-      // });
+      const items = this.businessForm.get('items')!.value;
+      formData.append('items', JSON.stringify(items));
+
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
 
       this.businessService.updateBusiness(formData).subscribe(() => {
         this.ngxService.stop();

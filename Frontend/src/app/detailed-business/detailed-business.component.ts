@@ -17,7 +17,9 @@ export class DetailedBusinessComponent {
   userId: number = 0;
   id: number = 0;
   business: any;
+  menuItems: any;
   token: any;
+  buttonHref: string = '';
 
   constructor(
     private businessService: BusinessService,
@@ -31,8 +33,9 @@ export class DetailedBusinessComponent {
     this.route.params.subscribe(params => {
       this.id = +params['businessId'];
       this.ngxService.start();
-      console.log(this.id);
+      // console.log(this.id);
       this.getBusinessById(this.id);
+      this.getMenuItems(this.id);
     });
 
     const token = localStorage.getItem('token');
@@ -42,12 +45,37 @@ export class DetailedBusinessComponent {
     }
   }
 
+  conditionalButton() {
+    // console.log(this.business.businessLink);
+    if (this.business && this.business.businessLink == 'null') {
+      this.buttonHref = "https://wa.me/6" + this.business.telNo; // Ensure to include 'https://' in the URL
+    } else {
+      this.buttonHref = this.business.businessLink;
+    }
+    // console.log("ButtonHref: ", this.buttonHref);
+  }  
+
   getBusinessById(id: number) {
     this.businessService.getBusinessById(id).subscribe((result: any) => {
         this.ngxService.stop();
         this.business = result;
         this.business.image = `${environment.apiUrl}/${this.business.image}`;
+        this.conditionalButton();
+        // console.log(this.business);
         // console.log(this.business.image);
+        // console.log(result);
+      },
+      (error: any) => {
+        this.ngxService.stop();
+        console.error(error);
+      }
+    );
+  }
+
+  getMenuItems(id: number) {
+    this.businessService.getMenuItems(id).subscribe((result: any) => {
+        this.ngxService.stop();
+        this.menuItems = result;
         // console.log(result);
       },
       (error: any) => {

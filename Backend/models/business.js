@@ -34,7 +34,7 @@ const getBusinessHistory = (userId, callback) => {
 const addBusiness = (business, callback) => {
     const sql = `INSERT INTO business (businessTitle, userId, description, location, othersLocation, telNo, telName, image, businessLink, datePublished) 
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.datePublished], callback); //business.datePublished should be replaced with CURDATE() after complete testing using Postman
+    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.datePublished], callback);
 };
 
 //update business

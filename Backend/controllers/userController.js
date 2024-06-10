@@ -73,21 +73,21 @@ const updateProfile = (req, res) => {
 
         // Ownership check
         if (result[0].userId !== res.userLocal.userId) {
-            console.log(result[0].userId, res.userLocal.userId)
+            // console.log(result[0].userId, res.userLocal.userId);
             return res.status(403).json({ message: "Forbidden" });
         }
 
         const oldImagePath = result[0].image;
         if (user.image === oldImagePath) {
-            console.log("Same image file " + user.image + " " + oldImagePath);
+            // console.log("Same image file " + user.image + " " + oldImagePath);
         } else (
-            console.log("Different image file " + user.image + " " + oldImagePath),
+            // console.log("Different image file " + user.image + " " + oldImagePath),
             fs.unlink(oldImagePath, (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ message: "Error deleting old image file" });
                 }
-                console.log("Old image file deleted successfully");
+                // console.log("Old image file deleted successfully");
             })
         )
 

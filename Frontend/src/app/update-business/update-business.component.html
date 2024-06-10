@@ -1,99 +1,144 @@
 <body>
-    <h2>Update business post</h2>
+    <h2>Post a business</h2>
     <div class="update-form">
         <form [formGroup]="businessForm">
-            <div class="upper-section">
-                <!-- Title -->
-                <p>
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Title</mat-label>
-                        <mat-icon matPrefix>title</mat-icon>
-                        <input matInput formControlName="businessTitle" required>
-                    </mat-form-field>
-                </p>
-                <!-- Contact name -->
-                <p>
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Contact name</mat-label>
-                        <mat-icon matPrefix>person</mat-icon>
-                        <input matInput formControlName="telName" required>
-                    </mat-form-field>
-                </p>
-                <!-- Contact number -->
-                <p>
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Contact number</mat-label>
-                        <mat-icon matPrefix>call</mat-icon>
-                        <input matInput formControlName="telNo" required>
-                    </mat-form-field>
-                </p>
-                <!-- Location -->
-                <p>
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Choose location</mat-label>
-                        <mat-icon matPrefix>place</mat-icon>
-                        <mat-select formControlName="location" required>
-                            <mat-option value="">--</mat-option>
-                            <mat-option value="KDOJ">KDOJ</mat-option>
-                            <mat-option value="KDSE">KDSE</mat-option>
-                            <mat-option value="KTR">KTR</mat-option>
-                            <mat-option value="KTHO">KTHO</mat-option>
-                            <mat-option value="KRP">KRP</mat-option>
-                            <mat-option value="KTF">KTF</mat-option>
-                            <mat-option value="KTDI">KTDI</mat-option>
-                            <mat-option value="KTC">KTC</mat-option>
-                            <mat-option value="KP">KP</mat-option>
-                            <mat-option value="K9">K9</mat-option>
-                            <mat-option value="K10">K10</mat-option>
-                            <mat-option value="Others">Others</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </p>
-                <!-- Others location -->
-                <p *ngIf="businessForm.get('location').value === 'Others'">
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Other location</mat-label>
-                        <mat-icon matPrefix>pin_drop</mat-icon>
-                        <input matInput formControlName="othersLocation" required>
-                    </mat-form-field>
-                </p>
-                <!-- Business link -->
-                <p>
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Business link</mat-label>
-                        <mat-icon matPrefix>link</mat-icon>
-                        <input matInput formControlName="businessLink" required>
-                    </mat-form-field>
-                </p>
-            </div>
-
-            <div class="lower-section">
-                <!-- Upload photo -->
-                <div class="image-section">
-                    <div class="image-wrapper">
-                        <img [src]="imagePath" alt="business image" *ngIf="image; else noImage">
-                        <ng-template #noImage>
-                            <span fxLayoutAlign="center center" style="height: 100%;"><p>Image preview</p></span>
-                        </ng-template>
-                    </div>
-                    <div class="image-upload">
+            <div class="form-container">
+                <div class="details-section">
+                    <div class="upper-section">
+                        <!-- Title -->
                         <p>
-                            <label class="form-label" for="customFile">Upload a photo</label>
-                            <input type="file" formControlName="image" (change)="onImageSelected($event)" class="form-control" accept=".png, .jpg"/> <!-- formControlName="image" -->
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Title</mat-label>
+                                <mat-icon matPrefix>title</mat-icon>
+                                <input matInput formControlName="businessTitle" required>
+                            </mat-form-field>
+                        </p>
+                        <!-- Contact name -->
+                        <p>
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Contact name</mat-label>
+                                <mat-icon matPrefix>person</mat-icon>
+                                <input matInput formControlName="telName" required>
+                            </mat-form-field>
+                        </p>
+                        <!-- Location -->
+                        <p>
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Choose location</mat-label>
+                                <mat-icon matPrefix>place</mat-icon>
+                                <mat-select formControlName="location" required>
+                                    <mat-option value="">--</mat-option>
+                                    <mat-option value="KDOJ">KDOJ</mat-option>
+                                    <mat-option value="KDSE">KDSE</mat-option>
+                                    <mat-option value="KTR">KTR</mat-option>
+                                    <mat-option value="KTHO">KTHO</mat-option>
+                                    <mat-option value="KRP">KRP</mat-option>
+                                    <mat-option value="KTF">KTF</mat-option>
+                                    <mat-option value="KTDI">KTDI</mat-option>
+                                    <mat-option value="KTC">KTC</mat-option>
+                                    <mat-option value="KP">KP</mat-option>
+                                    <mat-option value="K9">K9</mat-option>
+                                    <mat-option value="K10">K10</mat-option>
+                                    <mat-option value="Others">Others</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </p>
+                        <!-- Others location -->
+                        <p *ngIf="businessForm.get('location').value === 'Others'">
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Other location</mat-label>
+                                <mat-icon matPrefix>pin_drop</mat-icon>
+                                <input matInput formControlName="othersLocation" required>
+                            </mat-form-field>
+                        </p>
+                        <!-- Buying method -->
+                        <div class="buying-section">
+                            <h6>Choose selling method</h6>
+                            <mat-radio-group formControlName="sellingMethod" required>
+                                <mat-radio-button value="WhatsApp">WhatsApp</mat-radio-button>
+                                <mat-radio-button value="Google Form">Google Form</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <!-- Business link -->
+                        <p *ngIf="businessForm.get('sellingMethod').value === 'Google Form'">
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Business link</mat-label>
+                                <mat-icon matPrefix>link</mat-icon>
+                                <input matInput formControlName="businessLink" required>
+                            </mat-form-field>
+                        </p>
+                        <!-- Contact number -->
+                        <p *ngIf="businessForm.get('sellingMethod').value === 'WhatsApp'">
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Contact number</mat-label>
+                                <mat-icon matPrefix>call</mat-icon>
+                                <input matInput formControlName="telNo" required>
+                            </mat-form-field>
                         </p>
                     </div>
-                </div>
-
-                <div id="spacer"></div>
-                <!-- Description -->
-                <p>
-                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                        <mat-label>Description</mat-label>
-                        <mat-icon matPrefix>receipt</mat-icon>
-                        <textarea matInput formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="9" cdkAutosizeMaxRows="9" maxlength="500"></textarea>
-                    </mat-form-field>
-                </p>
+        
+                    <div class="lower-section">
+                        <!-- Upload photo -->
+                        <div class="image-section">
+                            <div class="image-wrapper">
+                                <img [src]="imagePath" alt="business image" *ngIf="image; else noImage">
+                                <ng-template #noImage>
+                                    <span fxLayoutAlign="center center" style="height: 100%;">
+                                        <p>Image preview</p>
+                                    </span>
+                                </ng-template>
+                            </div>
+                            <div class="image-upload">
+                                <p>
+                                    <label class="form-label" for="customFile">Upload a photo</label>
+                                    <input type="file" name="image" (change)="onImageSelected($event)" class="form-control" accept=".png, .jpg" /> <!-- formControlName="image" -->
+                                </p>
+                            </div>
+                        </div>
+                        <div id="spacer"></div>
+                        <!-- Description -->
+                        <p>
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Description</mat-label>
+                                <mat-icon matPrefix>receipt</mat-icon>
+                                <textarea matInput formControlName="description" cdkTextareaAutosize
+                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="9" cdkAutosizeMaxRows="9" maxlength="500"></textarea>
+                            </mat-form-field>
+                        </p>
+                    </div>
+                </div>                
             </div>
+            <!-- Items Section -->
+            <div formArrayName="items" class="menu-list">
+                <h6>Item details</h6>
+                <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+                    <div class="item-row-content">
+                        <!-- Item Name -->
+                        <mat-form-field appearance="fill" fxFlex>
+                            <mat-label>Item Name</mat-label>
+                            <input matInput formControlName="itemName" required>
+                        </mat-form-field>
+                        <!-- Item Price -->
+                        <mat-form-field appearance="fill" fxFlex>
+                            <mat-label>Price (RM)</mat-label>
+                            <input matInput formControlName="price" required>
+                        </mat-form-field>
+                        <!-- Quantity -->
+                        <mat-form-field appearance="fill" fxFlex>
+                            <mat-label>Quantity</mat-label>
+                            <input matInput formControlName="quantity" required>
+                        </mat-form-field>
+                        <!-- Item Note -->
+                        <mat-form-field appearance="fill" fxFlex>
+                            <mat-label>Note</mat-label>
+                            <input matInput formControlName="note">
+                        </mat-form-field>
+                        <!-- Delete button (disable for first item) -->
+                        <button mat-icon-button color="warn" (click)="removeItem(i)" [disabled]="i === 0"><mat-icon>delete</mat-icon></button>
+                    </div>
+                </div>
+                <button mat-raised-button (click)="addItem()">Add Item</button>
+            </div>            
         </form>
     </div>
     <div class="button-section">

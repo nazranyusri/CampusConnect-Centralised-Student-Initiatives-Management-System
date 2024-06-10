@@ -1,4 +1,5 @@
 const businessModel = require('../models/business');
+const menuModel = require('../models/menu');
 const fs = require('fs');
 
 //get all business
@@ -49,6 +50,18 @@ const getLatestBusiness = (req, res) => {
     });
 };
 
+//get menu items
+const getMenuItems = (req, res) => {
+    const businessId = req.params.businessId;
+    menuModel.getMenuItems(businessId, (err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+}
+
 //get specific user business -- viewed in Profile 
 const getBusinessHistory = (req, res) => {
     const userId = req.params.userId;
@@ -59,9 +72,9 @@ const getBusinessHistory = (req, res) => {
             return res.status(500).json(err);
         }
     });
-}
+};
 
-//create busines
+//create business
 const addBusiness = (req, res) => {
     const business = req.body;
     if (req.file) {
@@ -69,11 +82,26 @@ const addBusiness = (req, res) => {
     } else {
         return res.status(400).json({ message: "Image file is required" });
     }
+
     businessModel.addBusiness(business, (err, result) => {
         if (!err) {
+            const businessId = result.insertId;
+            const items = JSON.parse(business.items);
+            
+            // Insert each item into the menu_items table
+            items.forEach(item => {
+                item.businessId = businessId;
+                menuModel.addMenuItem(item, (err) => {
+                    if (err) {
+                        // console.log(item);
+                        return res.status(500).json({ message: "Error adding menu item" });
+                    }
+                });
+            });
+
             return res.status(200).json({ message: "Business added successfully" });
         } else {
-            return res.status(500).json(err);
+            return res.status(500).json({ message: "Error adding business" });
         }
     });
 };
@@ -101,15 +129,15 @@ const updateBusiness = (req, res) => {
 
         const oldImagePath = result[0].image;
         if (business.image === oldImagePath) {
-            console.log("Same image file " + business.image + " " + oldImagePath);
+            // console.log("Same image file " + business.image + " " + oldImagePath);
         } else (
-            console.log("Different image file " + business.image + " " + oldImagePath),
+            // console.log("Different image file " + business.image + " " + oldImagePath),
             fs.unlink(oldImagePath, (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ message: "Error deleting old image file" });
                 }
-                console.log("Old image file deleted successfully");
+                // console.log("Old image file deleted successfully");
             })
         )
 
@@ -173,6 +201,7 @@ module.exports = {
     getBusinessById,
     getTotalBusiness,
     getLatestBusiness,
+    getMenuItems,
     getBusinessHistory,
     addBusiness,
     updateBusiness,

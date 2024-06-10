@@ -26,6 +26,10 @@ export class BusinessService {
     return this.http.get(`${this.apiUrl}/latest`);
   }
 
+  getMenuItems(businessId: number){
+    return this.http.get(`${this.apiUrl}/menu/${businessId}`);
+  }
+
   addBusiness(data: any){
     return this.http.post(`${this.apiUrl}/add`, data);
   }
