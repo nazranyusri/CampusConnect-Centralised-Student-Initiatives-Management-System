@@ -10,6 +10,9 @@ const authenticateUser = (req, res) => {
             if (result.length <= 0 || result[0].password != user.password) {
                 return res.status(401).json({ message: "Incorrect email or password" });
             }
+            else if(result[0].status === 'false') {
+                return res.status(401).json({ message: "Please wait for admin approval" });
+            }
             else if (result[0].password == user.password) {
                 const response = { userId: result[0].userId, username: result[0].username, role: result[0].role, email: result[0].email };
                 const accessToken = jwt.sign(response, process.env.ACCESS_TOKEN, { expiresIn: '2h' });
@@ -22,8 +25,8 @@ const authenticateUser = (req, res) => {
     });
 };
 
-//register
-const register = (req, res) => {
+// user register
+const registerUser = (req, res) => {
     const user = req.body;
     userModel.checkExistingUser(user, (err, result) => {
         if (err) {
@@ -34,13 +37,73 @@ const register = (req, res) => {
             return res.status(401).json({ message: "Email or username already exists" });
         }
 
-        userModel.register(user, (err, result) => {
+        userModel.registerUser(user, (err, result) => {
             if (!err) {
                 return res.status(200).json({ message: "User registered successfully" });
             } else {
                 return res.status(500).json(err);
             }
         });
+    });
+};
+
+// club register
+const registerClub = (req, res) => {
+    const user = req.body;
+    console.log(user);
+    userModel.checkExistingUser(user, (err, result) => {
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        if (result) {
+            return res.status(401).json({ message: "Email or username already exists" });
+        }
+
+        userModel.registerClub(user, (err, result) => {
+            if (!err) {
+                return res.status(200).json({ message: "User registered successfully" });
+            } else {
+                return res.status(500).json(err);
+            }
+        });
+    });
+};
+
+//get all user
+const getAllUser = (req, res) => {
+    userModel.getAllUser((err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//get club request
+const getClubRequest = (req, res) => {
+    userModel.getClubRequest((err, result) => {
+        if (!err) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
+
+//approve club request
+const approveClub = (req, res) => {
+    const userId = req.body.userId;
+    userModel.approveClub(userId, (err, result) => {
+        if (!err) {
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "User id not found" });
+            }
+            return res.status(200).json({ message: "Club request approved successfully" });
+        } else {
+            return res.status(500).json(err);
+        }
     });
 };
 
@@ -104,10 +167,40 @@ const updateProfile = (req, res) => {
     });
 };
 
+//delete user
+const deleteUser = (req, res) => {
+    const userId = req.params.userId;
+    const imagePath = req.params.imagePath;
+
+    userModel.deleteUser(userId, (err, result) => {
+        if (!err) {
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "User id not found" });
+            }
+            if (imagePath !== 'null') {
+                fs.unlink(`uploads/${imagePath}`, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({ message: "Error deleting image file" });
+                    }
+                    return res.status(200).json({ message: "User and corresponding image deleted successfully" });
+                });
+            }
+            return res.status(200).json({ message: "User deleted successfully" });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+};
 
 module.exports = {
     authenticateUser,
-    register,
+    registerUser,
+    registerClub,
+    getAllUser,
+    getClubRequest,
+    approveClub,
     getUser,
-    updateProfile
+    updateProfile,
+    deleteUser
 };

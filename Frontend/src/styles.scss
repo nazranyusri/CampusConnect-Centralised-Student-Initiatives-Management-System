@@ -37,7 +37,7 @@ $custom-primary-pallette: (
   ),
 );
 
-// $custom-accent-pallette: (
+// $custom-accent-palette: (
 //   50: #e0e0e0,
 //   100: #b3b3b3,
 //   200: #808080,
@@ -87,6 +87,31 @@ $custom-accent-pallette: (
   ),
 );
 
+$custom-success-pallette: (
+  50: #e8f5e9,
+  100: #c8e6c9,
+  200: #a5d6a7,
+  300: #81c784,
+  400: #66bb6a,
+  500: #4caf50,
+  600: #43a047,
+  700: #388e3c,
+  800: #2e7d32,
+  900: #1b5e20,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
 $custom-warn-pallette: (
   50: #ffebee,
   100: #ffcdd2,
@@ -115,6 +140,7 @@ $custom-warn-pallette: (
 $custom-primary: mat.define-palette($custom-primary-pallette);
 $custom-accent: mat.define-palette($custom-accent-pallette);
 $custom-warn: mat.define-palette($custom-warn-pallette);
+$custom-success: mat.define-palette($custom-success-pallette);
 
 // Create the theme object
 $Frontend-theme: mat.define-light-theme((
@@ -122,6 +148,7 @@ $Frontend-theme: mat.define-light-theme((
     primary: $custom-primary,
     accent: $custom-accent,
     warn: $custom-warn,
+    success: $custom-success
   ),
 ));
 

@@ -39,6 +39,11 @@ import { DetailedBusinessComponent } from './detailed-business/detailed-business
 import { TokenInterceptor } from './services/token.interceptor';
 import { UpdatePersakaComponent } from './update-persaka/update-persaka.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { RegisterClubComponent } from './register-club/register-club.component';
+import { ManageComponent } from './manage/manage.component';
+import { UserQueryPipe } from './pipe/user-query.pipe';
+import { PostQueryPipe } from './pipe/post-query.pipe';
+import { ClubQueryPipe } from './pipe/club-query.pipe';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -83,6 +88,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DetailedBusinessComponent,
     UpdatePersakaComponent,
     UpdateProfileComponent,
+    RegisterClubComponent,
+    ManageComponent,
+    UserQueryPipe,
+    PostQueryPipe,
+    ClubQueryPipe,
   ],
   imports: [
     BrowserModule,

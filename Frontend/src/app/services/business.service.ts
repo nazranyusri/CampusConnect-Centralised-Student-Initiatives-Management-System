@@ -11,7 +11,7 @@ export class BusinessService {
   constructor(private http: HttpClient) {}
 
   getAllBusiness(){
-    return this.http.get(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   getBusinessById(businessId: number){

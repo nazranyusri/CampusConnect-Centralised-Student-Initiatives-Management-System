@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -6,12 +6,13 @@ import { SnackbarService } from '../services/snackbar.service';
 import { Router } from '@angular/router';
 import { GlobalConstants } from '../shared/global-constants';
 
+
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-register-club',
+  templateUrl: './register-club.component.html',
+  styleUrls: ['./register-club.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterClubComponent {
   registerForm: any = FormGroup;
   responseMessage: any;
 
@@ -23,13 +24,13 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      username: [null, [Validators.required, Validators.pattern(GlobalConstants.usernameRegex)]],
-      fullName: [null, Validators.required],
-      matricNo: [null, Validators.required],
-      telNo: [null, [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
-      email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
-      password: [null, [Validators.required, Validators.pattern(GlobalConstants.passwordRegex)]],
-      confirmPassword: [null, [Validators.required]],
+      username: ['', [Validators.required, Validators.pattern(GlobalConstants.usernameRegex)]],
+      fullName: ['', Validators.required],
+      matricNo: ['', Validators.required],
+      telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
+      email: ['', [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
+      password: ['', [Validators.required, Validators.pattern(GlobalConstants.passwordRegex)]],
+      confirmPassword: ['', [Validators.required]],
     },
     {
       validators: this.passwordMatchValidator('password', 'confirmPassword'),
@@ -69,9 +70,9 @@ export class RegisterComponent implements OnInit {
     }
     // console.log(data);
 
-    this.userService.registerUser(data).subscribe(() => {
+    this.userService.registerClub(data).subscribe(() => {
       this.ngxService.stop();
-      this.router.navigate(['/login']);
+      this.router.navigate(['/homepage']);
     }, (error) => {
       this.ngxService.stop();
       if (error.error?.message) {

@@ -120,7 +120,7 @@ const deleteSurvey = (req, res) => {
         }
 
         // Ownership check
-        if (result[0].userId !== res.userLocal.userId) {
+        if (result[0].userId !== res.userLocal.userId && res.userLocal.role !== 'admin') {
             // console.log("this survey", result[0].userId, "logged in as", res.userLocal.userId);
             return res.status(403).json({ message: "Forbidden" });
         }

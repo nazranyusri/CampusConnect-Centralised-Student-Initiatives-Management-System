@@ -22,10 +22,34 @@ const checkExistingUser = (user, callback) => {
     });
 };
 
-//register
-const register = (user, callback) => {
-    const sql = 'INSERT INTO user (username, email, password, role, fullName, matricNo, telNo) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    connection.query(sql, [user.username, user.email, user.password, user.role, user.fullName, user.matricNo, user.telNo], callback);
+// user register
+const registerUser = (user, callback) => {
+    const sql = "INSERT INTO user (username, email, password, role, fullName, matricNo, telNo, status, isDeletable) VALUES (?, ?, ?, 'user', ?, ?, ?, 'true', 'true')";
+    connection.query(sql, [user.username, user.email, user.password, user.fullName, user.matricNo, user.telNo], callback);
+};
+
+//club register
+const registerClub = (user, callback) => {
+    const sql = "INSERT INTO user (username, email, password, role, fullName, matricNo, telNo, status, isDeletable) VALUES (?, ?, ?, 'club', ?, ?, ?, 'false', 'true')";
+    connection.query(sql, [user.username, user.email, user.password, user.fullName, user.matricNo, user.telNo], callback);
+};
+
+//get all user
+const getAllUser = (callback) => {
+    const sql = 'SELECT userId, username, email, role, fullName, matricNo, telNo, status, isDeletable FROM user WHERE status = "true"';
+    connection.query(sql, callback);
+}
+
+//get club request
+const getClubRequest = (callback) => {
+    const sql = 'SELECT userId, username, email, role, fullName, matricNo, telNo, status, isDeletable FROM user WHERE role = "club" AND status = "false"';
+    connection.query(sql, callback);
+}
+
+//aprove club request
+const approveClub = (userId, callback) => {
+    const sql = 'UPDATE user SET status = "true" WHERE userId = ?';
+    connection.query(sql, userId, callback);
 };
 
 //view profile
@@ -40,10 +64,21 @@ const updateProfile = (user, callback) => {
     connection.query(sql, [user.username, user.fullName, user.matricNo, user.telNo, user.image, user.userId], callback);
 };
 
+//delete user
+const deleteUser = (userId, callback) => {
+    const sql = 'DELETE FROM user WHERE userId = ?';
+    connection.query(sql, userId, callback);
+};
+
 module.exports = {
     authenticateUser,
     checkExistingUser,
-    register,
+    registerUser,
+    registerClub,
+    getAllUser,
+    getClubRequest,
+    approveClub,
     getUser,
-    updateProfile
+    updateProfile,
+    deleteUser
 };

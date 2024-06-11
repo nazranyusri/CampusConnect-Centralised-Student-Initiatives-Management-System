@@ -2,13 +2,13 @@ const connection = require('../connection');
 
 // Get all programs
 const getAllProgram = (callback) => {
-    const sql = 'SELECT programId, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, tag, location, image, datePublished FROM program';
+    const sql = 'SELECT p.programId, p.programTitle, p.startDate, p.endDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.tag, p.telNo, p.location, p.image, p.description, p.datePublished, u.username AS createdBy FROM program p JOIN user u ON p.userId = u.userId';
     connection.query(sql, callback);
 };
 
 // Get program by id
 const getProgramById = (id, callback) => {
-    const sql = 'SELECT programId, userId, description, endDate, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, programTitle, startDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, tag, telNo, telName, image, datePublished FROM program WHERE programId = ?';
+    const sql = 'SELECT p.programId, p.userId, p.description, p.endDate, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.location, p.programTitle, p.startDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, p.tag, p.telNo, p.telName, p.image, p.datePublished, u.username FROM program p JOIN user u ON p.userId = u.userId WHERE p.programId = ?';
     connection.query(sql, id, callback);
 };
 

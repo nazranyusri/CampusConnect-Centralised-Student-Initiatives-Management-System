@@ -13,7 +13,7 @@ export class ProgramService {
   constructor(private http: HttpClient) {}
 
   getAllProgram(){
-    return this.http.get(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl);
   }
 
   getProgramById(id: number){

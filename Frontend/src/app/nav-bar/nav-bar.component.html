@@ -12,6 +12,7 @@
           <a mat-button routerLinkActive="active-link" routerLink="business">Business</a>
           <a mat-button routerLinkActive="active-link" routerLink="survey">Survey</a>
           <a mat-button routerLinkActive="active-link" routerLink="persaka">About Persaka</a>
+          <span *ngIf="isAuthorized"><a mat-button routerLinkActive="active-link" routerLink="manage">Manage</a></span>
           <span *ngIf="!isLoggedIn"><a mat-button routerLinkActive="active-link" routerLink="login">Login</a></span>
           <span *ngIf="isLoggedIn">
             <button mat-icon-button [matMenuTriggerFor]="menu">

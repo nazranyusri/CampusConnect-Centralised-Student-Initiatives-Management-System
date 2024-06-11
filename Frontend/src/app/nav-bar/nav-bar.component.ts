@@ -12,6 +12,7 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
 })
 export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;
+  isAuthorized: boolean = false;
   // username: string = '';
 
   constructor(
@@ -26,8 +27,18 @@ export class NavBarComponent implements OnInit {
       this.isLoggedIn = response;
     });
 
-    if(localStorage.getItem('token') != null){
+    this.userService.isAuthorized.subscribe((response: any) => {
+      this.isAuthorized = response;
+    });
+
+    const token = localStorage.getItem('token');
+    if(token != null){
       this.isLoggedIn = true;
+      const decodedToken = this.jwtDecode.decodeToken(token);
+      if(decodedToken && decodedToken.role === 'admin'){
+        console.log(decodedToken.role);
+        this.isAuthorized = true;
+      }
     }
   }
 
@@ -44,6 +55,7 @@ export class NavBarComponent implements OnInit {
       this.router.navigate(['/']);
       // window.location.reload();
       this.isLoggedIn = false;
+      this.isAuthorized = false;
     });
   }
 }

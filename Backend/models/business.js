@@ -2,13 +2,13 @@ const connection = require('../connection');
 
 //get all businesses
 const getAllBusiness = (callback) => {
-    const sql = 'SELECT * FROM business';
+    const sql = 'SELECT b.*, u.username AS createdBy FROM business b JOIN user u ON b.userId = u.userId';
     connection.query(sql, callback);
 };
 
 //get business by id
 const getBusinessById = (businessId, callback) => {
-    const sql = 'SELECT * FROM business WHERE businessId = ?';
+    const sql = 'SELECT b.*, u.username AS createdBy FROM business b JOIN user u ON b.userId = u.userId WHERE b.businessId = ?';
     connection.query(sql, businessId, callback);
 };
 

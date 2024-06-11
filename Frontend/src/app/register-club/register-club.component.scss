@@ -1,0 +1,134 @@
+.page-format {
+    display: flex;
+}
+
+.white-section {
+    background-color: white;
+    width: 30%;
+    // height: 100vh;
+}
+
+.register-section {
+    background-color: #1D203E;
+    padding: 5%;
+    width: 70%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    .back-button {
+        position: absolute;
+        top: 5%;
+        left: 35%;
+
+        button {
+            background-color: white !important;
+            color: black !important;
+
+            &:hover {
+                transition: transform(0.3s);
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    // form {
+    //     background-color: greenyellow;
+    //     display: flex;
+    //     flex-direction: column;
+    //     max-width: 70%;
+    // }
+
+    // .input-section {
+    //     background-color: red;
+    //     width: auto;
+    //     display: flex;
+    //     flex-wrap: wrap;
+
+    //     p {
+    //         margin: 5px;
+    //     }
+    // }
+    
+    .error-message {
+      &-underline {
+        position: relative;
+        bottom: auto;
+      }
+      &-subscript-wrapper {
+        position: static;
+      }
+    }
+
+    .mat-mdc-raised-button { // Change button color
+        background-color: white !important; 
+        color: #F38D11 !important;
+        width: 100%;
+        font-weight: bolder;
+    }
+    
+    .mat-mdc-raised-button[disabled]{ // Change button color when disabled
+        background-color: rgb(202, 202, 202) !important;
+        color: rgba(24, 19, 19, 0.12) !important;
+        width: 100%;
+        font-weight: bolder;
+    }
+
+    a {
+        color: #F38D11;
+    }
+    
+    .login {
+        text-align: center;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 1000px) {
+    .white-section {
+        display: none;
+    }
+
+    .register-section {
+        width: 100%;
+    }
+}
+
+::ng-deep .custom-outline {
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+    // Change border color
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+    // Change border color when focused
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+        border-color: white !important;
+    }
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__leading,
+    // Change border color when invalid
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__notch,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-notched-outline__trailing {
+        border-color: red !important;
+    }
+
+    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label,
+    // Change label color
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label,
+    // Change label color when focused                   
+    .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+        // Change input text color                       
+        color: white !important;
+    }
+
+    .mdc-text-field:not(.mdc-text-field--disabled).mdc-text-field--invalid .mdc-floating-label,
+    // Change label color when invalid
+    .mat-mdc-form-field-required-marker {
+        // Change label's asterisk color
+        color: red !important;
+    }
+}

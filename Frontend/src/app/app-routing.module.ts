@@ -24,14 +24,23 @@ import { DetailedBusinessComponent } from './detailed-business/detailed-business
 import { UpdatePersakaComponent } from './update-persaka/update-persaka.component';
 import { AdminGuardService } from './services/admin-guard.service';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { RegisterClubComponent } from './register-club/register-club.component';
+import { ManageComponent } from './manage/manage.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
+
+  // ADMIN ROUTES
+  {
+    path: 'manage', component: ManageComponent,
+    canActivate: [RouterGuardService, AdminGuardService]
+  },
 
   // USER ROUTES
   {path: 'homepage', component: HomepageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'registerclub', component: RegisterClubComponent},
   {
     path: 'profile', component: ProfileComponent,
     canActivate: [RouterGuardService]
