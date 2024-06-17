@@ -118,6 +118,7 @@ body {
 @media screen and (max-width: 810px) {
     mat-card {
       max-width: 370px;
+      min-width: 370px;
     }
 
     .upper-section {

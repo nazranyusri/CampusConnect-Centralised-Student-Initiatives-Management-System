@@ -10,7 +10,19 @@ const addMenuItem = (menu, callback) => {
     connection.query(sql, [menu.businessId, menu.itemName, menu.price, menu.quantity, menu.note], callback);
 };
 
+const updateMenuItem = (menu, callback) => {
+    const sql = `UPDATE menu SET itemName = ?, price = ?, quantity = ?, note = ? WHERE menuId = ?`;
+    connection.query(sql, [menu.itemName, menu.price, menu.quantity, menu.note, menu.menuId], callback);
+};
+
+const deleteMenuItem = (menuId, callback) => {
+    const sql = `DELETE FROM menu WHERE menuId = ?`;
+    connection.query(sql, [menuId], callback);
+};
+
 module.exports = {
     getMenuItems,
-    addMenuItem
+    addMenuItem,
+    updateMenuItem,
+    deleteMenuItem
 };

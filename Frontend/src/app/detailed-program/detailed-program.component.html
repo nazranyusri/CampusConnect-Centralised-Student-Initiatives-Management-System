@@ -18,6 +18,7 @@
                     <p id="first-item"><mat-icon> location_on</mat-icon>{{ program?.location }}</p>
                     <p><mat-icon>calendar_today</mat-icon>{{ program?.startDate | date:'dd/MM/yyyy' }} - {{ program?.endDate | date:'dd/MM/yyyy' }}</p>
                     <p><mat-icon>access_time</mat-icon>{{ program?.startTime }} - {{ program?.endTime }}</p>
+                    <p><mat-icon>person</mat-icon>{{ program?.telName }}</p>
                     <p><mat-icon>call</mat-icon>{{ program?.telNo }}</p>
                     <ng-container *ngIf="!isAuthorized">
                         <a mat-raised-button (click)="registerProgram(program.programId)">Register now!</a>

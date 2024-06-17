@@ -36,7 +36,7 @@ export class NavBarComponent implements OnInit {
       this.isLoggedIn = true;
       const decodedToken = this.jwtDecode.decodeToken(token);
       if(decodedToken && decodedToken.role === 'admin'){
-        console.log(decodedToken.role);
+        // console.log(decodedToken.role);
         this.isAuthorized = true;
       }
     }

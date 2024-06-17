@@ -36,6 +36,7 @@
         <a mat-button routerLinkActive="active-link" routerLink="business" (click)="sidenav.toggle()"><mat-icon>attach_money</mat-icon> Business</a><br>
         <a mat-button routerLinkActive="active-link" routerLink="survey" (click)="sidenav.toggle()"><mat-icon>insert_drive_file</mat-icon>Survey</a><br>
         <a mat-button routerLinkActive="active-link" routerLink="persaka" (click)="sidenav.toggle()"><mat-icon>info</mat-icon>About Persaka</a><br>
+        <span *ngIf="isAuthorized"><a mat-button routerLinkActive="active-link" routerLink="manage" (click)="sidenav.toggle()"><mat-icon>assignment</mat-icon>Manage</a><br></span>
         <div class="line"></div>
         <a mat-button *ngIf="!isLoggedIn" routerLinkActive="active-link" routerLink="login" (click)="sidenav.toggle()"><mat-icon>input</mat-icon>Login</a>
         <!-- <a mat-button *ngIf="isLoggedIn" routerLinkActive="active-link" [routerLink]="['/profile', username]" (click)="sidenav.toggle()"><mat-icon>person</mat-icon>Profile</a> -->

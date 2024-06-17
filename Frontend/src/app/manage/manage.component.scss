@@ -9,8 +9,15 @@ body {
 
 .search-bar {
     gap: 5px;
+    display: flex;
+    flex-wrap: wrap;
     // display: flex;
     // align-items: center;
+
+    .filter {
+        display: flex;
+        gap: 5px;
+    }
 }
 
 mat-expansion-panel {
@@ -18,5 +25,15 @@ mat-expansion-panel {
 
     .mat-mdc-raised-button.active  {
         background-color: #F38D11 !important;
+    }
+
+    .mat-elevation-z8 {
+        overflow-y: auto;
+    }
+}
+
+@media screen and (max-width: 622px) {
+    .filter {
+        margin-bottom: 10px !important;
     }
 }

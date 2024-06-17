@@ -41,6 +41,10 @@ export class BusinessService {
   deleteBusiness(id: number, imagePath: string){
     return this.http.delete(`${this.apiUrl}/delete/${id}/${imagePath}`);
   }
+
+  deleteMenuItem(menuId: number) {
+    return this.http.delete(`${this.apiUrl}/menu/delete/${menuId}`);
+  }
   
   getBusinessHistory(userId: number){
     return this.http.get(`${this.apiUrl}/history/${userId}`);

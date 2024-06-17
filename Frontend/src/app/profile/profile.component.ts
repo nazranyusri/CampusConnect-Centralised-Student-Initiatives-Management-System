@@ -65,7 +65,7 @@ getUserDetails(userId: number) {
       this.userDetails = result.map((user: any) => {
           if (user.image) {
               user.image = `${environment.apiUrl}/${user.image}`;
-              console.log("Image URL", user.image);
+              // console.log("Image URL", user.image);
           }
           return user;
       });

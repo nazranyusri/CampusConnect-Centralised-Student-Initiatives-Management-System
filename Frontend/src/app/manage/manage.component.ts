@@ -64,14 +64,14 @@ export class ManageComponent implements OnInit{
   }
 
   filterUserByRole(role: string) {
-    console.log(role);
+    // console.log(role);
     this.userFilterOption = role;
   }
 
   getClubRequest() {
     this.userService.getClubRequest().subscribe((result: any[]) => {
       this.clubDataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
-      console.log("Club request: ", this.clubDataSource.data);
+      // console.log("Club request: ", this.clubDataSource.data);
     },
       (error: any) => {
         this.ngxService.stop();
@@ -109,7 +109,7 @@ export class ManageComponent implements OnInit{
       this.ngxService.stop();
         // console.log(result);
         this.userDataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
-        console.log(this.userDataSource.data);
+        // console.log(this.userDataSource.data);
       },
       (error: any) => {
         this.ngxService.stop();
@@ -150,7 +150,7 @@ export class ManageComponent implements OnInit{
   getAllProgram() { 
     this.programService.getAllProgram().subscribe((result: any[]) => {
       this.programDataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
-      console.log(this.programDataSource.data);
+      // console.log(this.programDataSource.data);
     },
       (error: any) => {
         this.ngxService.stop();
@@ -190,7 +190,7 @@ export class ManageComponent implements OnInit{
   getAllBusiness() {
     this.businessService.getAllBusiness().subscribe((result: any[]) => {
       this.businessDataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
-      console.log(this.businessDataSource.data);
+      // console.log(this.businessDataSource.data);
     },
       (error: any) => {
         this.ngxService.stop();
@@ -230,7 +230,7 @@ export class ManageComponent implements OnInit{
   getAllSurvey() {
     this.surveyService.getAllSurvey().subscribe((result: any[]) => {
       this.surveyDataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
-      console.log("Survey", this.surveyDataSource.data);
+      // console.log("Survey", this.surveyDataSource.data);
       this.ngxService.stop();
     },
       (error: any) => {

@@ -35,7 +35,7 @@ export class UpdateProfileComponent {
     this.route.params.subscribe(params => {
       this.userId = +params['userId'];
       this.ngxService.start();
-      console.log("User ID:", this.userId);
+      // console.log("User ID:", this.userId);
       this.getUser(this.userId);
     });
 
@@ -76,13 +76,13 @@ export class UpdateProfileComponent {
         this.image = user[0].image;
         this.imagePath = `${environment.apiUrl}/${this.image}`;
 
-        console.log("User:", user);
-        console.log("User:", this.userForm.value);
+        // console.log("User:", user);
+        // console.log("User:", this.userForm.value);
         this.userIdOfProfile = user[0].userId;
         const token = localStorage.getItem('token');
         const decodedToken = token ? this.jwtDecode.decodeToken(token) : null;
         const userIdLoggedIn = decodedToken?.userId;
-        console.log("User ID of Profile:", this.userIdOfProfile, "User ID Logged In:", userIdLoggedIn);
+        // console.log("User ID of Profile:", this.userIdOfProfile, "User ID Logged In:", userIdLoggedIn);
         if (this.userIdOfProfile && this.userIdOfProfile !== userIdLoggedIn) {
           // console.log("Created by in if:", this.userId);
           this.router.navigate(['/forbidden']);
@@ -108,9 +108,9 @@ export class UpdateProfileComponent {
       formData.append('telNo', this.userForm.get('telNo').value);
       formData.append('image', this.image);
   
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}:`, value);
+      // });
 
       this.userService.updateProfile(formData).subscribe(() => {
         this.ngxService.stop();

@@ -26,6 +26,7 @@ import { AdminGuardService } from './services/admin-guard.service';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { RegisterClubComponent } from './register-club/register-club.component';
 import { ManageComponent } from './manage/manage.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -69,6 +70,7 @@ const routes: Routes = [
   // BUSINESS ROUTES
   {path: 'business', component: BusinessComponent},
   {path: 'detailedbusiness/:businessId', component: DetailedBusinessComponent},
+  {path: 'checkout/:businessId', component: CheckoutComponent},
   {path: 'addbusiness', component: AddBusinessComponent},
   {
     path: 'updatebusiness/:businessId', component: UpdateBusinessComponent,

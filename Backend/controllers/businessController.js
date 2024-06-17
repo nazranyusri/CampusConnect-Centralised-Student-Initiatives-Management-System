@@ -142,14 +142,32 @@ const updateBusiness = (req, res) => {
         )
 
         businessModel.updateBusiness(business, (err, result) => {
-            if (!err) {
-                if (result.affectedRows == 0) {
-                    return res.status(404).json({ message: "Business id not found" });
-                }
-                return res.status(200).json({ message: "Business updated successfully" });
-            } else {
+            if (err) {
                 return res.status(500).json(err);
             }
+
+            const items = JSON.parse(business.items);
+            items.forEach((item) => {
+                console.log(item.menuId);
+                if (item.menuId) {
+                    // Update existing menu item
+                    menuModel.updateMenuItem(item, (err) => {
+                        if (err) {
+                            return res.status(500).json(err);
+                        }
+                    });
+                } else {
+                    // Add new menu item
+                    item.businessId = business.id;
+                    menuModel.addMenuItem(item, (err) => {
+                        if (err) {
+                            return res.status(500).json(err);
+                        }
+                    });
+                }
+            });
+
+            return res.status(200).json({ message: "Business updated successfully" });
         });
     });
 };
@@ -196,6 +214,22 @@ const deleteBusiness = (req, res) => {
     });
 };
 
+const deleteMenuItem = (req, res) => {
+    const menuId = req.params.menuId;
+    console.log(menuId);
+    menuModel.deleteMenuItem(menuId, (err, result) => {
+        if (!err) {
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Menu item id not found" });
+            }
+            return res.status(200).json({ message: "Menu item deleted successfully" });
+        } else {
+            return res.status(500).json(err);
+        }
+    });
+
+};
+
 module.exports = {
     getAllBusiness,
     getBusinessById,
@@ -205,5 +239,6 @@ module.exports = {
     getBusinessHistory,
     addBusiness,
     updateBusiness,
-    deleteBusiness
+    deleteBusiness,
+    deleteMenuItem
 };

@@ -40,10 +40,13 @@ router.get('/history/:userId', businessController.getBusinessHistory);
 //create business
 router.post('/add', auth.authenticateToken, upload.single('image'), businessController.addBusiness);
 
-//update program
+//update business
 router.patch('/update', auth.authenticateToken, upload.single('image'), businessController.updateBusiness);
 
 //delete business
 router.delete('/delete/:id/:imagePath', auth.authenticateToken, businessController.deleteBusiness);
+
+//delete menu items
+router.delete('/menu/delete/:menuId', auth.authenticateToken, businessController.deleteMenuItem);
 
 module.exports = router;

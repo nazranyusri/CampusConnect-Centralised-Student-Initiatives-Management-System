@@ -51,7 +51,7 @@
                         </button>
                         </td>
                     </ng-container>
-
+                    
                     <tr mat-header-row *matHeaderRowDef="clubDisplayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: clubDisplayedColumns;"></tr>
                 </table>
@@ -68,13 +68,17 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="search-bar">
-                <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                  <input matInput placeholder="Search by username or fullname..." [(ngModel)]="userSearchKey">
-                </mat-form-field>
-                <button mat-raised-button (click)="filterUserByRole('')" [ngClass]="{'active': userFilterOption === ''}">All</button>
-                <!-- <button mat-raised-button (click)="filterUserByRole('admin')">Admin</button> -->
-                <button mat-raised-button (click)="filterUserByRole('club')" [ngClass]="{'active': userFilterOption === 'club'}">Club</button>
-                <button mat-raised-button (click)="filterUserByRole('user')" [ngClass]="{'active': userFilterOption === 'user'}">Student</button>
+                <div class="bar" fxFlex>
+                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                        <input matInput placeholder="Search by username or fullname..." [(ngModel)]="userSearchKey">
+                    </mat-form-field>
+                </div>
+                <div class="filter">
+                    <button mat-raised-button (click)="filterUserByRole('')" [ngClass]="{'active': userFilterOption === ''}">All</button>
+                    <!-- <button mat-raised-button (click)="filterUserByRole('admin')">Admin</button> -->
+                    <button mat-raised-button (click)="filterUserByRole('club')" [ngClass]="{'active': userFilterOption === 'club'}">Club</button>
+                    <button mat-raised-button (click)="filterUserByRole('user')" [ngClass]="{'active': userFilterOption === 'user'}">Student</button>
+                </div>
             </div>
             <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="userDataSource.data | userQuery : userSearchKey : userFilterOption" id="userTable">
@@ -128,12 +132,16 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="search-bar">
-                <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                  <input matInput placeholder="Search by title..." [(ngModel)]="postSearchKey">
-                </mat-form-field>
-                <button mat-raised-button (click)="tableToDisplay('program')" [ngClass]="{'active': tableChosen === 'program'}">Program</button>
-                <button mat-raised-button (click)="tableToDisplay('business')" [ngClass]="{'active': tableChosen === 'business'}">Business</button>
-                <button mat-raised-button (click)="tableToDisplay('survey')" [ngClass]="{'active': tableChosen === 'survey'}">Survey</button>
+                <div class="bar" fxFlex>
+                    <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                        <input matInput placeholder="Search by title..." [(ngModel)]="postSearchKey">
+                      </mat-form-field>
+                </div>
+                <div class="filter">
+                    <button mat-raised-button (click)="tableToDisplay('program')" [ngClass]="{'active': tableChosen === 'program'}">Program</button>
+                    <button mat-raised-button (click)="tableToDisplay('business')" [ngClass]="{'active': tableChosen === 'business'}">Business</button>
+                    <button mat-raised-button (click)="tableToDisplay('survey')" [ngClass]="{'active': tableChosen === 'survey'}">Survey</button>
+                </div>
             </div>
 
             <!-- Program table -->

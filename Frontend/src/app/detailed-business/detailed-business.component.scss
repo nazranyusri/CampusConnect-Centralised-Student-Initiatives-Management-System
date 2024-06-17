@@ -102,7 +102,12 @@ body {
                 table{
                     width: 100%;
                     border-collapse: collapse;
-                    td{vertical-align: top;}
+                    tr {
+                        th, td {
+                            padding: 10px 0;
+                            border-bottom: 1px solid #3b3b3b;
+                        }
+                    }
                 }
             }
 
@@ -134,6 +139,10 @@ body {
         .content-details {
             width: 100% !important;
         }
+    }
+
+    .detailed-content {
+        max-width: 370px;
     }
 
     .content-details {

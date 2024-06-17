@@ -21,6 +21,7 @@ export class UpdateBusinessComponent {
   businessId: number = 0;
   image: any;
   imagePath: string = '';
+  itemsToDelete: number[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,9 +45,9 @@ export class UpdateBusinessComponent {
       telName: ['', Validators.required],
       location: ['', Validators.required],
       othersLocation: ['', Validators.required],
-      sellingMethod: ['', Validators.required],
+      // sellingMethod: ['', Validators.required],
       telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
-      businessLink: ['', Validators.required],
+      // businessLink: ['', Validators.required],
       description: ['', Validators.required],
       items: this.formBuilder.array([])
     });
@@ -64,19 +65,19 @@ export class UpdateBusinessComponent {
     });
 
     // Dynamically set validation for telNo and businessLink fields based on sellingMethod field value
-    this.businessForm.get('sellingMethod').valueChanges.subscribe((value: string) => {
-      if (value === 'WhatsApp') {
-        this.businessForm.get('telNo').setValidators(Validators.required);
-        this.businessForm.get('businessLink').clearValidators();
-        this.businessForm.get('businessLink').reset();
-      } else if (value === 'Google Form') {
-        this.businessForm.get('businessLink').setValidators(Validators.required);
-        this.businessForm.get('telNo').clearValidators();
-        this.businessForm.get('telNo').reset();
-      }
-      this.businessForm.get('telNo').updateValueAndValidity();
-      this.businessForm.get('businessLink').updateValueAndValidity();
-    });
+    // this.businessForm.get('sellingMethod').valueChanges.subscribe((value: string) => {
+    //   if (value === 'WhatsApp') {
+    //     this.businessForm.get('telNo').setValidators(Validators.required);
+    //     this.businessForm.get('businessLink').clearValidators();
+    //     this.businessForm.get('businessLink').reset();
+    //   } else if (value === 'Google Form') {
+    //     this.businessForm.get('businessLink').setValidators(Validators.required);
+    //     this.businessForm.get('telNo').clearValidators();
+    //     this.businessForm.get('telNo').reset();
+    //   }
+    //   this.businessForm.get('telNo').updateValueAndValidity();
+    //   this.businessForm.get('businessLink').updateValueAndValidity();
+    // });
 
     this.addItem();
   }
@@ -93,10 +94,6 @@ export class UpdateBusinessComponent {
       note: ['']
     });
     this.items.push(itemGroup);
-  }
-
-  removeItem(index: number) {
-    this.items.removeAt(index);
   }
 
   onImageSelected(event: any) {
@@ -121,17 +118,17 @@ export class UpdateBusinessComponent {
           telName: business.telName,
           location: business.location,
           othersLocation: business.othersLocation,
-          sellingMethod: business.sellingMethod,
+          // sellingMethod: business.sellingMethod,
           telNo: business.telNo,
-          businessLink: business.businessLink,
+          // businessLink: business.businessLink,
           description: business.description
         });
         this.image = business.image;
         this.imagePath = `${environment.apiUrl}/${this.image}`;
 
         //set value for sellingMethod
-        console.log("Selling Method:", business.sellingMethod);
-        this.businessForm.get('sellingMethod').setValue(business.sellingMethod);
+        // console.log("Selling Method:", business.sellingMethod);
+        // this.businessForm.get('sellingMethod').setValue(business.sellingMethod);
 
         //frontend authorization
         this.userIdOfBusiness = business.userId;
@@ -151,6 +148,7 @@ export class UpdateBusinessComponent {
           menuItems.forEach((menuItem: any) => {
             itemsFormArray.push(
               new FormGroup({
+                menuId: new FormControl(menuItem.menuId),
                 itemName: new FormControl(menuItem.itemName),
                 price: new FormControl(menuItem.price),
                 quantity: new FormControl(menuItem.quantity),
@@ -181,7 +179,8 @@ export class UpdateBusinessComponent {
       formData.append('businessTitle', this.businessForm.get('businessTitle').value);
       formData.append('location', this.businessForm.get('location').value);
       formData.append('othersLocation', this.businessForm.get('othersLocation').value);
-      formData.append('businessLink', this.businessForm.get('businessLink').value);
+      // formData.append('businessLink', this.businessForm.get('businessLink').value);
+      // formData.append('sellingMethod', this.businessForm.get('sellingMethod').value);
       formData.append('telName', this.businessForm.get('telName').value);
       formData.append('telNo', this.businessForm.get('telNo').value);
       formData.append('image', this.image);
@@ -191,23 +190,41 @@ export class UpdateBusinessComponent {
       const items = this.businessForm.get('items')!.value;
       formData.append('items', JSON.stringify(items));
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      console.log(items);
 
       this.businessService.updateBusiness(formData).subscribe(() => {
+        // Delete the items marked for deletion
+        this.itemsToDelete.forEach(menuId => {
+            this.businessService.deleteMenuItem(menuId).subscribe(() => {
+              console.log('Items deleted:', menuId);
+                // Optional: Handle successful deletion of each item
+            }, (error) => {
+                this.responseMessage = error.error?.message;
+                this.snackbarService.openSnackBar(this.responseMessage);
+            });
+        });
         this.ngxService.stop();
         this.router.navigate(['/profile']);
-      }, (error) => {
+    }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {
-          this.responseMessage = error.error?.message;
-        }
-        else {
-          this.responseMessage = GlobalConstants.genericError;
+            this.responseMessage = error.error?.message;
+        } else {
+            this.responseMessage = GlobalConstants.genericError;
         }
         this.snackbarService.openSnackBar(this.responseMessage);
-      });
+    });
     }
+  }
+
+  removeItem(index: number) {
+    const menuArray = this.businessForm.get('items') as FormArray;
+    const item = menuArray.at(index);
+
+    if (item.get('menuId') && item.get('menuId')?.value) {
+        console.log ('Item to delete:', item.get('menuId')?.value);
+        this.itemsToDelete.push(item.get('menuId')?.value);
+    }
+    this.items.removeAt(index);
   }
 }
