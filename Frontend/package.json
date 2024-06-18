@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "@stripe/stripe-js": "^1.35.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "html2canvas": "^1.4.1",

@@ -2,7 +2,7 @@ const connection = require('../connection');
 
 //get all businesses
 const getAllBusiness = (callback) => {
-    const sql = 'SELECT b.*, u.username AS createdBy FROM business b JOIN user u ON b.userId = u.userId';
+    const sql = 'SELECT b.*, u.username AS createdBy FROM business b JOIN user u ON b.userId = u.userId ORDER BY b.businessId DESC';
     connection.query(sql, callback);
 };
 
@@ -32,15 +32,15 @@ const getBusinessHistory = (userId, callback) => {
 
 //create business
 const addBusiness = (business, callback) => {
-    const sql = `INSERT INTO business (businessTitle, userId, description, location, othersLocation, telNo, telName, image, businessLink, datePublished) 
+    const sql = `INSERT INTO business (businessTitle, userId, description, location, othersLocation, telNo, telName, image, datePublished) 
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.datePublished], callback);
+    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.datePublished], callback);
 };
 
 //update business
 const updateBusiness = (business, callback) => {
-    const sql = 'UPDATE business SET businessTitle = ?, description = ?, location = ?, othersLocation = ?, telNo = ?, telName = ?, image = ?, businessLink = ? WHERE businessId = ?';
-    connection.query(sql, [business.businessTitle, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.businessLink, business.id], callback);
+    const sql = 'UPDATE business SET businessTitle = ?, description = ?, location = ?, othersLocation = ?, telNo = ?, telName = ?, image = ? WHERE businessId = ?';
+    connection.query(sql, [business.businessTitle, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.id], callback);
 };
 
 //delete business

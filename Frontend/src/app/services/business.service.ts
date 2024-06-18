@@ -30,6 +30,10 @@ export class BusinessService {
     return this.http.get(`${this.apiUrl}/menu/${businessId}`);
   }
 
+  checkout(data: any) {
+    return this.http.post(`${this.apiUrl}/checkout`, data)
+  }
+
   addBusiness(data: any){
     return this.http.post(`${this.apiUrl}/add`, data);
   }
@@ -48,5 +52,9 @@ export class BusinessService {
   
   getBusinessHistory(userId: number){
     return this.http.get(`${this.apiUrl}/history/${userId}`);
+  }
+
+  getUserOrderedBusiness(userId: number){
+    return this.http.get(`${this.apiUrl}/ordered/${userId}`);
   }
 }

@@ -34,8 +34,17 @@ router.get('/menu/:businessId', businessController.getMenuItems);
 //get business by id
 router.get('/:businessId', businessController.getBusinessById);
 
+//checkout
+router.post('/checkout', auth.authenticateToken, businessController.checkout);
+
+//webhook
+router.post('/webhook', express.raw({ type: 'application/json' }), businessController.webhookStripe);
+
 //get business history
 router.get('/history/:userId', businessController.getBusinessHistory);
+
+//get user ordered business
+router.get('/ordered/:userId', businessController.getUserOrderedBusiness);
 
 //create business
 router.post('/add', auth.authenticateToken, upload.single('image'), businessController.addBusiness);

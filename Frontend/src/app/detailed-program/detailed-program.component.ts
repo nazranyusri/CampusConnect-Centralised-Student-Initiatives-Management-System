@@ -16,6 +16,7 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
 
 export class DetailedProgramComponent implements OnInit {
   isAuthorized: boolean = false;
+  isLoggedIn: boolean = false;
   id: number = 0;
   program: any;
   token: any;
@@ -38,6 +39,7 @@ export class DetailedProgramComponent implements OnInit {
       this.getProgramById(this.id);
       const token = localStorage.getItem('token');
       if (token) {
+        this.isLoggedIn = true;
         const decodedToken = this.jwtDecode.decodeToken(token);
         const role = decodedToken?.role || '';
         if (role === 'club') {

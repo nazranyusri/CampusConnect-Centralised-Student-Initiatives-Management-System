@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BusinessService } from '../services/business.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { loadStripe } from '@stripe/stripe-js';
+import { JwtDecoderService } from '../services/jwt-decoder.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit{
+export class CheckoutComponent {
   businessId: number = 0;
   menuItems: Array<any> = [];
+  selectedItems: Array<any> = [];
   totalPrice: number = 0;
   checkoutForm: any = FormGroup;
+  userId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private businessService: BusinessService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private ngxService: NgxUiLoaderService,
+    private jwtDecode: JwtDecoderService
   ) { }
 
   ngOnInit(): void {
@@ -26,17 +33,18 @@ export class CheckoutComponent implements OnInit{
       console.log(this.businessId); 
     });
 
-    this.getMenuItems(this.businessId);
+    const token = localStorage.getItem('token');
+    if(token){
+      const decodedToken = this.jwtDecode.decodeToken(token);
+      this.userId = decodedToken?.userId || 0;
+    }
 
     this.checkoutForm = this.formBuilder.group({
-      fullName: ['', Validators.required],
-      addLine1: ['', Validators.required],
-      addLine2: ['', Validators.required],
-      country: ['', Validators.required],
-      state: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      items: this.formBuilder.array([])
+      items: this.formBuilder.array([]),
     });
+
+    this.getMenuItems(this.businessId);
+
   }
 
   getMenuItems(businessId: number) {
@@ -63,6 +71,22 @@ export class CheckoutComponent implements OnInit{
     return availableQuantities;
   }
 
+  test(){
+    const itemsFormArray = this.checkoutForm.get('items') as FormArray;
+    this.selectedItems = [];
+    itemsFormArray.controls.forEach((control, index) => {
+      const quantity = control.get('quantity')?.value;
+      if (quantity !== 0) {
+        this.selectedItems.push({
+          ...this.menuItems[index],  // Include all properties of the item
+          quantity: quantity  // Include the selected quantity
+        });
+      }
+    });
+
+    this.checkoutForm.updateValueAndValidity();
+  }
+
   calculateTotalPrice() {
     let totalPrice = 0;
     const itemsFormArray = this.checkoutForm.get('items') as FormArray;
@@ -72,5 +96,29 @@ export class CheckoutComponent implements OnInit{
       totalPrice += quantity * price;
     });
     this.totalPrice = totalPrice;
+  }
+
+  onCheckout() {
+    this.ngxService.start();
+    
+    console.log(this.selectedItems);
+    // Prepare data to send
+    const data = {
+      userId: this.userId,
+      items: this.selectedItems  // Send the selected items with their quantities to the backend
+    };
+  
+    //Send checkout request
+    this.businessService.checkout(data).subscribe(async (result: any) => {
+      let stripe = await loadStripe('pk_test_51PSuTnKOIavqEBhSWKb3m1Qzynq9CqxdWSn6vIY6TsM1iBnDeUaljxJxJUCrTm1nnDjLY1wAecWnAPG3xARSAeVi00NPgUPx3z');
+      stripe?.redirectToCheckout({
+        sessionId: result.id
+      });
+      this.ngxService.stop();
+      console.log(result);
+    },
+    (error: any) => {
+      console.error(error);
+    });
   }
 }

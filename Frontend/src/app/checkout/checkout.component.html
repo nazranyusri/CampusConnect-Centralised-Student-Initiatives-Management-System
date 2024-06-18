@@ -2,39 +2,6 @@
     <form [formGroup]="checkoutForm">
         <h2>Checkout</h2>
         <div class="checkout-container">
-            <div class="personal-information">
-                <mat-card>
-                    <mat-card-title>
-                        Billing information
-                    </mat-card-title>
-                    <mat-card-content>
-                        <mat-form-field appearance="fill" class="custom-fill">
-                            <mat-label>Full name</mat-label>
-                            <input matInput formControlName="fullName" required>
-                        </mat-form-field><br>
-                        <mat-form-field appearance="fill" class="custom-fill">
-                            <mat-label>Address line 1</mat-label>
-                            <input matInput formControlName="addLine1" required>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" class="custom-fill">
-                            <mat-label>Address line 2</mat-label>
-                            <input matInput formControlName="addLine2" required>
-                        </mat-form-field><br>
-                        <mat-form-field appearance="fill"class="custom-fill">
-                            <mat-label>Country/Region</mat-label>
-                            <input matInput formControlName="country" required>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill"class="custom-fill">
-                            <mat-label>State/Province</mat-label>
-                            <input matInput formControlName="state" required>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill"class="custom-fill">
-                            <mat-label>Postal/Zip code</mat-label>
-                            <input matInput formControlName="zipCode" required>
-                        </mat-form-field>
-                    </mat-card-content>
-                </mat-card>
-            </div>
             <div class="item-table">
                 <mat-card>
                     <table>
@@ -52,9 +19,16 @@
                                 <td id="note">{{ item?.note }}</td>
                                 <td id="price">RM {{ item?.price }}</td>
                                 <td id="quantity">
-                                    <select (change)="calculateTotalPrice()" formControlName="quantity">
+                                    <mat-form-field>
+                                        <mat-select formControlName="quantity" (selectionChange)="calculateTotalPrice()" (selectionChange)="test()">
+                                            <mat-option *ngFor="let quantity of getAvailableQuantities(item?.quantity)" [value]="quantity">
+                                                {{ quantity }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- <select (change)="calculateTotalPrice()" formControlName="quantity">
                                         <option *ngFor="let quantity of getAvailableQuantities(item?.quantity)" [value]="quantity">{{ quantity }}</option>
-                                    </select>
+                                    </select> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -65,7 +39,7 @@
             <div class="total-row">
                 <mat-card>
                     <h4>Total Price: RM {{ totalPrice }}</h4>
-                    <button type="submit" mat-raised-button color="accent">Place Order</button>
+                    <button type="submit" mat-raised-button color="accent" (click)="onCheckout()" [disabled]="selectedItems.length == 0">Place Order</button>
                 </mat-card>
             </div>
         </div>

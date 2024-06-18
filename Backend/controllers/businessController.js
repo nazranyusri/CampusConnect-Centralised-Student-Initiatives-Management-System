@@ -1,6 +1,8 @@
 const businessModel = require('../models/business');
 const menuModel = require('../models/menu');
+const orderModel = require('../models/orders');
 const fs = require('fs');
+require("dotenv").config();
 
 //get all business
 const getAllBusiness = (req, res) => {
@@ -72,6 +74,240 @@ const getBusinessHistory = (req, res) => {
             return res.status(500).json(err);
         }
     });
+};
+
+//get user ordered business
+const getUserOrderedBusiness = (req, res) => {
+    const userId = req.params.userId;
+    // console.log(userId);
+    orderModel.getUserOrderedBusiness(userId, (err, results) => {
+        // console.log(results);
+        if (err) {
+            return res.status(500).json(err);
+        }
+
+        // Map each order to a Promise returned by processOrder function
+        const promises = results.map(order => {
+            return processOrder(order.orderId, order.userId, order.businessId, order.menuId, order.quantity, order.total, order.status, order.billingAddress, order.datePurchased);
+        });
+
+        // Wait for all promises to resolve
+        Promise.all(promises)
+            .then(processedOrders => {
+                // console.log("Processed order: ", processedOrders);
+                res.status(200).json(processedOrders);
+            })
+            .catch(error => {
+                console.error("Error processing orders:", error);
+                res.status(500).json({ error: "Error processing orders" });
+            });
+    });
+};
+
+function processOrder(orderId, userId, businessId, menuIds, quantities, total, status, billingAddress, datePurchased) {
+    return new Promise((resolve, reject) => {
+        const menuIdArray = menuIds.split(',').map(Number);
+        const quantityArray = quantities.split(',').map(Number);
+        // console.log("In function processOrder");
+        // console.log("orderId:", orderId);
+        // console.log("userId:", userId);
+        // console.log("businessId:", businessId);
+        // console.log("menuIds:", menuIds);
+        // console.log("quantities:", quantities);
+        // console.log("total:", total);
+        // console.log("status:", status);
+        // console.log("billingAddress:", billingAddress);
+        // console.log("datePurchased:", datePurchased);
+        // console.log("menuIdArray:", menuIdArray);
+        // console.log("quantityArray:", quantityArray);
+
+        let count = 0;
+        const orderedItem = [];
+
+        function fetchMenuDetails(menuId, quantity) {
+            menuModel.getIndividualMenu(menuId, (err, menuDetails) => {
+                if (err) {
+                    console.error('Error fetching menu details:', err);
+                    reject(err);
+                } 
+
+                if(menuDetails && menuDetails.length > 0){
+                    const menuDetail = menuDetails[0];
+                    // console.log("after menuModel.getIndividualMenu: ", menuDetail);
+                    orderedItem.push({
+                        menuId: menuDetail.menuId,
+                        businessId: menuDetail.businessId,
+                        itemName: menuDetail.itemName,
+                        price: menuDetail.price,
+                        note: menuDetail.note,
+                        quantity
+                    });
+
+                    // Add menu details to orderedItem object
+                    // orderedItem[`item${menuId}`] = {
+                    //     menuId: menuDetail.menuId,
+                    //     businessId: menuDetail.businessId,
+                    //     itemName: menuDetail.itemName,
+                    //     price: menuDetail.price,
+                    //     note: menuDetail.note,
+                    //     quantity
+                    // };
+
+                    // console.log("After fetch individual items: ",orderedItem[`item${menuId}`]);
+                } else{
+                    console.error('No menu details found for menuId:', menuId);
+                }
+
+                count++;
+                if (count === menuIdArray.length) {
+                    businessModel.getBusinessById(businessId, (err, businessDetails) => {
+                        if (err) {
+                            console.error('Error fetching business details:', err);
+                        }
+
+                        if (businessDetails && businessDetails.length > 0) {
+                            const businessDetail = businessDetails[0];
+                            console.log(businessDetail);
+                            businessDetails = {
+                                businessId: businessDetail.businessId,
+                                businessTitle: businessDetail.businessTitle,
+                                image: businessDetail.image,
+                                // Add other business details as needed
+                            };
+                            console.log(businessDetails);
+                        } else {
+                            console.error('No business details found for businessId:', businessId);
+                        }
+
+                        // Assemble the final object
+                        const finalObject = {
+                            orderId,
+                            userId,
+                            businessDetails,
+                            orderedItem,
+                            total,
+                            status,
+                            billingAddress,
+                            datePurchased
+                        };
+                        console.log("Final object: ", finalObject);
+                        resolve(finalObject);
+                    });
+                }
+            });
+        }
+
+        for (let i = 0; i < menuIdArray.length; i++) {
+            fetchMenuDetails(menuIdArray[i], quantityArray[i]);
+        }
+    });
+}
+
+
+//checkout
+const stripe = require("stripe")(process.env.STRIPE_KEY);
+const checkout = async (req, res, next) => {
+    try {
+        const { userId, items } = req.body;
+
+        const customer = await stripe.customers.create({
+            metadata: {
+                userId: userId,
+                cart: JSON.stringify(items),
+            }
+        })
+
+        const line_items = items.map((item) => {
+            return {
+                price_data: {
+                    currency: 'myr',
+                    product_data: {
+                        name: item.itemName,
+                        description: item.note,
+                        metadata: {
+                            id: item.menuId,
+                        }
+                    },
+                    unit_amount: item.price * 100,
+                },
+                quantity: item.quantity,
+            };
+        });
+
+        const session = await stripe.checkout.sessions.create({
+            customer: customer.id,
+            line_items,
+            mode: 'payment',
+            shipping_address_collection: {
+                allowed_countries: ['MY'],
+            },
+            success_url: `${process.env.CLIENT_URL}/business`,
+            cancel_url: `${process.env.CLIENT_URL}/business`,
+        });
+        return res.status(200).json(session);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
+
+const createOrder = async (customer, data) => {
+    const items = JSON.parse(customer.metadata.cart);
+    const totalAmount = data.amount_total / 100;
+
+    // for (const item of items) {
+        const businessId = items[0].businessId;
+    
+        const orderData = {
+            userId: customer.metadata.userId,
+            businessId: businessId,
+            // menuId: item.menuId,
+            menuId: items.map(item => item.menuId).join(','),
+            // quantity: item.quantity,
+            quantity: items.map(item => item.quantity).join(','),
+            total: totalAmount,
+            billingAddress: `${data.customer_details.address.line1} ${data.customer_details.address.line2} ${data.customer_details.address.postal_code} ${data.customer_details.address.city}`,
+            datePurchased: new Date().toISOString() // Current timestamp
+        };
+
+        console.log(orderData);
+        orderModel.addOrder(orderData, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    // }
+};
+
+//webhook endpoint
+const endpointSecret = process.env.WEBHOOK_KEY;
+const webhookStripe = (req, res) => {
+    const sig = req.headers['stripe-signature'];
+
+    let event;
+    let eventType;
+    let dataObject;
+
+    try {
+        // Construct the event using the raw body
+        event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+        console.log("Webhook verified");
+    } catch (err) {
+        console.log(`Webhook Error: ${err.message}`);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    // Extract the event type and data object
+    eventType = event.type;
+    dataObject = event.data.object;
+  
+    // Handle the event
+    if (eventType === "checkout.session.completed") {
+        stripe.customers.retrieve(dataObject.customer).then((customer) => {
+            createOrder(customer, dataObject);
+        }).catch((err) => { console.log(err.message)}); 
+    }
+
+    res.send().end();
 };
 
 //create business
@@ -237,6 +473,10 @@ module.exports = {
     getLatestBusiness,
     getMenuItems,
     getBusinessHistory,
+    getUserOrderedBusiness,
+    checkout,
+    createOrder,
+    webhookStripe,
     addBusiness,
     updateBusiness,
     deleteBusiness,

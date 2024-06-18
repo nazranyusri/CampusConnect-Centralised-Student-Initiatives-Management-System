@@ -5,6 +5,11 @@ const getMenuItems = (businessId, callback) => {
     connection.query(sql, businessId, callback);
 };
 
+const getIndividualMenu = (menuId, callback) => {
+    const sql = 'SELECT menuId, businessId, itemName, price, note FROM menu WHERE menuId = ?';
+    connection.query(sql, menuId, callback);
+};
+
 const addMenuItem = (menu, callback) => {
     const sql = `INSERT INTO menu (businessId, itemName, price, quantity, note) VALUES (?, ?, ?, ?, ?)`;
     connection.query(sql, [menu.businessId, menu.itemName, menu.price, menu.quantity, menu.note], callback);
@@ -22,6 +27,7 @@ const deleteMenuItem = (menuId, callback) => {
 
 module.exports = {
     getMenuItems,
+    getIndividualMenu,
     addMenuItem,
     updateMenuItem,
     deleteMenuItem

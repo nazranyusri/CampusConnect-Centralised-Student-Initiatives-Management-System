@@ -10,6 +10,7 @@ const surveyRoutes = require('./routes/surveyRoute');
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use('/webhook', businessRoutes);
 app.use(express.json());
 app.use('/user', userRoutes);
 app.use('/persaka', persakaRoutes);

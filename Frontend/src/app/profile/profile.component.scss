@@ -73,7 +73,7 @@ body {
         }
     }
 
-    .history-container {
+    .history-container, .activity-container {
         width: 100%;
     }
     .heading {
@@ -95,7 +95,7 @@ body {
     
     .program-history-container, .business-history-container, .survey-history-container {
         display: flex;
-        width: 1140px;
+        width: 100%;
         gap: 15px;
         padding: 10px 0px 10px 0px;
         overflow-y: auto;
@@ -191,6 +191,10 @@ body {
         background-color: rgba(255, 255, 255, 0.068);
         border-radius: 10px;
         margin-bottom: 20px;
+    }
+
+    .ordered-container {
+        
     }
 }
 

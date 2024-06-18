@@ -2,7 +2,7 @@ const connection = require('../connection');
 
 //get all surveys
 const getAllSurvey = (callback) => {
-    const sql = 'SELECT s.*, u.username AS createdBy FROM survey s JOIN user u ON s.userId = u.userId';
+    const sql = 'SELECT s.*, u.username AS createdBy FROM survey s JOIN user u ON s.userId = u.userId ORDER BY s.surveyId DESC';
     connection.query(sql, callback);
 };
 

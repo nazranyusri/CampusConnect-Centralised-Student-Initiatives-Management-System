@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   businesses: Array<any> = [];
   surveys: Array<any> = [];
   registeredPrograms: Array<any> = [];
+  orderedBusiness: Array<any> = [];
 
   constructor(
     private userService: UserService,
@@ -53,9 +54,11 @@ export class ProfileComponent implements OnInit {
       this.getProgramHistory(userId);
       this.getBusinessHistory(userId);
       this.getSurveyHistory(userId);
+      this.getUserOrderedBusiness(userId);
       if (!this.isAuthorized) {
         this.getUserRegisteredPrograms(userId);
       }
+      
     }
   }
 
@@ -125,7 +128,6 @@ getUserDetails(userId: number) {
   getUserRegisteredPrograms(userId: number) {
     this.programService.getUserRegisteredPrograms(userId).subscribe((result: any) => {
       // console.log(result);
-      this.ngxService.stop();
       this.registeredPrograms = result.map((program: any) => {
         program.image = `${environment.apiUrl}/${program.image}`;
         return program;
@@ -136,6 +138,22 @@ getUserDetails(userId: number) {
         console.error(error);
       }
     );
+  }
+
+  getUserOrderedBusiness(userId: number) {
+    this.businessService.getUserOrderedBusiness(userId).subscribe((result: any) => {
+      this.ngxService.stop();
+      // this.orderedBusiness = result;
+      this.orderedBusiness = result.map((business: any) => {
+        business.businessDetails.image = `${environment.apiUrl}/${business.businessDetails.image}`;
+        return business;
+      });
+      console.log(this.orderedBusiness);
+    },
+    (error: any) => {
+      this.ngxService.stop();
+      console.error(error);
+    });
   }
 
   confirmDeleteProgram(id: number, image: string) {

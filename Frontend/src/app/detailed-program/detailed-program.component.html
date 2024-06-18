@@ -20,7 +20,7 @@
                     <p><mat-icon>access_time</mat-icon>{{ program?.startTime }} - {{ program?.endTime }}</p>
                     <p><mat-icon>person</mat-icon>{{ program?.telName }}</p>
                     <p><mat-icon>call</mat-icon>{{ program?.telNo }}</p>
-                    <ng-container *ngIf="!isAuthorized">
+                    <ng-container *ngIf="!isAuthorized && isLoggedIn">
                         <a mat-raised-button (click)="registerProgram(program.programId)">Register now!</a>
                     </ng-container>
                     <p id="textarea">{{ program?.description }}</p>

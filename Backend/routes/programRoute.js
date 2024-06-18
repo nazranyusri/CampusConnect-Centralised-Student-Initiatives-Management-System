@@ -32,10 +32,10 @@ router.get('/latest', programController.getLatestProgram);
 router.get('/:id', programController.getProgramById);
 
 //get program history
-router.get('/history/:userId', programController.getProgramHistory);
+router.get('/history/:userId', auth.authenticateToken, programController.getProgramHistory);
 
 //get user registered program
-router.get('/registered/:userId', programController.getUserRegisteredProgram);
+router.get('/registered/:userId', auth.authenticateToken, programController.getUserRegisteredProgram);
 
 //create program
 router.post('/add', auth.authenticateToken, upload.single('image'), programController.addProgram);
