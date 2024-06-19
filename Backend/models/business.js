@@ -2,13 +2,13 @@ const connection = require('../connection');
 
 //get all businesses
 const getAllBusiness = (callback) => {
-    const sql = 'SELECT b.*, u.username AS createdBy FROM business b JOIN user u ON b.userId = u.userId ORDER BY b.businessId DESC';
+    const sql = 'SELECT b.*, u.username AS createdBy, u.image AS profileImage FROM business b JOIN user u ON b.userId = u.userId ORDER BY b.businessId DESC';
     connection.query(sql, callback);
 };
 
 //get business by id
 const getBusinessById = (businessId, callback) => {
-    const sql = 'SELECT b.*, u.username AS createdBy FROM business b JOIN user u ON b.userId = u.userId WHERE b.businessId = ?';
+    const sql = 'SELECT b.*, u.username AS createdBy, u.image AS profileImage FROM business b JOIN user u ON b.userId = u.userId WHERE b.businessId = ?';
     connection.query(sql, businessId, callback);
 };
 
@@ -20,20 +20,20 @@ const getTotalBusiness = (callback) => {
 
 //get latest business -- viewed in Homepage
 const getLatestBusiness = (callback) => {
-    const sql = 'SELECT * FROM business ORDER BY datePublished DESC LIMIT 3';
+    const sql = 'SELECT b.businessId, b.businessTitle, b.image, b.description, b.datePublished, u.username AS createdBy, u.image AS profileImage FROM business b JOIN user u ON b.userId = u.userId ORDER BY b.businessId DESC LIMIT 3';
     connection.query(sql, callback);
 };
 
 //get specific user businesses -- viewed in Profile page
 const getBusinessHistory = (userId, callback) => {
-    const sql = 'SELECT * FROM business WHERE userId = ?';
+    const sql = 'SELECT * FROM business WHERE userId = ? ORDER BY businessId DESC';
     connection.query(sql, [userId], callback);
 };
 
 //create business
 const addBusiness = (business, callback) => {
     const sql = `INSERT INTO business (businessTitle, userId, description, location, othersLocation, telNo, telName, image, datePublished) 
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.datePublished], callback);
 };
 
@@ -48,6 +48,7 @@ const deleteBusiness = (id, callback) => {
     const sql = "DELETE FROM business WHERE businessId = ?";
     connection.query(sql, id, callback);
 };
+
 
 module.exports = {
     getAllBusiness,

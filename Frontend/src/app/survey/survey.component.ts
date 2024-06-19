@@ -12,6 +12,7 @@ import { SurveyService } from '../services/survey.service';
 export class SurveyComponent implements OnInit {
   surveys: Array<any> = [];
   searchKey: string = '';
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
   
   constructor(
     private surveyService: SurveyService,
@@ -28,8 +29,12 @@ export class SurveyComponent implements OnInit {
   getAllSurvey(){
     this.surveyService.getAllSurvey().subscribe((result: any) => {
         this.ngxService.stop();
-        this.surveys = result;
-        return result;
+        this.surveys = result.map((survey: any) => {
+          if (survey.profileImage) {
+            survey.profileImage = `${environment.apiUrl}/${survey.profileImage}`;
+          }
+          return survey;
+        });
       },
       (error: any) => {
         this.ngxService.stop();

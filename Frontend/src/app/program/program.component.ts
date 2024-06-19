@@ -15,6 +15,7 @@ export class ProgramComponent implements OnInit{
   isAuthorized: boolean = false;
   isFilter: boolean = false;
   filterCategory: string = '';
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
   
   constructor(
     private programService: ProgramService,
@@ -54,6 +55,9 @@ export class ProgramComponent implements OnInit{
         this.ngxService.stop();
         this.programs = result.map((program: any) => {
           program.image = `${environment.apiUrl}/${program.image}`;
+          if(program.profileImage){
+            program.profileImage = `${environment.apiUrl}/${program.profileImage}`;
+          }
           return program;
         });
         // console.log(this.programs);

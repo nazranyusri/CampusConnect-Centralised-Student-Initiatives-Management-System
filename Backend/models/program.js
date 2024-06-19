@@ -2,13 +2,13 @@ const connection = require('../connection');
 
 // Get all programs
 const getAllProgram = (callback) => {
-    const sql = 'SELECT p.programId, p.programTitle, p.startDate, p.endDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.tag, p.telNo, p.location, p.image, p.description, p.datePublished, u.username AS createdBy FROM program p JOIN user u ON p.userId = u.userId ORDER BY p.programId DESC';
+    const sql = 'SELECT p.programId, p.programTitle, p.startDate, p.endDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.tag, p.telNo, p.location, p.image, p.description, p.datePublished, u.username AS createdBy, u.image AS profileImage FROM program p JOIN user u ON p.userId = u.userId ORDER BY p.programId DESC';
     connection.query(sql, callback);
 };
 
 // Get program by id
 const getProgramById = (id, callback) => {
-    const sql = 'SELECT p.programId, p.userId, p.description, p.endDate, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.location, p.programTitle, p.startDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, p.tag, p.telNo, p.telName, p.image, p.datePublished, u.username FROM program p JOIN user u ON p.userId = u.userId WHERE p.programId = ?';
+    const sql = 'SELECT p.programId, p.userId, p.description, p.endDate, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.location, p.programTitle, p.startDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, p.tag, p.telNo, p.telName, p.image, p.datePublished, u.username AS createdBy, u.image AS profileImage FROM program p JOIN user u ON p.userId = u.userId WHERE p.programId = ?';
     connection.query(sql, id, callback);
 };
 
@@ -20,13 +20,13 @@ const getTotalProgram = (callback) => {
 
 // Get latest program -- viewed in Homepage
 const getLatestProgram = (callback) => {
-    const sql = 'SELECT programId, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program ORDER BY datePublished DESC LIMIT 3';
+    const sql = 'SELECT p.programId, p.programTitle, p.startDate, p.endDate, TIME_FORMAT(p.startTime, "%h:%i %p") AS startTime, TIME_FORMAT(p.endTime, "%h:%i %p") AS endTime, p.location, p.image, p.datePublished, u.username AS createdBy, u.image AS profileImage FROM program p JOIN user u ON p.userId = u.userId ORDER BY p.programId DESC LIMIT 3';
     connection.query(sql, callback);
 };
 
 // Get specific user programs -- viewed in Profile page
 const getProgramHistory = (userId, callback) => {
-    const sql = 'SELECT programId, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program WHERE userId = ?';
+    const sql = 'SELECT programId, programTitle, startDate, endDate, TIME_FORMAT(startTime, "%h:%i %p") AS startTime, TIME_FORMAT(endTime, "%h:%i %p") AS endTime, location, image, datePublished FROM program WHERE userId = ? ORDER BY programId DESC';
     connection.query(sql, [userId], callback);
 };
 

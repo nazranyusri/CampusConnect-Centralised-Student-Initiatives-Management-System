@@ -62,22 +62,22 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-getUserDetails(userId: number) {
-    this.userService.getUser(userId).subscribe((result: any) => {
-      this.ngxService.stop();
-      this.userDetails = result.map((user: any) => {
-          if (user.image) {
-              user.image = `${environment.apiUrl}/${user.image}`;
-              // console.log("Image URL", user.image);
-          }
-          return user;
-      });
-    },
-    (error: any) => {
+  getUserDetails(userId: number) {
+      this.userService.getUser(userId).subscribe((result: any) => {
         this.ngxService.stop();
-        console.error(error);
-    });
-}
+        this.userDetails = result.map((user: any) => {
+            if (user.image) {
+                user.image = `${environment.apiUrl}/${user.image}`;
+                // console.log("Image URL", user.image);
+            }
+            return user;
+        });
+      },
+      (error: any) => {
+          this.ngxService.stop();
+          console.error(error);
+      });
+  }
 
   getProgramHistory(userId: number) {
     this.programService.getProgramHistory(userId).subscribe((result: any) => {

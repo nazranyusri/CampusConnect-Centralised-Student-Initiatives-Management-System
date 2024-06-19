@@ -17,6 +17,7 @@ export class HomepageComponent implements OnInit {
   latestProgram: Array<any> = [];
   latestBusiness: Array<any> = [];
   latestSurvey: Array<any> = [];
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
 
   constructor(
     private programService: ProgramService,
@@ -71,6 +72,9 @@ export class HomepageComponent implements OnInit {
     this.programService.getLatestProgram().subscribe((result: any) => {
       this.latestProgram = result.map((program: any) => {
         program.image = `${environment.apiUrl}/${program.image}`;
+        if(program.profileImage) {
+          program.profileImage = `${environment.apiUrl}/${program.profileImage}`;
+        }
         return program;
       });
       // console.log('Latest program:', result);
@@ -85,6 +89,9 @@ export class HomepageComponent implements OnInit {
     this.businessService.getLatestBusiness().subscribe((result: any) => {
       this.latestBusiness = result.map((business: any) => {
         business.image = `${environment.apiUrl}/${business.image}`;
+        if(business.profileImage) {
+          business.profileImage = `${environment.apiUrl}/${business.profileImage}`;
+        }
         return business;
       });
       // console.log('Latest business:', result);
@@ -97,7 +104,12 @@ export class HomepageComponent implements OnInit {
 
   getLatestSurvey() {
     this.surveyService.getLatestSurvey().subscribe((result: any) => {
-      this.latestSurvey = result;
+      this.latestSurvey = result.map((survey: any) => {
+        if (survey.profileImage) {
+          survey.profileImage = `${environment.apiUrl}/${survey.profileImage}`;
+        }
+        return survey;
+      });
       // console.log('Latest survey:', result);
     },
       (error) => {

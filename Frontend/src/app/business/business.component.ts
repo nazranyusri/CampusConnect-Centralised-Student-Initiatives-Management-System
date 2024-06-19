@@ -13,6 +13,7 @@ export class BusinessComponent implements OnInit {
   searchKey: string = '';
   isFilter: boolean = false;
   filterCategory: string = '';
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
   
   constructor(
     private businessService: BusinessService,
@@ -41,6 +42,9 @@ export class BusinessComponent implements OnInit {
         this.ngxService.stop();
         this.businesses = result.map((business: any) => {
           business.image = `${environment.apiUrl}/${business.image}`;
+          if(business.profileImage){
+            business.profileImage = `${environment.apiUrl}/${business.profileImage}`;
+          }
           return business;
         });
         // console.log(this.businesses);

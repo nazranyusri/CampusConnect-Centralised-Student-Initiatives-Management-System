@@ -96,12 +96,11 @@ export class ProgramRegistrantComponent implements AfterViewInit, OnInit {
         const fileHeight = (canvas.height * fileWidth) / canvas.width;
         const FILEURI = canvas.toDataURL('image/png');
         const PDF = new jsPDF('p', 'mm', 'a4');
-        const position = padding;
   
-        // Add program title without underline
+        // Add program title 
         const startY = padding;
         const lineHeight = 6;
-        PDF.setFontSize(14); // Set font size
+        PDF.setFontSize(14); 
         PDF.text(`${this.program?.programTitle}`, padding, startY + lineHeight);
   
         // Add program details
@@ -123,9 +122,9 @@ export class ProgramRegistrantComponent implements AfterViewInit, OnInit {
         const currentDate = new Date().toLocaleDateString();
         const currentTime = new Date().toLocaleTimeString();
         PDF.setFontSize(10);
-        PDF.text(`Generated on ${currentTime} ${currentDate}`, padding, 295);
+        PDF.text(`Generated on ${currentTime} ${currentDate} from CampusConnect`, padding, 295);
   
-        PDF.save('registrants.pdf');
+        PDF.save(`${this.program.programTitle}_registrants.pdf`);
       });
     }
   }

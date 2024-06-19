@@ -30,7 +30,7 @@ export class ManageComponent implements OnInit{
   programDisplayedColumns: string[] = ['position', 'programTitle', 'createdBy', 'date', 'time', 'description', 'telNo', 'datePublished', 'actions'];
   programDataSource = new MatTableDataSource<any>();
 
-  businessDisplayedColumns: string[] = ['position', 'businessTitle', 'createdBy', 'description', 'sellingMethod', 'datePublished', 'actions'];
+  businessDisplayedColumns: string[] = ['position', 'businessTitle', 'createdBy', 'description', 'datePublished', 'actions'];
   businessDataSource = new MatTableDataSource<any>();
 
   surveyDisplayedColumns: string[] = ['position', 'surveyTitle', 'createdBy', 'description', 'time', 'datePublished', 'actions'];
@@ -38,10 +38,24 @@ export class ManageComponent implements OnInit{
 
   postSearchKey: string = '';
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('clubPaginator', { static: true }) clubPaginator!: MatPaginator;
+  @ViewChild('userPaginator', { static: true }) userPaginator!: MatPaginator;
+  @ViewChild('programPaginator', { static: true }) programPaginator!: MatPaginator;
+  @ViewChild('businessPaginator', { static: true }) businessPaginator!: MatPaginator;
+  @ViewChild('surveyPaginator', { static: true }) surveyPaginator!: MatPaginator;
+  
+  @ViewChild('clubTable') clubTable!: ElementRef;
+  @ViewChild('userTable') userTable!: ElementRef;
+  @ViewChild('programTable') programTable!: ElementRef;
+  @ViewChild('businessTable') businessTable!: ElementRef;
+  @ViewChild('surveyTable') surveyTable!: ElementRef;
 
   ngAfterViewInit() {
-    this.userDataSource.paginator = this.paginator;
+    this.clubDataSource.paginator = this.clubPaginator;
+    this.userDataSource.paginator = this.userPaginator;
+    this.programDataSource.paginator = this.programPaginator;
+    this.businessDataSource.paginator = this.businessPaginator;
+    this.surveyDataSource.paginator = this.surveyPaginator;
   }
 
   constructor(

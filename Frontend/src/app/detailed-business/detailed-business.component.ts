@@ -18,6 +18,7 @@ export class DetailedBusinessComponent {
   id: number = 0;
   business: any;
   menuItems: any;
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
 
   constructor(
     private businessService: BusinessService,
@@ -49,6 +50,9 @@ export class DetailedBusinessComponent {
       this.ngxService.stop();
       this.business = result;
       this.business.image = `${environment.apiUrl}/${this.business.image}`;
+      if (result.profileImage) {
+        result.profileImage = `${environment.apiUrl}/${result.profileImage}`;
+      }
     },
     (error: any) => {
       this.ngxService.stop();

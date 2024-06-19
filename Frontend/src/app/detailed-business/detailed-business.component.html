@@ -8,9 +8,18 @@
     </div>
     <div class="detailed-content">
         <mat-card>
+            <div class="postedby-background"></div>
+            <div class="postedby">
+                <div class="profile-picture">
+                  <div class="image-wrapper">
+                    <img mat-card-image [src]="business?.profileImage ? business.profileImage : defaultAvatar">
+                  </div>
+                </div>
+                <div class="username"><strong>{{business?.createdBy}}</strong> posted this.</div>
+            </div>
             <div class="upper-section">
                 <div class="image-wrapper">
-                    <img [src]="business?.image" class="custom-picture">
+                    <img [src]="business?.image">
                 </div>
                 <div class="content-details">
                     <p id="title">{{ business?.businessTitle }}</p>
@@ -40,6 +49,7 @@
                     <p id="textarea">{{ business?.description }}</p>
                 </div>
             </div>
+            <div id="datePublished">Published on {{ business?.datePublished | date:'d MMM, yyyy' }}</div>
         </mat-card>
     </div>
 </body>

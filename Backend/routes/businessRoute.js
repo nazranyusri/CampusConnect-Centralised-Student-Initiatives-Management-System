@@ -41,10 +41,16 @@ router.post('/checkout', auth.authenticateToken, businessController.checkout);
 router.post('/webhook', express.raw({ type: 'application/json' }), businessController.webhookStripe);
 
 //get business history
-router.get('/history/:userId', businessController.getBusinessHistory);
+router.get('/history/:userId', auth.authenticateToken, businessController.getBusinessHistory);
 
 //get user ordered business
-router.get('/ordered/:userId', businessController.getUserOrderedBusiness);
+router.get('/ordered/:userId', auth.authenticateToken, businessController.getUserOrderedBusiness);
+
+//get business order list
+router.get('/orderList/:businessId', auth.authenticateToken, businessController.getBusinessOrderList);
+
+//update order status
+router.patch('/update/:orderId', auth.authenticateToken, businessController.updateOrderStatus);
 
 //create business
 router.post('/add', auth.authenticateToken, upload.single('image'), businessController.addBusiness);

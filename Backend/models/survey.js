@@ -2,13 +2,13 @@ const connection = require('../connection');
 
 //get all surveys
 const getAllSurvey = (callback) => {
-    const sql = 'SELECT s.*, u.username AS createdBy FROM survey s JOIN user u ON s.userId = u.userId ORDER BY s.surveyId DESC';
+    const sql = 'SELECT s.*, u.username AS createdBy, u.image AS profileImage FROM survey s JOIN user u ON s.userId = u.userId ORDER BY s.surveyId DESC';
     connection.query(sql, callback);
 };
 
 //get survey by id
 const getSurveyById = (surveyId, callback) => {
-    const sql = `SELECT s.*, u.fullName FROM survey s JOIN user u ON s.userId = u.userId WHERE s.surveyId = ?`;
+    const sql = `SELECT s.*, u.fullName, u.username AS createdBy, u.image AS profileImage FROM survey s JOIN user u ON s.userId = u.userId WHERE s.surveyId = ?`;
     connection.query(sql, surveyId, callback);
 };
 
@@ -20,13 +20,13 @@ const getTotalSurvey = (callback) => {
 
 //get latest survey -- viewed in Homepage
 const getLatestSurvey = (callback) => {
-    const sql = 'SELECT * FROM survey ORDER BY datePublished DESC LIMIT 3';
+    const sql = 'SELECT s.surveyId, s.surveyTitle, s.description, s.datePublished, u.username AS createdBy, u.image AS profileImage FROM survey s JOIN user u ON s.userId = u.userId ORDER BY s.surveyId DESC LIMIT 3';
     connection.query(sql, callback);
 };
 
 //get specific user surveys -- viewed in Profile page
 const getSurveyHistory = (userId, callback) => {
-    const sql = 'SELECT * FROM survey WHERE userId = ?';
+    const sql = 'SELECT * FROM survey WHERE userId = ? ORDER BY surveyId DESC';
     connection.query(sql, [userId], callback);
 };
 

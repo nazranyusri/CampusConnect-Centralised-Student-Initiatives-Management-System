@@ -15,6 +15,7 @@ export class DetailedSurveyComponent {
   id: number = 0;
   survey: any;
   token: any;
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
 
   constructor(
     private surveyService: SurveyService,
@@ -43,8 +44,10 @@ export class DetailedSurveyComponent {
   getSurveyById(surveyId: number) {
     this.surveyService.getSurveyById(surveyId).subscribe((result: any) => {
         this.ngxService.stop();
-        // console.log("Survey: ", result);
         this.survey = result;
+        if (result.profileImage) {
+          result.profileImage = `${environment.apiUrl}/${result.profileImage}`;
+        }
       },
       (error: any) => {
         this.ngxService.stop();

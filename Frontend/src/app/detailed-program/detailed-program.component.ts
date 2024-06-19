@@ -21,6 +21,7 @@ export class DetailedProgramComponent implements OnInit {
   program: any;
   token: any;
   userId: number = 0;
+  defaultAvatar: string = '../../assets/resources/defaultAvatar.png';
 
   constructor(
     private programService: ProgramService,
@@ -63,6 +64,9 @@ export class DetailedProgramComponent implements OnInit {
         this.ngxService.stop();
         this.program = result;
         this.program.image = `${environment.apiUrl}/${this.program.image}`;
+        if (result.profileImage) {
+          result.profileImage = `${environment.apiUrl}/${result.profileImage}`;
+        }
         // console.log(this.program.image);
         // console.log(result);
       },

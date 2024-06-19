@@ -43,10 +43,19 @@
         <mat-card *ngFor="let business of results" [routerLink]="['/detailedbusiness', business.businessId]">
           <div class="image-wrapper">
             <img mat-card-image [src]="business?.image" class="custom-picture">
+            <div class="postedby-background"></div>
+            <div class="postedby">
+              <div class="profile-picture">
+                <div class="image-wrapper">
+                  <img mat-card-image [src]="business.profileImage ? business.profileImage : defaultAvatar" class="custom-picture">
+                </div>
+              </div>
+              <div class="username">{{business.createdBy}}</div>
+            </div>
           </div>
           <mat-card-header>
             <mat-card-title>
-              <a [routerLink]="['/detailedbusiness', business.businessId]">{{ business.businessTitle }}</a>
+              <a [routerLink]="['/detailedbusiness', business.businessId]">{{ business.businessTitle | truncate: 4 }}</a>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>

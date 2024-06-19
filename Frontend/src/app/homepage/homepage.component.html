@@ -50,10 +50,19 @@
                     <mat-card *ngFor="let program of latestProgram" [routerLink]="['/detailedprogram', program.programId]">
                         <div class="image-wrapper">
                             <img mat-card-image [src]="program?.image" class="custom-picture">
+                            <div class="postedby-background"></div>
+                            <div class="postedby">
+                                <div class="profile-picture">
+                                <div class="image-wrapper">
+                                    <img mat-card-image [src]="program.profileImage ? program.profileImage : defaultAvatar" class="custom-picture">
+                                </div>
+                                </div>
+                                <div class="username">{{program.createdBy}}</div>
+                            </div>
                         </div>
                         <mat-card-header>
                             <mat-card-title>
-                                <a [routerLink]="['/detailedprogram', program.programId]">{{ program.programTitle | truncate: 3 }}</a>
+                                <a [routerLink]="['/detailedprogram', program.programId]">{{ program.programTitle | truncate: 4 }}</a>
                             </mat-card-title>
                         </mat-card-header>
                         <mat-card-content>
@@ -72,14 +81,23 @@
                     <mat-card *ngFor="let business of latestBusiness" [routerLink]="['/detailedbusiness', business.businessId]">
                         <div class="image-wrapper">
                             <img mat-card-image [src]="business?.image" class="custom-picture">
+                            <div class="postedby-background"></div>
+                            <div class="postedby">
+                                <div class="profile-picture">
+                                <div class="image-wrapper">
+                                    <img mat-card-image [src]="business.profileImage ? business.profileImage : defaultAvatar" class="custom-picture">
+                                </div>
+                                </div>
+                                <div class="username">{{business.createdBy}}</div>
+                            </div>
                         </div>
                         <mat-card-header>
                             <mat-card-title>
-                                <a [routerLink]="['/detailedbusiness', business.businessId]">{{ business.businessTitle | truncate: 3 }}</a>
+                                <a [routerLink]="['/detailedbusiness', business.businessId]">{{ business.businessTitle | truncate: 4 }}</a>
                             </mat-card-title>
                         </mat-card-header>
                         <mat-card-content>
-                            <p>{{ business.description }}</p>
+                            <p>{{ business.description | truncate: 30 }}</p>
                             <div id="datePublished">Published on {{ business.datePublished | date:'d MMM, yyyy' }}</div>
                         </mat-card-content>
                     </mat-card>
@@ -106,13 +124,24 @@
                 </div>
                 <div class="item-card">
                     <mat-card *ngFor="let survey of latestSurvey" [routerLink]="['/detailedsurvey', survey.surveyId]">
+                        <div class="survey-card-profile">
+                            <div class="postedby-background"></div>
+                            <div class="postedby">
+                              <div class="profile-picture">
+                                <div class="image-wrapper">
+                                  <img [src]="survey.profileImage ? survey.profileImage : defaultAvatar" class="custom-picture">
+                                </div>
+                              </div>
+                              <div class="username">{{survey.createdBy}}</div>
+                            </div>
+                        </div>
                         <mat-card-header>
                             <mat-card-title>
-                                <a [routerLink]="['/detailedsurvey', survey.surveyId]">{{ survey.surveyTitle | truncate: 3 }}</a>
+                                <a [routerLink]="['/detailedsurvey', survey.surveyId]">{{ survey.surveyTitle | truncate: 4 }}</a>
                             </mat-card-title>
                         </mat-card-header>
                         <mat-card-content>
-                            <p>{{ survey.description | truncate: 40 }}</p>
+                            <p>{{ survey.description | truncate: 30 }}</p>
                             <div id="datePublished">Published on {{ survey.datePublished | date:'d MMM, yyyy' }}</div>
                         </mat-card-content>
                     </mat-card>

@@ -45,6 +45,7 @@ import { UserQueryPipe } from './pipe/user-query.pipe';
 import { PostQueryPipe } from './pipe/post-query.pipe';
 import { ClubQueryPipe } from './pipe/club-query.pipe';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { BusinessOrderComponent } from './business-order/business-order.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -95,6 +96,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     PostQueryPipe,
     ClubQueryPipe,
     CheckoutComponent,
+    BusinessOrderComponent,
   ],
   imports: [
     BrowserModule,

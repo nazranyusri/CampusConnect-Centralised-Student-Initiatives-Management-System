@@ -27,6 +27,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { RegisterClubComponent } from './register-club/register-club.component';
 import { ManageComponent } from './manage/manage.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { BusinessOrderComponent } from './business-order/business-order.component';
 
 const routes: Routes = [
   {path: '', component: HomepageComponent},
@@ -70,8 +71,18 @@ const routes: Routes = [
   // BUSINESS ROUTES
   {path: 'business', component: BusinessComponent},
   {path: 'detailedbusiness/:businessId', component: DetailedBusinessComponent},
-  {path: 'checkout/:businessId', component: CheckoutComponent},
-  {path: 'addbusiness', component: AddBusinessComponent},
+  {
+    path: 'checkout/:businessId', component: CheckoutComponent,
+    canActivate: [RouterGuardService]
+  },
+  {
+    path: 'businessorder/:businessId', component: BusinessOrderComponent,
+    canActivate: [RouterGuardService]
+  },
+  {
+    path: 'addbusiness', component: AddBusinessComponent,
+    canActivate: [RouterGuardService]
+  },
   {
     path: 'updatebusiness/:businessId', component: UpdateBusinessComponent,
     canActivate: [RouterGuardService]

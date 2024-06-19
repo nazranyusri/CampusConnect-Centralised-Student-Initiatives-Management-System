@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -56,5 +57,13 @@ export class BusinessService {
 
   getUserOrderedBusiness(userId: number){
     return this.http.get(`${this.apiUrl}/ordered/${userId}`);
+  }
+
+  getBusinessOrderList(businessId: number): Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/orderList/${businessId}`);
+  }
+
+  updateOrderStatus(orderId: number, status: string) {
+    return this.http.patch(`${this.apiUrl}/update/${orderId}`, {status})
   }
 }
