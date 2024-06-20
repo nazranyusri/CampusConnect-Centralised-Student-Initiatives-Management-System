@@ -32,9 +32,9 @@ const getBusinessHistory = (userId, callback) => {
 
 //create business
 const addBusiness = (business, callback) => {
-    const sql = `INSERT INTO business (businessTitle, userId, description, location, othersLocation, telNo, telName, image, datePublished) 
+    const sql = `INSERT INTO business (businessTitle, userId, description, location, tag, telNo, telName, image, datePublished) 
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.othersLocation, business.telNo, business.telName, business.image, business.datePublished], callback);
+    connection.query(sql, [business.businessTitle, business.userId, business.description, business.location, business.tag, business.telNo, business.telName, business.image, business.datePublished], callback);
 };
 
 //update business

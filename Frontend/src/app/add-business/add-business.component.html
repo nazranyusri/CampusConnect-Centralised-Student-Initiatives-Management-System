@@ -16,50 +16,11 @@
                         <!-- Location -->
                         <p>
                             <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                                <mat-label>Choose location</mat-label>
-                                <mat-icon matPrefix>place</mat-icon>
-                                <mat-select formControlName="location" required>
-                                    <mat-option value="">--</mat-option>
-                                    <mat-option value="KDOJ">KDOJ</mat-option>
-                                    <mat-option value="KDSE">KDSE</mat-option>
-                                    <mat-option value="KTR">KTR</mat-option>
-                                    <mat-option value="KTHO">KTHO</mat-option>
-                                    <mat-option value="KRP">KRP</mat-option>
-                                    <mat-option value="KTF">KTF</mat-option>
-                                    <mat-option value="KTDI">KTDI</mat-option>
-                                    <mat-option value="KTC">KTC</mat-option>
-                                    <mat-option value="KP">KP</mat-option>
-                                    <mat-option value="K9">K9</mat-option>
-                                    <mat-option value="K10">K10</mat-option>
-                                    <mat-option value="Others">Others</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </p>
-                        <!-- Others location -->
-                        <p *ngIf="businessForm.get('location').value === 'Others'">
-                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                                <mat-label>Other location</mat-label>
+                                <mat-label>Your location</mat-label>
                                 <mat-icon matPrefix>pin_drop</mat-icon>
-                                <input matInput formControlName="othersLocation" required>
+                                <input matInput formControlName="location" required>
                             </mat-form-field>
                         </p>
-                        <!-- Buying method -->
-                        <!-- <div class="buying-section">
-                            <h6>Choose selling method</h6>
-                            <mat-radio-group formControlName="sellingMethod" required>
-                                <mat-radio-button value="WhatsApp" checked>WhatsApp</mat-radio-button>
-                                <mat-radio-button value="Google Form">Google Form</mat-radio-button>
-                            </mat-radio-group>
-                        </div> -->
-                        <!-- Business link -->
-                        <!-- <p *ngIf="businessForm.get('sellingMethod').value === 'Google Form'">
-                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
-                                <mat-label>Business link</mat-label>
-                                <mat-icon matPrefix>link</mat-icon>
-                                <input matInput formControlName="businessLink" required>
-                            </mat-form-field>
-                        </p> -->
-                        <!-- Contact name -->
                         <p>
                             <mat-form-field appearance="fill" fxFlex class="custom-fill">
                                 <mat-label>Contact name</mat-label>
@@ -67,12 +28,27 @@
                                 <input matInput formControlName="telName" required>
                             </mat-form-field>
                         </p>
-                        <!-- Contact number *ngIf="businessForm.get('sellingMethod').value === 'WhatsApp'" -->
                         <p>
                             <mat-form-field appearance="fill" fxFlex class="custom-fill">
                                 <mat-label>Contact number</mat-label>
                                 <mat-icon matPrefix>call</mat-icon>
                                 <input matInput formControlName="telNo" required>
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="fill" fxFlex class="custom-fill">
+                                <mat-label>Choose the business category</mat-label>
+                                <mat-icon matPrefix>list</mat-icon>
+                                <mat-select formControlName="tag" required>
+                                    <mat-option value="">--</mat-option>
+                                    <mat-option value="Books">Books</mat-option>
+                                    <mat-option value="Computer & Accessories">Computer & Accessories</mat-option>
+                                    <mat-option value="Electrical Appliances">Electrical Appliances</mat-option>
+                                    <mat-option value="Fashion">Fashion</mat-option>
+                                    <mat-option value="Foods & Drinks">Foods & Drinks</mat-option>
+                                    <mat-option value="Others">Others</mat-option>
+                                    <mat-option value="Sports & Outdoor">Sports & Outdoor</mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </p>
                     </div>
@@ -102,7 +78,7 @@
                                 <mat-label>Description</mat-label>
                                 <mat-icon matPrefix>receipt</mat-icon>
                                 <textarea matInput formControlName="description" cdkTextareaAutosize
-                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" maxlength="500"></textarea>
+                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="9" cdkAutosizeMaxRows="9" maxlength="500"></textarea>
                             </mat-form-field>
                         </p>
                     </div>

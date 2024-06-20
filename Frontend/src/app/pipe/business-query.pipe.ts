@@ -20,7 +20,7 @@ export class BusinessQueryPipe implements PipeTransform {
 
     if (filterCategory) {
       filteredBusinesses = filteredBusinesses.filter(business =>
-        business.location === filterCategory
+        business.tag === filterCategory
       );
     }
 

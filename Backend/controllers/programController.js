@@ -174,7 +174,7 @@ const deleteProgram = (req, res) => {
                         console.error(err);
                         return res.status(500).json({ message: "Error deleting image file" });
                     }
-                    return res.status(200).json({ message: "Program and corresponding image deleted successfully" });
+                    return res.status(200).json({ message: "Program deleted successfully" });
                 });
             } else {
                 return res.status(500).json(err);

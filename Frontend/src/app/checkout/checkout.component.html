@@ -20,15 +20,12 @@
                                 <td id="price">RM {{ item?.price }}</td>
                                 <td id="quantity">
                                     <mat-form-field>
-                                        <mat-select formControlName="quantity" (selectionChange)="calculateTotalPrice()" (selectionChange)="test()">
+                                        <mat-select formControlName="quantity" (selectionChange)="calculateTotalPrice()" (selectionChange)="updateSelectedItems()">
                                             <mat-option *ngFor="let quantity of getAvailableQuantities(item?.quantity)" [value]="quantity">
                                                 {{ quantity }}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <!-- <select (change)="calculateTotalPrice()" formControlName="quantity">
-                                        <option *ngFor="let quantity of getAvailableQuantities(item?.quantity)" [value]="quantity">{{ quantity }}</option>
-                                    </select> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -39,7 +36,7 @@
             <div class="total-row">
                 <mat-card>
                     <h4>Total Price: RM {{ totalPrice }}</h4>
-                    <button type="submit" mat-raised-button color="accent" (click)="onCheckout()" [disabled]="selectedItems.length == 0">Place Order</button>
+                    <button type="submit" mat-raised-button color="accent" (click)="onCheckout()" [disabled]="selectedItems.length == 0">Checkout</button>
                 </mat-card>
             </div>
         </div>

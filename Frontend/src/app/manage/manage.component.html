@@ -56,7 +56,7 @@
                     <tr mat-row *matRowDef="let row; columns: clubDisplayedColumns;"></tr>
                 </table>
             </div>
-            <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons #clubPaginator></mat-paginator>
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons></mat-paginator>
         </mat-expansion-panel>
 
         <!-- Manage users -->
@@ -74,7 +74,6 @@
                 </div>
                 <div class="filter">
                     <button mat-raised-button (click)="filterUserByRole('')" [ngClass]="{'active': userFilterOption === ''}">All</button>
-                    <!-- <button mat-raised-button (click)="filterUserByRole('admin')">Admin</button> -->
                     <button mat-raised-button (click)="filterUserByRole('club')" [ngClass]="{'active': userFilterOption === 'club'}">Club</button>
                     <button mat-raised-button (click)="filterUserByRole('user')" [ngClass]="{'active': userFilterOption === 'user'}">Student</button>
                 </div>
@@ -119,7 +118,6 @@
                     <tr mat-row *matRowDef="let row; columns: userDisplayedColumns;"></tr>
                 </table>
             </div>
-            <mat-paginator [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons #userPaginator></mat-paginator>
         </mat-expansion-panel>
 
         <!-- Manage posts -->
@@ -199,7 +197,6 @@
                         <tr mat-row *matRowDef="let row; columns: programDisplayedColumns;"></tr>
                     </table>
                 </div>
-                <mat-paginator [length]="programDataSource.data.length" [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons #programPaginator></mat-paginator>
              </ng-container>
 
             <!-- Business table -->
@@ -228,7 +225,7 @@
 
                         <ng-container matColumnDef="datePublished">
                             <th mat-header-cell *matHeaderCellDef> Date Published </th>
-                            <td mat-cell *matCellDef="let element"> {{element.datePublished}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.datePublished | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         
                         <ng-container matColumnDef="actions">
@@ -244,7 +241,6 @@
                         <tr mat-row *matRowDef="let row; columns: businessDisplayedColumns;"></tr>
                     </table>
                 </div>
-                <mat-paginator [length]="businessDataSource.data.length" [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons #businessPaginator></mat-paginator>
              </ng-container>
 
             <!-- Survey table -->
@@ -278,7 +274,7 @@
 
                         <ng-container matColumnDef="datePublished">
                             <th mat-header-cell *matHeaderCellDef> Date Published </th>
-                            <td mat-cell *matCellDef="let element"> {{element.datePublished}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.datePublished | date:'dd/MM/yyyy'}} </td>
                         </ng-container>
                         
                         <ng-container matColumnDef="actions">
@@ -294,7 +290,6 @@
                         <tr mat-row *matRowDef="let row; columns: surveyDisplayedColumns;"></tr>
                     </table>
                 </div>
-                <mat-paginator [length]="surveyDataSource.data.length" [pageSizeOptions]="[10, 50, 100]" showFirstLastButtons #surveyPaginator></mat-paginator>
             </ng-container>
         </mat-expansion-panel>
     </mat-accordion>

@@ -34,43 +34,11 @@ export class AddBusinessComponent implements OnInit {
       telName: ['', Validators.required],
       telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
       location: ['', Validators.required],
-      othersLocation: ['', Validators.required],
+      tag: ['', Validators.required],
       image: ['', Validators.required],
       description: ['', Validators.required],
-      // sellingMethod: ['', Validators.required],
-      // businessLink: ['', Validators.required],
       items: this.formBuilder.array([])
     });
-
-    // Dynamically set validation for othersLocation field based on location field value
-    this.businessForm.get('location').valueChanges.subscribe((value: string) => {
-      const othersLocationControl = this.businessForm.get('othersLocation');
-      if (value === 'Others') {
-        othersLocationControl.setValidators(Validators.required);
-      } else {
-        othersLocationControl.clearValidators();
-      }
-      othersLocationControl.setValue(''); // Clear othersLocation value
-      othersLocationControl.updateValueAndValidity();
-    });
-
-    // Set default value for sellingMethod
-    // this.businessForm.get('sellingMethod').setValue('Google Form'); 
-
-    // Dynamically set validation for telNo and businessLink fields based on sellingMethod field value
-    // this.businessForm.get('sellingMethod').valueChanges.subscribe((value: string) => {
-    //   if (value === 'WhatsApp') {
-    //     this.businessForm.get('telNo').setValidators(Validators.required);
-    //     this.businessForm.get('businessLink').clearValidators();
-    //     this.businessForm.get('businessLink').reset();
-    //   } else if (value === 'Google Form') {
-    //     this.businessForm.get('businessLink').setValidators(Validators.required);
-    //     this.businessForm.get('telNo').clearValidators();
-    //     this.businessForm.get('telNo').reset();
-    //   }
-    //   this.businessForm.get('telNo').updateValueAndValidity();
-    //   this.businessForm.get('businessLink').updateValueAndValidity();
-    // });
 
     this.addItem();
   }
@@ -118,7 +86,7 @@ export class AddBusinessComponent implements OnInit {
       formData.append('userId', userId?.toString());
       formData.append('businessTitle', this.businessForm.get('businessTitle').value);
       formData.append('location', this.businessForm.get('location').value);
-      formData.append('othersLocation', this.businessForm.get('othersLocation').value);
+      formData.append('tag', this.businessForm.get('tag').value);
       // formData.append('businessLink', this.businessForm.get('businessLink').value);
       // formData.append('sellingMethod', this.businessForm.get('sellingMethod').value);
       formData.append('telName', this.businessForm.get('telName').value);

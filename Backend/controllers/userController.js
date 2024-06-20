@@ -183,7 +183,7 @@ const deleteUser = (req, res) => {
                         console.error(err);
                         return res.status(500).json({ message: "Error deleting image file" });
                     }
-                    return res.status(200).json({ message: "User and corresponding image deleted successfully" });
+                    return res.status(200).json({ message: "User deleted successfully" });
                 });
             }
             return res.status(200).json({ message: "User deleted successfully" });

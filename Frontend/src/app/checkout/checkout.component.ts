@@ -71,7 +71,7 @@ export class CheckoutComponent {
     return availableQuantities;
   }
 
-  test(){
+  updateSelectedItems(){
     const itemsFormArray = this.checkoutForm.get('items') as FormArray;
     this.selectedItems = [];
     itemsFormArray.controls.forEach((control, index) => {

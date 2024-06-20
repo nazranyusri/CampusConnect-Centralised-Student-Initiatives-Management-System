@@ -95,7 +95,7 @@ export class BusinessOrderComponent implements OnInit{
         PDF.text(`Name          : ${this.business.telName}`, padding, businessDetailsY);
         PDF.text(`Telephone no. : ${this.business.telNo}`, padding, businessDetailsY + lineHeight);
   
-        // Adding the "Registrant List" text above the table image
+        // Adding the "Order List" text above the table image
         const orderListY = businessDetailsY + lineHeight * 3 + 10;
         PDF.setFontSize(14);
         PDF.text('Order List', padding, orderListY);

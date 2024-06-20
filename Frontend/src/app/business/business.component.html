@@ -13,20 +13,16 @@
                 <mat-icon>filter_list</mat-icon>
             </button>
           </div>
-          <div class ="filter-container" *ngIf="isFilter">
-            <button mat-raised-button (click)="toggleButton('KDOJ')" [ngClass]="{'active': filterCategory === 'KDOJ'}">KDOJ</button>
-            <button mat-raised-button (click)="toggleButton('KDSE')" [ngClass]="{'active': filterCategory === 'KDSE'}">KDSE</button>
-            <button mat-raised-button (click)="toggleButton('KTR')" [ngClass]="{'active': filterCategory === 'KTR'}">KTR</button>
-            <button mat-raised-button (click)="toggleButton('KTHO')" [ngClass]="{'active': filterCategory === 'KTHO'}">KTHO</button>
-            <button mat-raised-button (click)="toggleButton('KRP')" [ngClass]="{'active': filterCategory === 'KRP'}">KRP</button>
-            <button mat-raised-button (click)="toggleButton('KTF')" [ngClass]="{'active': filterCategory === 'KTF'}">KTF</button>
-            <button mat-raised-button (click)="toggleButton('KTDI')" [ngClass]="{'active': filterCategory === 'KTDI'}">KTDI</button>
-            <button mat-raised-button (click)="toggleButton('KTC')" [ngClass]="{'active': filterCategory === 'KTC'}">KTC</button>
-            <button mat-raised-button (click)="toggleButton('KP')" [ngClass]="{'active': filterCategory === 'KP'}">KP</button>
-            <button mat-raised-button (click)="toggleButton('K9')" [ngClass]="{'active': filterCategory === 'K9'}">K9</button>
-            <button mat-raised-button (click)="toggleButton('K10')" [ngClass]="{'active': filterCategory === 'K10'}">K10</button>
+          <div class="filter-container" *ngIf="isFilter">
+            <button mat-raised-button (click)="toggleButton('Books')" [ngClass]="{'active': filterCategory === 'Books'}">Books</button>
+            <button mat-raised-button (click)="toggleButton('Computer & Accessories')" [ngClass]="{'active': filterCategory === 'Computer & Accessories'}">Computer & Accessories</button>
+            <button mat-raised-button (click)="toggleButton('Electrical Appliances')" [ngClass]="{'active': filterCategory === 'Electrical Appliances'}">Electrical Appliances</button>
+            <button mat-raised-button (click)="toggleButton('Fashion')" [ngClass]="{'active': filterCategory === 'Fashion'}">Fashion</button>
+            <button mat-raised-button (click)="toggleButton('Foods & Drinks')" [ngClass]="{'active': filterCategory === 'Foods & Drinks'}">Foods & Drinks</button>
             <button mat-raised-button (click)="toggleButton('Others')" [ngClass]="{'active': filterCategory === 'Others'}">Others</button>
+            <button mat-raised-button (click)="toggleButton('Sports & Outdoor')" [ngClass]="{'active': filterCategory === 'Sports & Outdoor'}">Sports & Outdoor</button>
           </div>
+          
         </mat-card-content>
       </mat-card>
     </div>
