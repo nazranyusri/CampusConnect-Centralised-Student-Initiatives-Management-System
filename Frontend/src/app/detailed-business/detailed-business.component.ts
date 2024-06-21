@@ -6,6 +6,8 @@ import { JwtDecoderService } from '../services/jwt-decoder.service';
 import { BusinessService } from '../services/business.service';
 import { loadStripe } from '@stripe/stripe-js';
 import { SnackbarService } from '../services/snackbar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 @Component({
   selector: 'app-detailed-business',
@@ -24,7 +26,8 @@ export class DetailedBusinessComponent {
     private businessService: BusinessService,
     private route: ActivatedRoute,
     private ngxService: NgxUiLoaderService,
-    private jwtDecode: JwtDecoderService
+    private jwtDecode: JwtDecoderService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -69,6 +72,18 @@ export class DetailedBusinessComponent {
     (error: any) => {
       this.ngxService.stop();
       console.error(error);
+    });
+  }
+
+  openCheckoutDialog(): void {
+    const dialogRef = this.dialog.open(CheckoutComponent, {
+      width: '90%',
+      maxHeight: '90vh',
+      data: { businessId: this.business?.businessId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //do nothing
     });
   }
 }

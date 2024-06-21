@@ -1,27 +1,28 @@
-.page-format {
+body {
     display: flex;
 }
 
 .white-section {
-    background-color: white;
     width: 30%;
-    // height: 100vh;
+    background-color: white;
 }
 
 .register-section {
+    width: 70%;
+    height: 100%;
     background-color: #1D203E;
     padding: 5%;
-    width: 70%;
-    min-height: 100vh;
+    position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: white;
 
     .back-button {
         position: absolute;
-        top: 5%;
-        left: 35%;
+        top: 2%;
+        left: 2%;
 
         button {
             background-color: white !important;
@@ -34,55 +35,42 @@
         }
     }
 
-    // form {
-    //     background-color: greenyellow;
-    //     display: flex;
-    //     flex-direction: column;
-    //     max-width: 70%;
-    // }
+    form {
+        min-width: 50%;
+        max-width: 70%;
 
-    // .input-section {
-    //     background-color: red;
-    //     width: auto;
-    //     display: flex;
-    //     flex-wrap: wrap;
-
-    //     p {
-    //         margin: 5px;
-    //     }
-    // }
-    
-    .error-message {
-      &-underline {
-        position: relative;
-        bottom: auto;
-      }
-      &-subscript-wrapper {
-        position: static;
-      }
-    }
-
-    .mat-mdc-raised-button { // Change button color
-        background-color: white !important; 
-        color: #F38D11 !important;
-        width: 100%;
-        font-weight: bolder;
-    }
-    
-    .mat-mdc-raised-button[disabled]{ // Change button color when disabled
-        background-color: rgb(202, 202, 202) !important;
-        color: rgba(24, 19, 19, 0.12) !important;
-        width: 100%;
-        font-weight: bolder;
-    }
-
-    a {
-        color: #F38D11;
-    }
-    
-    .login {
-        text-align: center;
-        font-size: 0.8em;
+        .error-message {
+            &-underline {
+              position: relative;
+              bottom: auto;
+            }
+            &-subscript-wrapper {
+              position: static;
+            }
+          }
+      
+          .mat-mdc-raised-button { // Change button color
+              background-color: white !important; 
+              color: #F38D11 !important;
+              width: 100%;
+              font-weight: bolder;
+          }
+          
+          .mat-mdc-raised-button[disabled]{ // Change button color when disabled
+              background-color: rgb(202, 202, 202) !important;
+              color: rgba(24, 19, 19, 0.12) !important;
+              width: 100%;
+              font-weight: bolder;
+          }
+      
+          a {
+              color: #F38D11;
+          }
+          
+          .login {
+              text-align: center;
+              font-size: 0.8em;
+          }
     }
 }
 
@@ -92,6 +80,22 @@
     }
 
     .register-section {
+        width: 100%;
+
+        .back-button {
+            position: static;
+            width: 100% !important;
+            padding: 0 0 20px 0 !important;
+        }
+    
+        form {
+            min-width: 80%;
+        }
+    }
+}
+
+@media (max-width: 599px) {
+    .login-section {
         width: 100%;
     }
 }

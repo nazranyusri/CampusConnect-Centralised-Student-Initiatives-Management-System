@@ -203,6 +203,10 @@ body {
         flex-direction: column;
         width: 100%;
 
+        .mat-expansion-indicator::after {
+            color: white !important;
+        }
+
         .an-order-container {
             display: flex;
             flex-direction: column;
@@ -352,9 +356,9 @@ body {
     }
 }
 
-::ng-deep .mat-expansion-indicator::after {
-    color: white !important;
-}
+// ::ng-deep .mat-expansion-indicator::after {
+//     color: white !important;
+// }
 
 @media screen and (max-width: 1192px) {
     body {

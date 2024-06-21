@@ -43,8 +43,9 @@
                         </table>
                     </mat-card>
                     <ng-container *ngIf="userId !== business?.userId">
-                        <a mat-raised-button [routerLink]="['/checkout', business?.businessId]">Buy now!</a>
-                        <!-- <a mat-raised-button (click)="onCheckout()">Buy now!</a> -->
+                        <!-- <a mat-raised-button [routerLink]="['/checkout', business?.businessId]">Buy now!</a> -->
+                        <a mat-raised-button (click)="openCheckoutDialog()">Buy now!</a>
+
                     </ng-container>
                     <p id="textarea">{{ business?.description }}</p>
                 </div>

@@ -49,14 +49,14 @@ router.get('/ordered/:userId', auth.authenticateToken, businessController.getUse
 //get business order list
 router.get('/orderList/:businessId', auth.authenticateToken, businessController.getBusinessOrderList);
 
+//update business
+router.patch('/update', auth.authenticateToken, upload.single('image'), businessController.updateBusiness);
+
 //update order status
 router.patch('/update/:orderId', auth.authenticateToken, businessController.updateOrderStatus);
 
 //create business
 router.post('/add', auth.authenticateToken, upload.single('image'), businessController.addBusiness);
-
-//update business
-router.patch('/update', auth.authenticateToken, upload.single('image'), businessController.updateBusiness);
 
 //delete business
 router.delete('/delete/:id/:imagePath', auth.authenticateToken, businessController.deleteBusiness);

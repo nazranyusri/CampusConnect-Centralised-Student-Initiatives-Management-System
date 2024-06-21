@@ -364,9 +364,6 @@ const checkout = async (req, res, next) => {
                   type: 'text',
                 },
               ],
-            // shipping_address_collection: {
-                // allowed_countries: ['MY'],
-            // },
             success_url: `${process.env.CLIENT_URL}/business`,
             cancel_url: `${process.env.CLIENT_URL}/business`,
         });
@@ -516,6 +513,7 @@ const updateBusiness = (req, res) => {
 
         businessModel.updateBusiness(business, (err, result) => {
             if (err) {
+                console.log(business);
                 return res.status(500).json(err);
             }
 

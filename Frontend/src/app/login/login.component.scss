@@ -1,17 +1,17 @@
-.page-format {
+body {
     display: flex;
 }
 
 .white-section {
-    background-color: white;
     width: 30%;
-    // height: 100vh;
+    background-color: white;
 }
 
 .login-section {
-    background-color: #1D203E;
     width: 70%;
-    height: 100vh;
+    height: calc(100vh - 128px);
+    background-color: #1D203E;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,9 +19,10 @@
     color: white;
 
     .back-button {
+        display: block;
         position: absolute;
-        top: 5%;
-        left: 35%;
+        top: 2%;
+        left: 2%;
 
         button {
             background-color: white !important;
@@ -34,27 +35,32 @@
         }
     }
 
-    .mat-mdc-raised-button {                                                                                              // Change button color
-        background-color: white !important; 
-        color: #F38D11 !important;
-        width: 100% !important;
-        font-weight: bolder !important;
-    }
-    
-    .mat-mdc-raised-button[disabled]{                                                                                     // Change button color when disabled
-        background-color: rgb(202, 202, 202) !important;
-        color: rgba(24, 19, 19, 0.12) !important;
-        width: 100%;
-        font-weight: bolder;
-    }
+    form {
+        min-width: 50%;
+        max-width: 70%;
 
-    a {
-        color: #F38D11;
-    }
+        .mat-mdc-raised-button {                                                                                              // Change button color
+            background-color: white !important; 
+            color: #F38D11 !important;
+            width: 100% !important;
+            font-weight: bolder !important;
+        }
+        
+        .mat-mdc-raised-button[disabled]{                                                                                     // Change button color when disabled
+            background-color: rgb(202, 202, 202) !important;
+            color: rgba(24, 19, 19, 0.12) !important;
+            width: 100%;
+            font-weight: bolder;
+        }
     
-    .register {
-        text-align: center;
-        font-size: 0.8em;
+        a {
+            color: #F38D11;
+        }
+        
+        .register {
+            text-align: center;
+            font-size: 0.8em;
+        }
     }
 }
 
@@ -65,9 +71,22 @@
 
     .login-section {
         width: 100%;
+    
+        form {
+            min-width: 80%;
+        }
     }
 }
 
+@media (max-width: 599px) {
+    .login-section {
+        width: 100%;
+        height: calc(100vh - 112px);
+    }
+}
+
+
+//custom input field styling
 ::ng-deep .custom-outline {
 
     .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,                                     // Change border color

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BusinessService } from '../services/business.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { loadStripe } from '@stripe/stripe-js';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-checkout',
@@ -19,20 +20,45 @@ export class CheckoutComponent {
   checkoutForm: any = FormGroup;
   userId: number = 0;
 
+  // constructor(
+  //   private route: ActivatedRoute,
+  //   private businessService: BusinessService,
+  //   private formBuilder: FormBuilder,
+  //   private ngxService: NgxUiLoaderService,
+  //   private jwtDecode: JwtDecoderService
+  // ) { }
+
+  // ngOnInit(): void {
+  //   this.route.params.subscribe(params => {
+  //     this.businessId = +params['businessId'];
+  //     console.log(this.businessId); 
+  //   });
+
+  //   const token = localStorage.getItem('token');
+  //   if(token){
+  //     const decodedToken = this.jwtDecode.decodeToken(token);
+  //     this.userId = decodedToken?.userId || 0;
+  //   }
+
+  //   this.checkoutForm = this.formBuilder.group({
+  //     items: this.formBuilder.array([]),
+  //   });
+
+  //   this.getMenuItems(this.businessId);
+
+  // }
+
   constructor(
-    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private businessService: BusinessService,
     private formBuilder: FormBuilder,
     private ngxService: NgxUiLoaderService,
     private jwtDecode: JwtDecoderService
-  ) { }
+  ) {
+    this.businessId = data.businessId;
+  }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.businessId = +params['businessId'];
-      console.log(this.businessId); 
-    });
-
     const token = localStorage.getItem('token');
     if(token){
       const decodedToken = this.jwtDecode.decodeToken(token);
@@ -44,7 +70,6 @@ export class CheckoutComponent {
     });
 
     this.getMenuItems(this.businessId);
-
   }
 
   getMenuItems(businessId: number) {
