@@ -152,8 +152,8 @@ export class UpdateBusinessComponent {
 
       const items = this.businessForm.get('items')!.value;
       formData.append('items', JSON.stringify(items));
-
-      console.log(items);
+      console.log(formData);
+      // console.log(items);
 
       this.businessService.updateBusiness(formData).subscribe(() => {
         // Delete the items marked for deletion

@@ -122,6 +122,7 @@ const getUser = (req, res) => {
 // Update profile
 const updateProfile = (req, res) => {
     const user = req.body;
+    console.log("update profile controller");
     if (req.file) {
         user.image = req.file.path; // Store the path of the uploaded image
     }
@@ -141,7 +142,7 @@ const updateProfile = (req, res) => {
         }
 
         const oldImagePath = result[0].image;
-        if (user.image === oldImagePath) {
+        if (user.image === oldImagePath || oldImagePath === null) {
             // console.log("Same image file " + user.image + " " + oldImagePath);
         } else (
             // console.log("Different image file " + user.image + " " + oldImagePath),

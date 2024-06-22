@@ -54,6 +54,8 @@ export class UpdateProfileComponent {
       const file = event.target.files[0];
       this.image = file;
       this.imagePath = `${environment.apiUrl}/${this.image}`;
+      console.log(this.image);
+      console.log(this.imagePath);
 
       var reader = new FileReader();
       reader.readAsDataURL(file);
@@ -108,9 +110,9 @@ export class UpdateProfileComponent {
       formData.append('telNo', this.userForm.get('telNo').value);
       formData.append('image', this.image);
   
-      // formData.forEach((value, key) => {
-      //   console.log(`${key}:`, value);
-      // });
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
 
       this.userService.updateProfile(formData).subscribe(() => {
         this.ngxService.stop();

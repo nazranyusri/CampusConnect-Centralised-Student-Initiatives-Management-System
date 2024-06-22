@@ -166,9 +166,9 @@ export class UpdateProgramComponent {
       formData.append('description', this.programForm.get('description').value);
       formData.append('tag', this.programForm.get('tag').value);
 
-      // formData.forEach((value, key) => {
-      //   console.log(`${key}:`, value);
-      // });
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
 
       this.programService.updateProgram(formData).subscribe(() => {
         this.ngxService.stop();

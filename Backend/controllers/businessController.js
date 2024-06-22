@@ -424,9 +424,9 @@ const webhookStripe = (req, res) => {
     try {
         // Construct the event using the raw body
         event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-        console.log("Webhook verified");
+        // console.log("Webhook verified");
     } catch (err) {
-        console.log(`Webhook Error: ${err.message}`);
+        // console.log(`Webhook Error: ${err.message}`);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
