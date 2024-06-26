@@ -4,8 +4,6 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { environment } from 'src/environments/environment';
 import { JwtDecoderService } from '../services/jwt-decoder.service';
 import { BusinessService } from '../services/business.service';
-import { loadStripe } from '@stripe/stripe-js';
-import { SnackbarService } from '../services/snackbar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CheckoutComponent } from '../checkout/checkout.component';
 

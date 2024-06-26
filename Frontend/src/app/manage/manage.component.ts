@@ -111,7 +111,7 @@ export class ManageComponent implements OnInit{
       this.ngxService.stop();
         // console.log(result);
         this.userDataSource.data = result.map((item, index) => ({ ...item, position: index + 1 }));
-        // console.log(this.userDataSource.data);
+        console.log(this.userDataSource.data);
       },
       (error: any) => {
         this.ngxService.stop();
@@ -125,10 +125,19 @@ export class ManageComponent implements OnInit{
     dialogConfig.data = {
       message: 'delete this user'
     };
+
+    let relativeImagePath = '';
+    if(image != null){
+      const imagePathParts = image.split(/[\\/]/);
+      relativeImagePath = imagePathParts[imagePathParts.length - 1];
+    } else {
+      relativeImagePath = 'null';
+    }
+
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, dialogConfig);
     const response = dialogRef.componentInstance.onEmitStatusChange.subscribe((response: any) => {
       dialogRef.close();
-        this.userService.deleteUser(id, image).subscribe((result: any) => {
+        this.userService.deleteUser(id, relativeImagePath).subscribe((result: any) => {
           this.snackbarService.openSnackBar(result.message);
           this.userDataSource.data = this.userDataSource.data.filter(user => user.userId !== id);
           this.clubDataSource.data = this.clubDataSource.data.filter(user => user.userId !== id);
@@ -164,7 +173,7 @@ export class ManageComponent implements OnInit{
   deleteProgram(id: number, image: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message: 'delete the program'
+      message: 'delete this program'
     };
 
     const imagePathParts = image.split(/[\\/]/);
@@ -204,7 +213,7 @@ export class ManageComponent implements OnInit{
   deleteBusiness(id: number, image: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message: 'delete the business'
+      message: 'delete this business'
     };
 
     const imagePathParts = image.split(/[\\/]/);

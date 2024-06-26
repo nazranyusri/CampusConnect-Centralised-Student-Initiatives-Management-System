@@ -36,7 +36,7 @@ const registerClub = (user, callback) => {
 
 //get all user
 const getAllUser = (callback) => {
-    const sql = 'SELECT userId, username, email, role, fullName, matricNo, telNo, status, isDeletable FROM user WHERE status = "true"';
+    const sql = 'SELECT userId, username, email, role, fullName, matricNo, telNo, status, isDeletable, image FROM user WHERE status = "true"';
     connection.query(sql, callback);
 }
 

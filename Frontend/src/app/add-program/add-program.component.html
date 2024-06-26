@@ -59,6 +59,9 @@
                         <mat-label>Contact number</mat-label>
                         <mat-icon matPrefix>call</mat-icon>
                         <input matInput formControlName="telNo" required>
+                        <mat-error *ngIf="programForm.controls.telNo.touched && programForm.controls.telNo.invalid">
+                            <span *ngIf="programForm.controls.telNo.errors.pattern">Contact number is invalid</span>
+                        </mat-error>
                     </mat-form-field>
                 </p>
             </div>

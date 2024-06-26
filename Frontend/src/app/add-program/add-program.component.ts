@@ -35,7 +35,7 @@ export class AddProgramComponent implements OnInit {
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
       telName: ['', Validators.required],
-      telNo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
       image: ['', Validators.required],
       description: ['', Validators.required],
       tag: ['', Validators.required]
@@ -108,9 +108,10 @@ export class AddProgramComponent implements OnInit {
         // console.log(`${key}:`, value);
       });
 
-      this.programService.addProgram(formData).subscribe(() => {
+      this.programService.addProgram(formData).subscribe((result: any) => {
         this.ngxService.stop();
         this.router.navigate(['/program']);
+        this.snackbarService.openSnackBar(result.message);
       }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {

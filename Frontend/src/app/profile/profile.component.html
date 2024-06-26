@@ -149,28 +149,7 @@
                             {{ registeredPrograms.length }} Program<ng-container *ngIf="registeredPrograms.length > 1">s</ng-container> registered
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <!-- <div class="overflow-container">
-                        <div class="program-history-container" *ngIf="registeredPrograms.length > 0; else noProgramsJoined">
-                            <mat-card *ngFor="let program of registeredPrograms">
-                                <div class="image-wrapper">
-                                    <img mat-card-image [src]="program?.image" class="custom-picture">
-                                </div>
-                                <mat-card-header>
-                                    <mat-card-title>
-                                        <p>{{ program.programTitle | truncate: 4 }}</p>
-                                    </mat-card-title>
-                                </mat-card-header>
-                                <mat-card-content>
-                                    <p><mat-icon>calendar_today</mat-icon>{{ program.startDate | date:'dd/MM/yyyy' }} - {{ program.endDate | date:'dd/MM/yyyy' }}</p>
-                                    <p><mat-icon>access_time</mat-icon>{{ program.startTime }} - {{ program.endTime }}</p>
-                                    <p><mat-icon>location_on</mat-icon>{{ program.location }}</p>
-                                    <div id="datePublished">Registered on {{ program.registrationdate | date:'d MMM, yyyy' }}</div>
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-                    </div> -->
-
-                    <div class="ordered-container" *ngIf="registeredPrograms.length > 0; else noOrdersMade">
+                    <div class="ordered-container" *ngIf="registeredPrograms.length > 0; else noProgramsJoined">
                         <div class="an-order-container" *ngFor="let program of registeredPrograms">
                             <div class="an-order-container-wrapper">
                                 <div class="order-header">
@@ -242,9 +221,6 @@
                                                 </tbody>
                                             </table>
                                         </div><br>
-                                        <!-- <div class="shipping">
-                                            <p>Address: {{ order.billingAddress }}</p>
-                                        </div><br> -->
                                         <div class="total">
                                             <p>Total: RM {{ order.total }}</p>
                                         </div>

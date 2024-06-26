@@ -39,7 +39,7 @@ const registerUser = (req, res) => {
 
         userModel.registerUser(user, (err, result) => {
             if (!err) {
-                return res.status(200).json({ message: "User registered successfully" });
+                return res.status(200).json({ message: "Account successfully registered!" });
             } else {
                 return res.status(500).json(err);
             }
@@ -50,7 +50,7 @@ const registerUser = (req, res) => {
 // club register
 const registerClub = (req, res) => {
     const user = req.body;
-    console.log(user);
+    // console.log(user);
     userModel.checkExistingUser(user, (err, result) => {
         if (err) {
             return res.status(500).json(err);
@@ -62,7 +62,7 @@ const registerClub = (req, res) => {
 
         userModel.registerClub(user, (err, result) => {
             if (!err) {
-                return res.status(200).json({ message: "User registered successfully" });
+                return res.status(200).json({ message: "Account successfully registered! Please wait for admin approval." });
             } else {
                 return res.status(500).json(err);
             }
@@ -172,6 +172,7 @@ const updateProfile = (req, res) => {
 const deleteUser = (req, res) => {
     const userId = req.params.userId;
     const imagePath = req.params.imagePath;
+    console.log(userId, imagePath);
 
     userModel.deleteUser(userId, (err, result) => {
         if (!err) {
@@ -184,7 +185,7 @@ const deleteUser = (req, res) => {
                         console.error(err);
                         return res.status(500).json({ message: "Error deleting image file" });
                     }
-                    return res.status(200).json({ message: "User deleted successfully" });
+                    // return res.status(200).json({ message: "User deleted successfully" });
                 });
             }
             return res.status(200).json({ message: "User deleted successfully" });

@@ -102,9 +102,10 @@ export class AddBusinessComponent implements OnInit {
         // console.log(`${key}:`, value);
       // });
 
-      this.businessService.addBusiness(formData).subscribe(() => {
+      this.businessService.addBusiness(formData).subscribe((result: any) => {
         this.ngxService.stop();
         this.router.navigate(['/business']);
+        this.snackbarService.openSnackBar(result.message);
       }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {

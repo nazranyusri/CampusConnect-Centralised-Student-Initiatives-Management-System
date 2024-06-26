@@ -70,9 +70,10 @@ export class RegisterClubComponent {
     }
     // console.log(data);
 
-    this.userService.registerClub(data).subscribe(() => {
+    this.userService.registerClub(data).subscribe((result: any) => {
       this.ngxService.stop();
       this.router.navigate(['/homepage']);
+      this.snackbarService.openSnackBar(result.message);
     }, (error) => {
       this.ngxService.stop();
       if (error.error?.message) {
@@ -81,6 +82,7 @@ export class RegisterClubComponent {
       else {
         this.responseMessage = GlobalConstants.genericError;
       }
+      this.router.navigate(['/registerclub']);
       this.snackbarService.openSnackBar(this.responseMessage);
     })
   }

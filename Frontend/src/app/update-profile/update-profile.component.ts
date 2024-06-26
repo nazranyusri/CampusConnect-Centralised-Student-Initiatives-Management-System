@@ -41,7 +41,7 @@ export class UpdateProfileComponent {
 
     this.userForm = this.formBuilder.group({
       email: [''],
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.pattern(GlobalConstants.usernameRegex)]],
       fullName: ['', Validators.required],
       matricNo: ['', Validators.required],
       telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
@@ -114,9 +114,10 @@ export class UpdateProfileComponent {
         console.log(`${key}:`, value);
       });
 
-      this.userService.updateProfile(formData).subscribe(() => {
+      this.userService.updateProfile(formData).subscribe((result: any) => {
         this.ngxService.stop();
         this.router.navigate(['/profile']);
+        this.snackbarService.openSnackBar(result.message);
       }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {

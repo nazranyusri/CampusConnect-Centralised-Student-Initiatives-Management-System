@@ -47,7 +47,7 @@ export class UpdateProgramComponent {
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
       telName: ['', Validators.required],
-      telNo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      telNo: ['', [Validators.required, Validators.pattern(GlobalConstants.phoneRegex)]],
       image: [''],
       description: ['', Validators.required],
       tag: ['', Validators.required]
@@ -166,13 +166,14 @@ export class UpdateProgramComponent {
       formData.append('description', this.programForm.get('description').value);
       formData.append('tag', this.programForm.get('tag').value);
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
+      // formData.forEach((value, key) => {
+      //   console.log(`${key}:`, value);
+      // });
 
-      this.programService.updateProgram(formData).subscribe(() => {
+      this.programService.updateProgram(formData).subscribe((result: any) => {
         this.ngxService.stop();
         this.router.navigate(['/profile']);
+        this.snackbarService.openSnackBar(result.message);
       }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {

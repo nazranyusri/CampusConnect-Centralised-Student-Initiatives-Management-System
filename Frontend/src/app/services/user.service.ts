@@ -76,7 +76,7 @@ export class UserService {
   }
 
   deleteUser(userId: number, imagePath: string) {
-    imagePath = imagePath || 'null';
+    // imagePath = imagePath || 'null';
     return this.http.delete(`${this.apiUrl}/delete/${userId}/${imagePath}`);
   }
 }

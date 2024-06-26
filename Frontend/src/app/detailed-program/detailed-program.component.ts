@@ -96,6 +96,7 @@ export class DetailedProgramComponent implements OnInit {
       },
       (error: any) => {
         console.error(error);
+        this.snackbarService.openSnackBar("You have already registered for this program");
       });
     });
 

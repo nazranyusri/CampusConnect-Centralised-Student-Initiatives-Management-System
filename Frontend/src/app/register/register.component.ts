@@ -69,9 +69,10 @@ export class RegisterComponent implements OnInit {
     }
     // console.log(data);
 
-    this.userService.registerUser(data).subscribe(() => {
+    this.userService.registerUser(data).subscribe((result: any) => {
       this.ngxService.stop();
       this.router.navigate(['/login']);
+      this.snackbarService.openSnackBar(result.message);
     }, (error) => {
       this.ngxService.stop();
       if (error.error?.message) {
@@ -80,6 +81,7 @@ export class RegisterComponent implements OnInit {
       else {
         this.responseMessage = GlobalConstants.genericError;
       }
+      this.router.navigate(['/register']);
       this.snackbarService.openSnackBar(this.responseMessage);
     })
   }
