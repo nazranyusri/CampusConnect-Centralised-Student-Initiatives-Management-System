@@ -17,6 +17,9 @@
                         <mat-label>Minutes taken to fill in the survey</mat-label>
                         <mat-icon matPrefix>access_time</mat-icon>
                         <input matInput formControlName="time" required>
+                        <mat-error *ngIf="surveyForm.controls.time.touched && surveyForm.controls.time.invalid">
+                            <span *ngIf="surveyForm.controls.time.errors.pattern">Time is invalid</span>
+                        </mat-error>
                     </mat-form-field>
                 </p>
                 <!-- Survey link -->

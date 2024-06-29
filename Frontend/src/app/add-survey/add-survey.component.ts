@@ -50,9 +50,10 @@ export class AddSurveyComponent {
         datePublished: new Date().toISOString()
       }
 
-      this.surveyService.addSurvey(data).subscribe(() => {
+      this.surveyService.addSurvey(data).subscribe((result: any) => {
         this.ngxService.stop();
         this.router.navigate(['/survey']);
+        this.snackbarService.openSnackBar(result.message);
       }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {

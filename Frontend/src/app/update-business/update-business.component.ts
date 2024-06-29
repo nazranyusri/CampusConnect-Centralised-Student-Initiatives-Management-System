@@ -155,7 +155,7 @@ export class UpdateBusinessComponent {
       console.log(formData);
       // console.log(items);
 
-      this.businessService.updateBusiness(formData).subscribe(() => {
+      this.businessService.updateBusiness(formData).subscribe((result: any) => {
         // Delete the items marked for deletion
         this.itemsToDelete.forEach(menuId => {
             this.businessService.deleteMenuItem(menuId).subscribe(() => {
@@ -168,6 +168,7 @@ export class UpdateBusinessComponent {
         });
         this.ngxService.stop();
         this.router.navigate(['/profile']);
+        this.snackbarService.openSnackBar(result.message);
     }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {

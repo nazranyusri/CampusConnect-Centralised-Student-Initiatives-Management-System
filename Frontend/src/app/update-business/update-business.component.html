@@ -35,6 +35,9 @@
                                 <mat-label>Contact number</mat-label>
                                 <mat-icon matPrefix>call</mat-icon>
                                 <input matInput formControlName="telNo" required>
+                                <mat-error *ngIf="businessForm.controls.telNo.touched && businessForm.controls.telNo.invalid">
+                                    <span *ngIf="businessForm.controls.telNo.errors.pattern">Contact number is invalid</span>
+                                </mat-error>
                             </mat-form-field>
                         </p>
                         <!-- Business category -->

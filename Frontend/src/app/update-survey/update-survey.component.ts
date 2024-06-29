@@ -88,9 +88,10 @@ export class UpdateSurveyComponent {
         datePublished: new Date().toISOString()
       }
       // console.log("Data:", data);
-      this.surveyService.updateSurvey(data).subscribe(() => {
+      this.surveyService.updateSurvey(data).subscribe((result: any) => {
         this.ngxService.stop();
         this.router.navigate(['/profile']);
+        this.snackbarService.openSnackBar(result.message);
       }, (error) => {
         this.ngxService.stop();
         if (error.error?.message) {
